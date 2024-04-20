@@ -1,22 +1,27 @@
 import Link from "next/link"
+import { Typography } from "@/components/ui/typography"
 import { Button } from "@/components/ui/button"
 import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet"
 import { DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
 import ModeToggle from "@/components/mode-toggle"
-import { CircleUserRound, Menu, FileJson } from "lucide-react"
+import { CircleUserRound, Menu } from "lucide-react"
 
 export default function MainHeader() {
     return (
-        <header className="flex h-16 w-full items-center justify-between px-4 md:px-6">
-            <Link className="flex items-center gap-2" href="#">
-                <FileJson />
-                <span className="text-lg font-semibold">FRONT-END FOUNDATION</span>
-            </Link>
+        <header className="flex h-16 w-full items-center justify-between pr-4 md:pr-6 bg-[#171717]">
+            <div className="bg-white px-4 md:px-6 border-b-2 border-black-600 h-full">
+                <Typography variant="extra2LargeText" as="h1" className="text-black font-bold">
+                    FRONT-END
+                </Typography>
+                <Typography variant="extra2LargeText" as="h1" className="text-black font-bold">
+                    FOUNDATION
+                </Typography>
+            </div>
             <div className="flex items-center gap-4 md:hidden">
                 <Sheet>
                     <SheetTrigger asChild>
-                        <Button size="icon" variant="ghost">
-                            <Menu />
+                        <Button size="icon" variant="link">
+                            <Menu color="white" />
                             <span className="sr-only">Toggle navigation menu</span>
                         </Button>
                     </SheetTrigger>
@@ -45,8 +50,8 @@ export default function MainHeader() {
                 </Sheet>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Button className="rounded-full" size="icon" variant="ghost">
-                            <CircleUserRound />
+                        <Button className="rounded-full" size="icon" variant="link">
+                            <CircleUserRound color="white" />
                             <span className="sr-only">Toggle user menu</span>
                         </Button>
                     </DropdownMenuTrigger>
@@ -65,21 +70,27 @@ export default function MainHeader() {
                     className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
                     href="#"
                 >
-                    Home
+                    <Typography variant="p" as="h1" className="text-white">
+                        HOME
+                    </Typography>
                 </Link>
                 <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
                 <Link
                     className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
                     href="#"
                 >
-                    About
+                    <Typography variant="p" as="h1" className="text-white">
+                        ABOUT
+                    </Typography>
                 </Link>
                 <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
                 <Link
                     className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
                     href="#"
                 >
-                    Contact
+                    <Typography variant="p" as="h1" className="text-white">
+                        CONTACT
+                    </Typography>
                 </Link>
                 <ModeToggle />
             </nav>
