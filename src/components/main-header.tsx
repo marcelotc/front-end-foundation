@@ -9,14 +9,16 @@ import { CircleUserRound, Menu } from "lucide-react"
 export default function MainHeader() {
     return (
         <header className="flex h-16 w-full items-center justify-between pr-4 md:pr-6 bg-[#171717]">
-            <div className="bg-white px-4 md:px-6 border-b-2 border-black-600 h-full">
-                <Typography variant="extra2LargeText" as="h1" className="text-black font-bold">
-                    FRONT-END
-                </Typography>
-                <Typography variant="extra2LargeText" as="h1" className="text-black font-bold">
-                    FOUNDATION
-                </Typography>
-            </div>
+            <Link href={'/'}>
+                <div className="bg-white px-4 md:px-6 border-b-2 border-black-600 h-full cursor-pointer hover:opacity-90">
+                    <Typography variant="extra2LargeText" as="h1" className="text-black font-bold">
+                        FRONT-END
+                    </Typography>
+                    <Typography variant="extra2LargeText" as="h1" className="text-black font-bold">
+                        FOUNDATION
+                    </Typography>
+                </div>
+            </Link>
             <div className="flex items-center gap-4 md:hidden">
                 <Sheet>
                     <SheetTrigger asChild>
@@ -29,19 +31,19 @@ export default function MainHeader() {
                         <div className="flex flex-col gap-4 p-6">
                             <Link
                                 className="flex items-center gap-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
-                                href="#"
+                                href="/"
                             >
                                 Home
                             </Link>
                             <Link
                                 className="flex items-center gap-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
-                                href="#"
+                                href="/About"
                             >
                                 About
                             </Link>
                             <Link
                                 className="flex items-center gap-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
-                                href="#"
+                                href="/Contact"
                             >
                                 Contact
                             </Link>
@@ -68,7 +70,7 @@ export default function MainHeader() {
             <nav className="hidden items-center gap-4 md:flex">
                 <Link
                     className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
-                    href="#"
+                    href="/"
                 >
                     <Typography variant="p" as="h1" className="text-white">
                         HOME
@@ -77,7 +79,7 @@ export default function MainHeader() {
                 <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
                 <Link
                     className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
-                    href="#"
+                    href="/about"
                 >
                     <Typography variant="p" as="h1" className="text-white">
                         ABOUT
@@ -86,7 +88,7 @@ export default function MainHeader() {
                 <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
                 <Link
                     className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
-                    href="#"
+                    href="/contact"
                 >
                     <Typography variant="p" as="h1" className="text-white">
                         CONTACT
