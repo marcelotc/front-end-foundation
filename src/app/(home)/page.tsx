@@ -1,9 +1,13 @@
-import { Button } from "@/components/ui/button"
+import MainHeader from "@/components/main-header"
+import MainFooter from "@/components/main-footer"
 
 export default function Home() {
+
     return (
-        <main className="flex min-h-screen flex-col items-center justify-between p-24">
-            <Button>Click me</Button>
-        </main>
+        <section className="flex flex-col min-h-[100dvh]">
+            <MainHeader />
+            <main className="flex-1" />
+            <MainFooter />
+        </section>
     );
 }
