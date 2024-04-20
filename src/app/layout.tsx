@@ -20,16 +20,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <MainHeader />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
+          <MainHeader />
           {children}
+          <MainFooter />
         </ThemeProvider>
-        <MainFooter />
       </body>
     </html>
   );
