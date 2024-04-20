@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider"
 import MainHeader from "@/components/main-header"
 import MainFooter from "@/components/main-footer"
+import FloatingProgressTracker from "@/components/floating-progress-tracker"
 import "@/styles/globals.css"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans", });
@@ -22,12 +23,13 @@ export default function RootLayout({
       <body className={inter.className}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >
           <MainHeader />
           {children}
+          <FloatingProgressTracker />
           <MainFooter />
         </ThemeProvider>
       </body>

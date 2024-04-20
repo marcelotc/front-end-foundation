@@ -9,7 +9,7 @@ import { CircleUserRound, Menu } from "lucide-react"
 export default function MainHeader() {
     return (
         <header className="flex h-16 w-full items-center justify-between pr-4 md:pr-6 bg-[#171717]">
-            <Link href={'/'}>
+            <Link href={'/'} className="h-full">
                 <div className="bg-white px-4 md:px-6 border-b-2 border-black-600 h-full cursor-pointer hover:opacity-90">
                     <Typography variant="extra2LargeText" as="h1" className="text-black font-bold">
                         FRONT-END
