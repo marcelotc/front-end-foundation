@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`flex h-screen flex-col ${inter.className}`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
