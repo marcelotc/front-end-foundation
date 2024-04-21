@@ -8,7 +8,9 @@ export default function LearningLayout({
     return (
         <div className="flex flex-1 pt-16">
             <SideMenu />
-            {children}
+            <div className="ml-72">
+                {children}
+            </div>
         </div>
     )
 }

@@ -15,7 +15,7 @@ export default function Home() {
 
     return (
         <section className="flex flex-col">
-            <main className="flex-1 px-4 md:px-6 mt-20">
+            <main className="flex-1 px-4 md:px-6 mt-32">
                 <div className="flex justify-between">
                     <div className="space-y-4 animate-fade-down">
                         <div>
@@ -32,7 +32,7 @@ export default function Home() {
                             </Button>
                         </Link>
                     </div>
-                    <div className="flex flex-col items-center gap-3 animate-fade-down border-2 border-[#121C1C] p-3 rounded-xl">
+                    <div className="flex flex-col items-center gap-3 animate-fade-down border-2 border-[#1b1b1d] p-3 rounded-xl">
                         <div className="flex">
                             <Link href={'/learning/html'}>
                                 <Image
@@ -74,7 +74,7 @@ export default function Home() {
                 <div className="flex flex-col justify-center items-center gap-4 mt-10 py-10 animate-fade-up">
                     <div className="flex gap-4">
                         <Link href={'/learning/path'}>
-                            <div className="flex bg-[#121C1C] w-[400px] h-[200px] rounded-xl hover:opacity-95 cursor-pointer">
+                            <div className="flex bg-[#1b1b1d] w-[400px] h-[200px] rounded-xl hover:opacity-95 cursor-pointer">
                                 <div className="flex items-center justify-between w-full p-10">
                                     <Typography variant="largeText" as="h1" className="text-white">
                                         Define your
@@ -90,7 +90,7 @@ export default function Home() {
                             </div>
                         </Link>
                         <Link href={'/quiz'}>
-                            <div className="flex bg-[#121C1C] w-[400px] h-[200px] rounded-xl hover:opacity-95 cursor-pointer">
+                            <div className="flex bg-[#1b1b1d] w-[400px] h-[200px] rounded-xl hover:opacity-95 cursor-pointer">
                                 <div className="flex items-center justify-between w-full p-10">
                                     <Typography variant="largeText" as="h1" className="text-white">
                                         Take quizes
@@ -107,7 +107,7 @@ export default function Home() {
                     </div>
                     <div className="flex gap-4">
                         <Link href={'/roadmap'}>
-                            <div className="flex bg-[#121C1C] w-[400px] h-[200px] rounded-xl hover:opacity-95 cursor-pointer">
+                            <div className="flex bg-[#1b1b1d] w-[400px] h-[200px] rounded-xl hover:opacity-95 cursor-pointer">
                                 <div className="flex items-center justify-between w-full p-10">
                                     <Typography variant="largeText" as="h1" className="text-white">
                                         Check the
@@ -123,7 +123,7 @@ export default function Home() {
                             </div>
                         </Link>
                         <Link href={'/learning/progress'}>
-                            <div className="flex bg-[#121C1C] w-[400px] h-[200px] rounded-xl hover:opacity-95 cursor-pointer">
+                            <div className="flex bg-[#1b1b1d] w-[400px] h-[200px] rounded-xl hover:opacity-95 cursor-pointer">
                                 <div className="flex items-center justify-between w-full p-10">
                                     <Typography variant="largeText" as="h1" className="text-white">
                                         Track your
