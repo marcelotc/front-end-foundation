@@ -1,4 +1,6 @@
 import SideMenu from "./components/sideMenu"
+import { SideMenuProvider } from "./context/sideMenuContext"
+
 
 export default function LearningLayout({
     children,
@@ -7,10 +9,10 @@ export default function LearningLayout({
 }) {
     return (
         <div className="flex flex-1 pt-16">
-            <SideMenu />
-            <div className="ml-72">
+            <SideMenuProvider>
+                <SideMenu />
                 {children}
-            </div>
+            </SideMenuProvider>
         </div>
     )
 }
