@@ -11,7 +11,7 @@ export default function SideMenu() {
   const { menuOpen, toggleMenu } = useContext(SideMenuContext);
 
   return (
-    <nav className={`my-5 mx-4 rounded-[10px] bg-[#1b1b1d] dark:bg-gray-800 md:block fixed top-16 bottom-20 z-10 transition-all duration-300 ${menuOpen ? 'w-64' : 'w-10'}`}>
+    <nav className={`my-5 mr-4 rounded-tr-[10px] rounded-br-[10px] bg-[#1b1b1d] dark:bg-gray-800 md:block fixed top-16 bottom-20 z-10 transition-all duration-300 ${menuOpen ? 'w-64' : 'w-10'}`}>
       {menuOpen ? (
         <div className="space-y-6 p-2">
           <div className="flex items-center space-x-2 p-3">
