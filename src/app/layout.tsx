@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { ClerkProvider } from '@clerk/nextjs'
 import { ThemeProvider } from "@/components/theme-provider"
 import MainHeader from "@/components/main-header"
 import MainFooter from "@/components/main-footer"
@@ -19,20 +20,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`flex h-screen flex-col ${inter.className}`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <MainHeader />
-          {children}
-          <FloatingProgressTracker />
-          <MainFooter />
-        </ThemeProvider>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={`flex h-screen flex-col ${inter.className}`}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <MainHeader />
+            {children}
+            <FloatingProgressTracker />
+            <MainFooter />
+          </ThemeProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

@@ -1,14 +1,25 @@
+"use client";
+import { useUser, SignOutButton } from "@clerk/nextjs";
+
 import Link from "next/link"
 import { Typography } from "@/components/ui/typography"
 import { Button } from "@/components/ui/button"
 import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet"
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
 import { DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
 import ModeToggle from "@/components/mode-toggle"
-import { CircleUserRound, Menu } from "lucide-react"
+import { CircleUserRound, Menu, User, LogOut } from "lucide-react"
 
 export default function MainHeader() {
+    const { isLoaded, isSignedIn, user } = useUser();
+
     return (
-        <header className="flex h-16 w-full fixed items-center justify-between pr-4 md:pr-6 bg-[#1b1b1d] z-10">
+        <header className="flex h-16 w-full py-10 items-center justify-between pr-4 md:pr-6 bg-[#1b1b1d] z-10">
             <Link href={'/'}>
                 <div className="pl-[46px] pr-[50px] h-full cursor-pointer hover:opacity-60 ">
                     <Typography variant="mutedText" as="h1" className="text-white font-semibold">
@@ -95,7 +106,29 @@ export default function MainHeader() {
                     </Typography>
                 </Link>
                 <ModeToggle />
+                {isSignedIn ? (
+                    <div className="flex justify-center items-center gap-4">
+                        <Typography variant="p" as="h1" className="text-white">
+                            Hello {user.firstName}!
+                        </Typography>
+                        <SignOutButton>
+                            <div className="flex justify-center items-center gap-4 cursor-pointer">
+                                <LogOut color="white" className="cursor-pointer" />
+                                <Typography variant="smallText" as="p" className="text-white block !m-0">
+                                    Sign out
+                                </Typography>
+                            </div>
+                        </SignOutButton>
+                    </div>
+                ) : (
+                    <Link href="/sign-in" className="flex justify-center items-center gap-4">
+                        <User color="white" />
+                        <Typography variant="smallText" as="p" className="text-white block !m-0">
+                            Sign in
+                        </Typography>
+                    </Link>
+                )}
             </nav>
-        </header>
-    );
+        </header >
+    )
 }
