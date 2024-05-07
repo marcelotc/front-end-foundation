@@ -26,7 +26,7 @@ export default function Home() {
                                 by developing your <b><u>foundation</u></b>
                             </Typography>
                         </div>
-                        <Link href={'/learning/path'} className="block">
+                        <Link href={'/learning/path'} className="block w-min">
                             <Button size={"lg"}>
                                 Start your learning parth
                             </Button>
