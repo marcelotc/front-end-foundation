@@ -44,7 +44,7 @@ export default function Html() {
 
     return (
         <MainWrapper>
-            <ContentOutput content={markdown ? markdown[0].content : ''} />
+            <ContentOutput content={markdown ? markdown[0]?.content : ''} />
         </MainWrapper>
     );
 }
