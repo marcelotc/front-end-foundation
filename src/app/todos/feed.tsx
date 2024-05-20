@@ -11,20 +11,19 @@ const Feed = () => {
 
     useEffect(() => {
         if (!userId) {
-            // User is not authenticated, do nothing
             return;
         }
 
         const loadTodos = async () => {
             try {
-                setLoading(true); // Set loading state to true
+                setLoading(true); 
                 const token = await getToken({ template: 'supabase' });
                 const data = await getTodos({ userId, token });
                 setPosts(data as any);
             } catch (error) {
                 console.error('Error loading todos:', error);
             } finally {
-                setLoading(false); // Set loading state to false, regardless of success or failure
+                setLoading(false);
             }
         };
 
@@ -32,7 +31,6 @@ const Feed = () => {
     }, [userId, getToken]);
 
     if (!userId) {
-        // User is not authenticated, return null or show a message
         return null;
     }
 

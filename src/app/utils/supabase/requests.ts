@@ -36,14 +36,15 @@ export const postTodo = async ({ userId, token, e }: any) => {
   };
   
   
-  export const postMarkdown = async ({ userId, token, e }: any) => {
+  export const postMarkdown = async ({ userId, token, content }: any) => {
     const supabase = await supabaseClient(token);
     const { data, error } = await supabase
       .from('markdown_content')
       .insert({
         user_id: userId,
-        todo: e.target[0].value,
-        tag: e.target[1].value,
+        title: 'teste',
+        content,
+        subject: 'asd',
       })
       .select();
   
@@ -54,3 +55,19 @@ export const postTodo = async ({ userId, token, e }: any) => {
   
     return data;
   };
+
+  export const getMarkdown = async ({ userId, token }: any) => {
+    const supabase = await supabaseClient(token);
+    const { data: todos, error } = await supabase
+      .from("markdown_content")
+      .select("*")
+      .eq("user_id", userId);
+  
+    if (error) {
+      console.error('Error fetching todos:', error.message);
+      return [];
+    }
+  
+    return todos;
+  };
+  
