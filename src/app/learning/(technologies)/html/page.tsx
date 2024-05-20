@@ -4,12 +4,17 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '@clerk/nextjs';
 
 import MainWrapper from '../components/mainWrapper';
-import ContenOutput from '../components/contenOutput'
+import ContentOutput from '../components/contentOutput'
 import { getMarkdown } from '../../../utils/supabase/requests';
+
+interface MarkdownData {
+    id: string; 
+    content: string;
+}
 
 export default function Html() {
     const { userId, getToken } = useAuth();
-    const [markdown, setMakdown] = useState();
+    const [markdown, setMarkdown] = useState<MarkdownData[] | null>(null);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -22,9 +27,9 @@ export default function Html() {
                 setLoading(true); 
                 const token = await getToken({ template: 'supabase' });
                 const data = await getMarkdown({ userId, token });
-                setMakdown(data as any);
+                setMarkdown(data as MarkdownData[]);
             } catch (error) {
-                console.error('Error loading todos:', error);
+                console.error('Error loading markdown:', error);
             } finally {
                 setLoading(false); 
             }
@@ -39,7 +44,7 @@ export default function Html() {
 
     return (
         <MainWrapper>
-            <ContenOutput content={markdown && markdown[0].content} />
+            <ContentOutput content={markdown ? markdown[0].content : ''} />
         </MainWrapper>
     );
 }

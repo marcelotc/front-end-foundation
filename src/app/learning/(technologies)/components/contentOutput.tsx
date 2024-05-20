@@ -14,7 +14,7 @@ const extensions = [
     StarterKit.configure(),
 ]
 
-export default function MyEditor({content}: any) {
+export default function contentOutput({content}: any) {
 
     if(!content) {
         return;
