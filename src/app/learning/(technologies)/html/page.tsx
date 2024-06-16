@@ -2,13 +2,14 @@
 
 import { useEffect, useState } from 'react';
 import { useAuth } from '@clerk/nextjs';
+import { SkeletonCard } from "../components/contentSkeleton"
 
 import MainWrapper from '../components/mainWrapper';
 import ContentOutput from '../components/contentOutput'
 import { getMarkdown } from '../../../utils/supabase/requests';
 
 interface MarkdownData {
-    id: string; 
+    id: string;
     content: string;
 }
 
@@ -24,27 +25,23 @@ export default function Html() {
 
         const loadMarkdown = async () => {
             try {
-                setLoading(true); 
+                setLoading(true);
                 const token = await getToken({ template: 'supabase' });
                 const data = await getMarkdown({ userId, token });
                 setMarkdown(data as MarkdownData[]);
             } catch (error) {
                 console.error('Error loading markdown:', error);
             } finally {
-                setLoading(false); 
+                setLoading(false);
             }
         };
 
         loadMarkdown();
     }, [userId, getToken]);
 
-    if (!userId) {
-        return null;
-    }
-
     return (
         <MainWrapper>
-            <ContentOutput content={markdown ? markdown[0]?.content : ''} />
+            {loading || !userId ? <SkeletonCard /> : <ContentOutput content={markdown ? markdown[0]?.content : ''} />}
         </MainWrapper>
     );
 }
