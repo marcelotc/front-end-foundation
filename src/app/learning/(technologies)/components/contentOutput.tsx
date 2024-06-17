@@ -20,9 +20,11 @@ export default function contentOutput({content}: any) {
         return;
     }
 
+    const contentData = JSON.parse(content)
+
     const editor = useEditor({
         extensions,
-        content: JSON.parse(content),
+        content: contentData.content,
         editable: false
     })
 

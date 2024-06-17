@@ -6,8 +6,9 @@ import { Color } from '@tiptap/extension-color'
 import TextStyle from '@tiptap/extension-text-style'
 import { EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import React from 'react'
+import React, { useState } from 'react'
 import { Button } from '@/components/ui/button'
+import { v4 as uuidv4 } from 'uuid' 
 
 const extensions = [
     Color.configure(),
@@ -45,7 +46,9 @@ const initialContent = {
     ]
 }
 
-export default function MyEditor({ handlePublish }: any) {
+export default function MyEditor({ handlePublish, submitting }: any) {
+    const [chapterName, setChapterName] = useState('')
+    const [chapterId, setChapterId] = useState(uuidv4())
     const editor = useEditor({
         extensions,
         content: initialContent,
@@ -58,6 +61,7 @@ export default function MyEditor({ handlePublish }: any) {
 
         return (
             <div className='mb-10'>
+                {/* All buttons here as before */}
                 <button
                     onClick={() => editor.chain().focus().toggleBold().run()}
                     disabled={
@@ -202,7 +206,7 @@ export default function MyEditor({ handlePublish }: any) {
     const handlePublishClick = () => {
         if (editor) {
             const json = editor.getJSON()
-            handlePublish(json) // Pass the editor's JSON content to handlePublish
+            handlePublish({ chapterName, chapterId, content: json }) 
         } else {
             console.log('Editor not initialized')
         }
@@ -211,9 +215,18 @@ export default function MyEditor({ handlePublish }: any) {
     return (
         <>
             <MenuBar />
+            <label>
+                Chapter name:
+                <input
+                    type="text"
+                    value={chapterName}
+                    className="border border-gray-300 rounded m-3"
+                    onChange={(e) => setChapterName(e.target.value)}
+                />
+            </label>
             <EditorContent editor={editor} />
             <Button size={"lg"} onClick={handlePublishClick}>
-                Publicar
+                {submitting ? 'Publishing...' : 'Publish'}
             </Button>
         </>
     )

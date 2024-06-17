@@ -41,7 +41,7 @@ export default function Html() {
 
     return (
         <MainWrapper>
-            {loading || !userId ? <SkeletonCard /> : <ContentOutput content={markdown ? markdown[0]?.content : ''} />}
+            {loading || !userId ? <SkeletonCard /> : <ContentOutput content={markdown ? markdown[0].content : ''} />}
         </MainWrapper>
     );
 }

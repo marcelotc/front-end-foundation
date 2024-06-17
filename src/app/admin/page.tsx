@@ -24,23 +24,24 @@ export default function MainHeader() {
         }
     }, [userRole]);
 
-    async function handlePublish(content: any) {
+    async function handlePublish({ chapterName, chapterId, content }: any) {
         try {
             setSubmitting(true);
             const token = await getToken({ template: 'supabase' });
-            const posts = await postMarkdown({ userId, token, content });
-            console.log('posts log', posts);
+            await postMarkdown({ userId, token, content, chapterId, chapterName });
+            setSubmitting(false);
 
         } catch (error) {
             console.error('An error occurred:', error);
+            setSubmitting(false);
         } finally {
             setSubmitting(false);
         }
     }
 
     return (
-        <div className='m-[60px] border-solid border-2 border-black p-10'>
-            <TextEditor handlePublish={handlePublish} />
+        <div className='m-[60px] border-solid border-2 border-black p-10 h-full'>
+            <TextEditor handlePublish={handlePublish} submitting={submitting} />
         </div>
     )
 }

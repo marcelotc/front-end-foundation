@@ -17,57 +17,62 @@ export const getTodos = async ({ userId, token }: any) => {
 };
 
 export const postTodo = async ({ userId, token, e }: any) => {
-    const supabase = await supabaseClient(token);
-    const { data, error } = await supabase
-      .from('todos')
-      .insert({
-        user_id: userId,
-        todo: e.target[0].value,
-        tag: e.target[1].value,
-      })
-      .select();
-  
-    if (error) {
-      console.error('Error posting todo:', error.message);
-      return null;
-    }
-  
-    return data;
-  };
-  
-  
-  export const postMarkdown = async ({ userId, token, content }: any) => {
-    const supabase = await supabaseClient(token);
-    const { data, error } = await supabase
-      .from('markdown_content')
-      .insert({
-        user_id: userId,
-        title: 'teste',
-        content,
-        subject: 'asd',
-      })
-      .select();
-  
-    if (error) {
-      console.error('Error posting todo:', error.message);
-      return null;
-    }
-  
-    return data;
-  };
+  const supabase = await supabaseClient(token);
+  const { data, error } = await supabase
+    .from('todos')
+    .insert({
+      user_id: userId,
+      todo: e.target[0].value,
+      tag: e.target[1].value,
+    })
+    .select();
 
-  export const getMarkdown = async ({ userId, token }: any) => {
-    const supabase = await supabaseClient(token);
-    const { data: todos, error } = await supabase
-      .from("markdown_content")
-      .select("*")
-      .eq("user_id", userId);
-  
-    if (error) {
-      console.error('Error fetching todos:', error.message);
-      return [];
-    }
-  
-    return todos;
-  };
-  
+  if (error) {
+    console.error('Error posting todo:', error.message);
+    return null;
+  }
+
+  return data;
+};
+
+
+export const postMarkdown = async ({ userId, token, content, chapterId, chapterName }: any) => {
+  const supabase = await supabaseClient(token);
+  const { data, error } = await supabase
+    .from('markdown_content')
+    .insert({
+      user_id: userId,
+      title: 'teste 2',
+      content: {
+        content,
+        "chapter": {
+          "id": chapterId,
+          "name": chapterName
+        }
+      },
+      subject: 'asd',
+    })
+    .select();
+
+  if (error) {
+    console.error('Error posting todo:', error.message);
+    return null;
+  }
+
+  return data;
+};
+
+export const getMarkdown = async ({ userId, token }: any) => {
+  const supabase = await supabaseClient(token);
+  const { data: todos, error } = await supabase
+    .from("markdown_content")
+    .select("*")
+    .eq("user_id", userId);
+
+  if (error) {
+    console.error('Error fetching todos:', error.message);
+    return [];
+  }
+
+  return todos;
+};
