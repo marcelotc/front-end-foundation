@@ -1,10 +1,13 @@
 'use client'
 
-import React, { useContext } from 'react';
-import SideMenuContext from '../context/sideMenuContext'; 
+import React, { useContext, useEffect, useState } from 'react';
+import SideMenuContext from '../context/sideMenuContext';
 import { CollapsibleTrigger, CollapsibleContent, Collapsible } from "@/components/ui/collapsible";
 import { Typography } from "@/components/ui/typography";
 import { ChevronDown, ChevronLeft, ChevronRight, Brain } from "lucide-react";
+import { useAuth } from '@clerk/nextjs';
+import { Skeleton } from "@/components/ui/skeleton"
+import { getMenu } from '../../../utils/supabase/requests';
 import clsx from 'clsx';
 
 interface Subject {
@@ -15,7 +18,7 @@ interface Subject {
 
 interface Chapter {
   chapterNumber: number;
-  chapterTitle: string;
+  chapter: string;
   subjects: Subject[];
 }
 
@@ -26,71 +29,46 @@ interface SideMenuContent {
 export default function SideMenu() {
   const { menuOpen, toggleMenu } = useContext(SideMenuContext);
 
-  const sideMenuContent: SideMenuContent = {
-    chapters: [
-      {
-        chapterNumber: 1,
-        chapterTitle: "Introduction to Programming",
-        subjects: [
-          {
-            subjectName: "History of Programming",
-            content: "Programming started with...",
-            subjects: []
-          },
-          {
-            subjectName: "Basic Concepts",
-            content: "Variables, loops, and functions are...",
-            subjects: [
-              {
-                subjectName: "Variables",
-                content: "Variables store data...",
-                subjects: []
-              },
-              {
-                subjectName: "Loops",
-                content: "Loops allow you to execute a block of code multiple times...",
-                subjects: []
-              },
-              {
-                subjectName: "Functions",
-                content: "Functions are reusable blocks of code...",
-                subjects: []
-              }
-            ]
-          }
-        ]
-      },
-      {
-        chapterNumber: 2,
-        chapterTitle: "Data Structures",
-        subjects: [
-          {
-            subjectName: "Arrays",
-            content: "Arrays are collections of elements...",
-            subjects: []
-          },
-          {
-            subjectName: "Linked Lists",
-            content: "A linked list is a linear data structure...",
-            subjects: [
-              {
-                subjectName: "Singly Linked Lists",
-                content: "Each node points to the next node...",
-                subjects: []
-              },
-              {
-                subjectName: "Doubly Linked Lists",
-                content: "Each node points to both the next and the previous node...",
-                subjects: []
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
+  const { userId, getToken } = useAuth();
+  const [menu, setMenu] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
 
-  const renderSubjects = (subjects: Subject[]) => {
+  useEffect(() => {
+    if (!userId) {
+      return;
+    }
+
+    const loadMarkdown = async () => {
+      try {
+        setLoading(true);
+        const token = await getToken({ template: 'supabase' });
+        const data = await getMenu({ userId, token });
+        setMenu(data as any);
+      } catch (error) {
+        console.error('Error loading markdown:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadMarkdown();
+  }, [userId, getToken]);
+
+  const renderSubjects = (subject: any) => {
+    return (
+      <Collapsible className="space-y-2">
+        <CollapsibleTrigger asChild>
+          <div className="flex items-center justify-between space-x-4 px-4 cursor-pointer">
+            <Typography variant="smallText" as="p" className="text-white">
+              {subject}
+            </Typography>
+          </div>
+        </CollapsibleTrigger>
+      </Collapsible>
+    )
+  };
+
+  /*const renderSubjects = (subjects: Subject[]) => {
     return subjects.map((subject, index) => (
       <Collapsible key={index} className="space-y-2">
         <CollapsibleTrigger asChild>
@@ -112,38 +90,52 @@ export default function SideMenu() {
         </CollapsibleContent>
       </Collapsible>
     ));
-  };
+  };*/
 
   return (
     <nav className={`my-5 mr-4 rounded-tr-[10px] rounded-br-[10px] bg-[#1b1b1d] dark:bg-gray-800 md:block fixed top-16 bottom-20 z-10 animate-fade-right transition-all duration-300 ${menuOpen ? 'w-64' : 'w-10'}`}>
-      {menuOpen ? (
-        <div className="space-y-6 p-2">
-          <div className="flex items-center space-x-2 p-3">
-            <Brain color="white" size={20} />
-            <Typography variant="largeText" as="p" className="text-white">
-              HTML
-            </Typography>
-          </div>
-          {sideMenuContent.chapters.map((chapter, index) => (
-            <Collapsible key={index} className="space-y-2">
-              <CollapsibleTrigger asChild>
-                <div className="flex items-center justify-between space-x-4 px-4 cursor-pointer">
-                  <Typography variant="smallText" as="p" className="text-white">
-                    {chapter.chapterTitle}
-                  </Typography>
-                  <div>
-                    <ChevronDown color="white" size={20} />
-                    <span className="sr-only">Toggle</span>
-                  </div>
-                </div>
-              </CollapsibleTrigger>
-              <CollapsibleContent className="space-y-4 px-4 overflow-hidden transition-[max-height] duration-300 [data-state=open]:max-h-[1000px] [data-state=closed]:max-h-0">
-                {renderSubjects(chapter.subjects)}
-              </CollapsibleContent>
-            </Collapsible>
-          ))}
+      {loading || !userId ? (
+        <div className='flex flex-col gap-5 p-5'>
+          <Skeleton className="h-[20px] w-full rounded-xl" />
+          <Skeleton className="h-[20px] w-full rounded-xl" />
+          <Skeleton className="h-[20px] w-full rounded-xl" />
+          <Skeleton className="h-[20px] w-full rounded-xl" />
+          <Skeleton className="h-[20px] w-full rounded-xl" />
+          <Skeleton className="h-[20px] w-full rounded-xl" />
+          <Skeleton className="h-[20px] w-full rounded-xl" />
         </div>
-      ) : null}
+      ) : (
+        <>
+          {menuOpen ? (
+            <div className="space-y-6 p-2">
+              <div className="flex items-center space-x-2 p-3">
+                <Brain color="white" size={20} />
+                <Typography variant="largeText" as="p" className="text-white">
+                  HTML
+                </Typography>
+              </div>
+              {menu && menu.map((menu: any, index: any) => (
+                <Collapsible key={index} className="space-y-2">
+                  <CollapsibleTrigger asChild>
+                    <div className="flex items-center justify-between space-x-4 px-4 cursor-pointer">
+                      <Typography variant="smallText" as="p" className="text-white">
+                        {menu.chapter}
+                      </Typography>
+                      <div>
+                        <ChevronDown color="white" size={20} />
+                        <span className="sr-only">Toggle</span>
+                      </div>
+                    </div>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="space-y-4 px-4 overflow-hidden transition-[max-height] duration-300 [data-state=open]:max-h-[1000px] [data-state=closed]:max-h-0">
+                    {renderSubjects(menu.subjects)}
+                  </CollapsibleContent>
+                </Collapsible>
+              ))}
+            </div>
+          ) : null}
+        </>
+      )}
       <div className={clsx(
         "absolute bottom-0 p-1 rounded-b-[10px] bg-[#272729] w-full cursor-pointer transition-all duration-300",
         !menuOpen && "h-full rounded-[10px]"

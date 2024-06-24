@@ -36,36 +36,67 @@ export const postTodo = async ({ userId, token, e }: any) => {
 };
 
 
-export const postMarkdown = async ({ userId, token, content, chapterId, chapterName }: any) => {
+export const postMarkdown = async ({ userId, token, content, chapter, subject }: any) => {
+  console.log('chapter', chapter)
+
   const supabase = await supabaseClient(token);
-  const { data, error } = await supabase
+
+  const { data: markdownData, error: markdownError } = await supabase
     .from('markdown_content')
     .insert({
       user_id: userId,
-      title: 'teste 2',
+      chapter: chapter,  
       content: {
         content,
-        "chapter": {
-          "id": chapterId,
-          "name": chapterName
-        }
       },
-      subject: 'asd',
+      subject: subject,
     })
     .select();
 
-  if (error) {
-    console.error('Error posting todo:', error.message);
+  if (markdownError) {
+    console.error('Error posting markdown content:', markdownError.message);
     return null;
   }
 
-  return data;
+  const contentId = markdownData[0].id;
+
+  const { data: menuData, error: menuError } = await supabase
+    .from('menu')
+    .insert({
+      user_id: userId,
+      chapter: chapter,
+      subject: subject,
+      content_id: contentId,
+    })
+    .select();
+
+  if (menuError) {
+    console.error('Error posting menu:', menuError.message);
+    return null;
+  }
+
+  return { markdownData, menuData };
 };
 
 export const getMarkdown = async ({ userId, token }: any) => {
   const supabase = await supabaseClient(token);
   const { data: todos, error } = await supabase
     .from("markdown_content")
+    .select("*")
+    .eq("user_id", userId);
+
+  if (error) {
+    console.error('Error fetching todos:', error.message);
+    return [];
+  }
+
+  return todos;
+};
+
+export const getMenu = async ({ userId, token }: any) => {
+  const supabase = await supabaseClient(token);
+  const { data: todos, error } = await supabase
+    .from("menu")
     .select("*")
     .eq("user_id", userId);
 

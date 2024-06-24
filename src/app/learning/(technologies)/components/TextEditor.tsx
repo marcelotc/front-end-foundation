@@ -1,14 +1,13 @@
 'use client'
 
 import './styles.css'
-
 import { Color } from '@tiptap/extension-color'
 import TextStyle from '@tiptap/extension-text-style'
 import { EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import React, { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { v4 as uuidv4 } from 'uuid' 
+import { v4 as uuidv4 } from 'uuid'
 
 const extensions = [
     Color.configure(),
@@ -47,7 +46,8 @@ const initialContent = {
 }
 
 export default function MyEditor({ handlePublish, submitting }: any) {
-    const [chapterName, setChapterName] = useState('')
+    const [chapter, setChapter] = useState('')
+    const [subject, setSubject] = useState('')
     const [chapterId, setChapterId] = useState(uuidv4())
     const editor = useEditor({
         extensions,
@@ -61,7 +61,6 @@ export default function MyEditor({ handlePublish, submitting }: any) {
 
         return (
             <div className='mb-10'>
-                {/* All buttons here as before */}
                 <button
                     onClick={() => editor.chain().focus().toggleBold().run()}
                     disabled={
@@ -193,8 +192,7 @@ export default function MyEditor({ handlePublish, submitting }: any) {
                     redo
                 </button>
                 <button
-                    onClick={() => editor.setEditable(false)
-                    }
+                    onClick={() => editor.chain().focus().setColor('#958DF1').run()}
                     className={editor.isActive('textStyle', { color: '#958DF1' }) ? 'is-active' : ''}
                 >
                     purple
@@ -206,7 +204,7 @@ export default function MyEditor({ handlePublish, submitting }: any) {
     const handlePublishClick = () => {
         if (editor) {
             const json = editor.getJSON()
-            handlePublish({ chapterName, chapterId, content: json }) 
+            handlePublish({ chapterId, content: json, chapter, subject }) 
         } else {
             console.log('Editor not initialized')
         }
@@ -216,12 +214,21 @@ export default function MyEditor({ handlePublish, submitting }: any) {
         <>
             <MenuBar />
             <label>
-                Chapter name:
+                Chapter:
                 <input
                     type="text"
-                    value={chapterName}
+                    value={chapter}
                     className="border border-gray-300 rounded m-3"
-                    onChange={(e) => setChapterName(e.target.value)}
+                    onChange={(e) => setChapter(e.target.value)}
+                />
+            </label>
+            <label>
+                Subject:
+                <input
+                    type="text"
+                    value={subject}
+                    className="border border-gray-300 rounded m-3"
+                    onChange={(e) => setSubject(e.target.value)}
                 />
             </label>
             <EditorContent editor={editor} />
