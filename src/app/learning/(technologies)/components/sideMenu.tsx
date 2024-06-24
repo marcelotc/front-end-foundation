@@ -121,7 +121,7 @@ export default function SideMenu() {
                     </div>
                   </CollapsibleTrigger>
                   <CollapsibleContent className="space-y-4 px-4 overflow-hidden transition-[max-height] duration-300 [data-state=open]:max-h-[1000px] [data-state=closed]:max-h-0">
-                    {renderSubjects(menu.subjects)}
+                    {renderSubjects(menu.subject)}
                   </CollapsibleContent>
                 </Collapsible>
               ))}
