@@ -5,7 +5,6 @@ import SideMenuContext from '../context/sideMenuContext';
 import { CollapsibleTrigger, CollapsibleContent, Collapsible } from "@/components/ui/collapsible";
 import { Typography } from "@/components/ui/typography";
 import { ChevronDown, ChevronLeft, ChevronRight, Brain } from "lucide-react";
-import { useAuth } from '@clerk/nextjs';
 import { Skeleton } from "@/components/ui/skeleton"
 import { getMenu } from '../../../utils/supabase/requests';
 import clsx from 'clsx';
@@ -29,20 +28,14 @@ interface SideMenuContent {
 export default function SideMenu() {
   const { menuOpen, toggleMenu } = useContext(SideMenuContext);
 
-  const { userId, getToken } = useAuth();
   const [menu, setMenu] = useState<any>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (!userId) {
-      return;
-    }
-
     const loadMarkdown = async () => {
       try {
         setLoading(true);
-        const token = await getToken({ template: 'supabase' });
-        const data = await getMenu({ userId, token });
+        const data = await getMenu();
         setMenu(data as any);
       } catch (error) {
         console.error('Error loading markdown:', error);
@@ -52,7 +45,7 @@ export default function SideMenu() {
     };
 
     loadMarkdown();
-  }, [userId, getToken]);
+  }, []);
 
   const renderSubjects = (subject: any) => {
     return (
@@ -94,7 +87,7 @@ export default function SideMenu() {
 
   return (
     <nav className={`my-5 mr-4 rounded-tr-[10px] rounded-br-[10px] bg-[#1b1b1d] dark:bg-gray-800 md:block fixed top-16 bottom-20 z-10 animate-fade-right transition-all duration-300 ${menuOpen ? 'w-64' : 'w-10'}`}>
-      {loading || !userId ? (
+      {loading || !menu ? (
         <div className='flex flex-col gap-5 p-5'>
           <Skeleton className="h-[20px] w-full rounded-xl" />
           <Skeleton className="h-[20px] w-full rounded-xl" />

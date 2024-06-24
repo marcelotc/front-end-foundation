@@ -1,8 +1,7 @@
-import { supabaseClient } from './supabaseClient';
+import { supabaseClientWithAuth, supabaseClientPublic } from './supabaseClient';
 
-// Function to fetch todos from Supabase
 export const getTodos = async ({ userId, token }: any) => {
-  const supabase = await supabaseClient(token);
+  const supabase = await supabaseClientWithAuth(token);
   const { data: todos, error } = await supabase
     .from("todos")
     .select("*")
@@ -17,7 +16,7 @@ export const getTodos = async ({ userId, token }: any) => {
 };
 
 export const postTodo = async ({ userId, token, e }: any) => {
-  const supabase = await supabaseClient(token);
+  const supabase = await supabaseClientWithAuth(token);
   const { data, error } = await supabase
     .from('todos')
     .insert({
@@ -39,13 +38,13 @@ export const postTodo = async ({ userId, token, e }: any) => {
 export const postMarkdown = async ({ userId, token, content, chapter, subject }: any) => {
   console.log('chapter', chapter)
 
-  const supabase = await supabaseClient(token);
+  const supabase = await supabaseClientWithAuth(token);
 
   const { data: markdownData, error: markdownError } = await supabase
     .from('markdown_content')
     .insert({
       user_id: userId,
-      chapter: chapter,  
+      chapter: chapter,
       content: {
         content,
       },
@@ -78,32 +77,28 @@ export const postMarkdown = async ({ userId, token, content, chapter, subject }:
   return { markdownData, menuData };
 };
 
-export const getMarkdown = async ({ userId, token }: any) => {
-  const supabase = await supabaseClient(token);
-  const { data: todos, error } = await supabase
+export const getMarkdown = async () => {
+  const { data, error } = await supabaseClientPublic
     .from("markdown_content")
     .select("*")
-    .eq("user_id", userId);
 
   if (error) {
-    console.error('Error fetching todos:', error.message);
+    console.error('Error fetching:', error.message);
     return [];
   }
 
-  return todos;
+  return data;
 };
 
-export const getMenu = async ({ userId, token }: any) => {
-  const supabase = await supabaseClient(token);
-  const { data: todos, error } = await supabase
+export const getMenu = async () => {
+  const { data, error } = await supabaseClientPublic
     .from("menu")
     .select("*")
-    .eq("user_id", userId);
 
   if (error) {
-    console.error('Error fetching todos:', error.message);
+    console.error('Error fetching:', error.message);
     return [];
   }
 
-  return todos;
+  return data;
 };

@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useAuth } from '@clerk/nextjs';
 import { SkeletonCard } from "../components/contentSkeleton"
 
 import MainWrapper from '../components/mainWrapper';
@@ -14,20 +13,14 @@ interface MarkdownData {
 }
 
 export default function Html() {
-    const { userId, getToken } = useAuth();
     const [markdown, setMarkdown] = useState<MarkdownData[] | null>(null);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        if (!userId) {
-            return;
-        }
-
         const loadMarkdown = async () => {
             try {
                 setLoading(true);
-                const token = await getToken({ template: 'supabase' });
-                const data = await getMarkdown({ userId, token });
+                const data = await getMarkdown();
                 setMarkdown(data as MarkdownData[]);
             } catch (error) {
                 console.error('Error loading markdown:', error);
@@ -37,11 +30,11 @@ export default function Html() {
         };
 
         loadMarkdown();
-    }, [userId, getToken]);
+    }, []);
 
     return (
         <MainWrapper>
-            {loading || !userId ? <SkeletonCard /> : <ContentOutput content={markdown ? markdown[0].content : ''} />}
+            {loading || !markdown ? <SkeletonCard /> : <ContentOutput content={markdown ? markdown[0]?.content : ''} />}
         </MainWrapper>
     );
 }
