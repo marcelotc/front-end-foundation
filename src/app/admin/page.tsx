@@ -24,11 +24,11 @@ export default function MainHeader() {
         }
     }, [userRole]);
 
-    async function handlePublish({ chapter, chapterId, content, menu, subject }: any) {
+    async function handlePublish({ chapter, chapterId, content, menu, subject, technology }: any) {
         try {
             setSubmitting(true);
             const token = await getToken({ template: 'supabase' });
-            await postMarkdown({ userId, token, content, chapterId, chapter, menu, subject });
+            await postMarkdown({ userId, token, content, chapterId, chapter, menu, subject, technology });
             setSubmitting(false);
 
         } catch (error) {

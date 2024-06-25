@@ -1,103 +1,43 @@
+'use client';
+
+import React, { useContext, useEffect, useState } from 'react';
+import SideMenuContext from '../context/sideMenuContext';
+import { SkeletonCard } from "../components/contentSkeleton"
+
 import MainWrapper from '../components/mainWrapper';
+import ContentOutput from '../components/contentOutput'
+import { getMarkdown } from '../../../utils/supabase/requests';
+
+interface MarkdownData {
+    id: string;
+    content: string;
+    chapter: string;
+}
 
 export default function JavaScript() {
+    const [markdown, setMarkdown] = useState<MarkdownData[] | null>(null);
+    const [loading, setLoading] = useState(false);
+    const { setTechnology } = useContext(SideMenuContext);
+
+    useEffect(() => {
+        const loadMarkdown = async () => {
+            try {
+                setLoading(true);
+                const data = await getMarkdown('javascript');
+                setMarkdown(data as MarkdownData[]);
+            } catch (error) {
+                console.error('Error loading markdown:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        setTechnology('javascript')
+        loadMarkdown();
+    }, []);
 
     return (
-        <MainWrapper>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">JavaScript</h1>
-            <p className="mb-16 text-gray-600 dark:text-gray-400">
-                This is the main content area of the app. It's scrollable and fills the remaining space between the header
-                and footer. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl.        This is the main content area of the app. It's scrollable and fills the remaining space between the header
-                and footer. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl.        This is the main content area of the app. It's scrollable and fills the remaining space between the header
-                and footer. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl.        This is the main content area of the app. It's scrollable and fills the remaining space between the header
-                and footer. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl.        This is the main content area of the app. It's scrollable and fills the remaining space between the header
-                and footer. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl.        This is the main content area of the app. It's scrollable and fills the remaining space between the header
-                and footer. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Donec euismod, nisl nec ultricies
-                lacinia, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. teste
-            </p>
+        <MainWrapper markdown={markdown}>
+            {loading || !markdown ? <SkeletonCard /> : <ContentOutput content={markdown ? markdown[0]?.content : ''} />}
         </MainWrapper>
     );
 }

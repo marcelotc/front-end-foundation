@@ -35,7 +35,7 @@ export const postTodo = async ({ userId, token, e }: any) => {
 };
 
 
-export const postMarkdown = async ({ userId, token, content, chapter, subject }: any) => {
+export const postMarkdown = async ({ userId, token, content, chapter, subject, technology }: any) => {
   console.log('chapter', chapter)
 
   const supabase = await supabaseClientWithAuth(token);
@@ -45,6 +45,7 @@ export const postMarkdown = async ({ userId, token, content, chapter, subject }:
     .insert({
       user_id: userId,
       chapter: chapter,
+      technology: technology,
       content: {
         content,
       },
@@ -64,6 +65,7 @@ export const postMarkdown = async ({ userId, token, content, chapter, subject }:
     .insert({
       user_id: userId,
       chapter: chapter,
+      technology: technology,
       subject: subject,
       content_id: contentId,
     })
@@ -77,10 +79,11 @@ export const postMarkdown = async ({ userId, token, content, chapter, subject }:
   return { markdownData, menuData };
 };
 
-export const getMarkdown = async () => {
+export const getMarkdown = async (technology: string) => {
   const { data, error } = await supabaseClientPublic
     .from("markdown_content")
     .select("*")
+    .eq('technology', technology);
 
   if (error) {
     console.error('Error fetching:', error.message);
@@ -90,10 +93,11 @@ export const getMarkdown = async () => {
   return data;
 };
 
-export const getMenu = async () => {
+export const getMenu = async (technology: string) => {
   const { data, error } = await supabaseClientPublic
     .from("menu")
     .select("*")
+    .eq('technology', technology);
 
   if (error) {
     console.error('Error fetching:', error.message);

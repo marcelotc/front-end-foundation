@@ -48,6 +48,7 @@ const initialContent = {
 export default function MyEditor({ handlePublish, submitting }: any) {
     const [chapter, setChapter] = useState('')
     const [subject, setSubject] = useState('')
+    const [technology, setTechnology] = useState('html')
     const [chapterId, setChapterId] = useState(uuidv4())
     const editor = useEditor({
         extensions,
@@ -204,7 +205,7 @@ export default function MyEditor({ handlePublish, submitting }: any) {
     const handlePublishClick = () => {
         if (editor) {
             const json = editor.getJSON()
-            handlePublish({ chapterId, content: json, chapter, subject })
+            handlePublish({ chapterId, content: json, chapter, subject, technology })
         } else {
             console.log('Editor not initialized')
         }
@@ -230,6 +231,18 @@ export default function MyEditor({ handlePublish, submitting }: any) {
                     className="border border-gray-300 rounded m-3"
                     onChange={(e) => setSubject(e.target.value)}
                 />
+            </label>
+            <label>
+                Technology:
+                <select
+                    value={technology}
+                    className="border border-gray-300 rounded m-3"
+                    onChange={(e) => setTechnology(e.target.value)}
+                >
+                    <option value="html">HTML</option>
+                    <option value="css">CSS</option>
+                    <option value="javascript">JavaScript</option>
+                </select>
             </label>
             <div className='my-[10px] border-solid border-2 border-black p-5'>
                 <EditorContent editor={editor} />

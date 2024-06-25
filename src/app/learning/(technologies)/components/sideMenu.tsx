@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import SideMenuContext from '../context/sideMenuContext';
 import { CollapsibleTrigger, CollapsibleContent, Collapsible } from "@/components/ui/collapsible";
 import { Typography } from "@/components/ui/typography";
-import { ChevronDown, ChevronLeft, ChevronRight, Brain } from "lucide-react";
+import { ChevronDown, ChevronLeft, ChevronRight, Code2 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton"
 import { getMenu } from '../../../utils/supabase/requests';
 import clsx from 'clsx';
@@ -26,26 +26,28 @@ interface SideMenuContent {
 }
 
 export default function SideMenu() {
-  const { menuOpen, toggleMenu } = useContext(SideMenuContext);
+  const { menuOpen, toggleMenu, technology } = useContext(SideMenuContext);
 
   const [menu, setMenu] = useState<any>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const loadMarkdown = async () => {
-      try {
-        setLoading(true);
-        const data = await getMenu();
-        setMenu(data as any);
-      } catch (error) {
-        console.error('Error loading markdown:', error);
-      } finally {
-        setLoading(false);
+    const loadMenu = async () => {
+      if (technology) {
+        try {
+          setLoading(true);
+          const data = await getMenu(technology);
+          setMenu(data as any);
+        } catch (error) {
+          console.error('Error loading markdown:', error);
+        } finally {
+          setLoading(false);
+        }
       }
     };
 
-    loadMarkdown();
-  }, []);
+    loadMenu();
+  }, [technology]);
 
   const renderSubjects = (subject: any) => {
     return (
@@ -102,9 +104,9 @@ export default function SideMenu() {
           {menuOpen ? (
             <div className="space-y-6 p-2">
               <div className="flex items-center space-x-2 p-3">
-                <Brain color="white" size={20} />
+                <Code2 color="white" size={20} />
                 <Typography variant="largeText" as="p" className="text-white">
-                  HTML
+                  {technology.toUpperCase()}
                 </Typography>
               </div>
               {menu && menu.map((menu: any, index: any) => (
