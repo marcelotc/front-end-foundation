@@ -40,7 +40,7 @@ export default function MainHeader() {
     }
 
     return (
-        <div className='m-[60px] border-solid border-2 border-black p-10 h-full'>
+        <div className='m-[60px] border-solid border-2 border-black p-10'>
             <TextEditor handlePublish={handlePublish} submitting={submitting} />
         </div>
     )

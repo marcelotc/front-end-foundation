@@ -204,7 +204,7 @@ export default function MyEditor({ handlePublish, submitting }: any) {
     const handlePublishClick = () => {
         if (editor) {
             const json = editor.getJSON()
-            handlePublish({ chapterId, content: json, chapter, subject }) 
+            handlePublish({ chapterId, content: json, chapter, subject })
         } else {
             console.log('Editor not initialized')
         }
@@ -231,7 +231,9 @@ export default function MyEditor({ handlePublish, submitting }: any) {
                     onChange={(e) => setSubject(e.target.value)}
                 />
             </label>
-            <EditorContent editor={editor} />
+            <div className='my-[10px] border-solid border-2 border-black p-5'>
+                <EditorContent editor={editor} />
+            </div>
             <Button size={"lg"} onClick={handlePublishClick}>
                 {submitting ? 'Publishing...' : 'Publish'}
             </Button>
