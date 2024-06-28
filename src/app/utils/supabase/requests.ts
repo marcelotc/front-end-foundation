@@ -36,8 +36,6 @@ export const postTodo = async ({ userId, token, e }: any) => {
 
 
 export const postMarkdown = async ({ userId, token, content, chapter, subject, technology }: any) => {
-  console.log('chapter', chapter)
-
   const supabase = await supabaseClientWithAuth(token);
 
   const { data: markdownData, error: markdownError } = await supabase
@@ -74,6 +72,45 @@ export const postMarkdown = async ({ userId, token, content, chapter, subject, t
   if (menuError) {
     console.error('Error posting menu:', menuError.message);
     return null;
+  }
+
+  return { markdownData, menuData };
+};
+
+export const putMarkdown = async ({ userId, token, content, chapter, subject, technology, contentId }: any) => {
+  const supabase = await supabaseClientWithAuth(token);
+
+  const { data: markdownData, error: markdownError } = await supabase
+      .from('markdown_content')
+      .update({
+          chapter: chapter,
+          technology: technology,
+          content: {
+              content,
+          },
+          subject: subject,
+      })
+      .eq('id', contentId)
+      .select();
+
+  if (markdownError) {
+      console.error('Error updating markdown content:', markdownError.message);
+      return null;
+  }
+
+  const { data: menuData, error: menuError } = await supabase
+      .from('menu')
+      .update({
+          chapter: chapter,
+          technology: technology,
+          subject: subject,
+      })
+      .eq('content_id', contentId)
+      .select();
+
+  if (menuError) {
+      console.error('Error updating menu:', menuError.message);
+      return null;
   }
 
   return { markdownData, menuData };

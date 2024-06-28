@@ -3,14 +3,14 @@
 import { useEffect, useState } from 'react'
 import { useAuth } from '@clerk/nextjs';
 import { useSession } from '@clerk/clerk-react'
+import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation';
 import TextEditor from '../learning/(technologies)/components/TextEditor'
 import { postMarkdown } from '../utils/supabase/requests';
 import { checkUserRole } from '../../utils/userUtils';
 
-export default function MainHeader() {
+export default function Admin() {
     const [submitting, setSubmitting] = useState(false);
-    const [textEditorContent, setTextEditorContent] = useState();
 
     const { userId, getToken } = useAuth();
     const { session } = useSession();
@@ -41,6 +41,11 @@ export default function MainHeader() {
 
     return (
         <div className='m-[60px] border-solid border-2 border-black p-10'>
+            <div className='flex items-center justify-center'>
+                <Button size={"lg"} onClick={() => router.push('/admin/posts')} className='mb-5'>
+                    Check posts
+                </Button>
+            </div>
             <TextEditor handlePublish={handlePublish} submitting={submitting} />
         </div>
     )

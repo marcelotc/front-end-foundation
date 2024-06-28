@@ -1,99 +1,80 @@
-'use client'
+'use client';
 
-import './styles.css'
-import { Color } from '@tiptap/extension-color'
-import TextStyle from '@tiptap/extension-text-style'
-import { EditorContent, useEditor } from '@tiptap/react'
-import StarterKit from '@tiptap/starter-kit'
-import React, { useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { v4 as uuidv4 } from 'uuid'
+import './styles.css';
+import { Color } from '@tiptap/extension-color';
+import TextStyle from '@tiptap/extension-text-style';
+import { EditorContent, useEditor } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import React, { useEffect, useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { v4 as uuidv4 } from 'uuid';
 
 const extensions = [
     Color.configure(),
     TextStyle.configure(),
     StarterKit.configure(),
-]
+];
 
-const initialContent = {
-    "type": "doc",
-    "content": [
-        {
-            "type": "heading",
-            "attrs": {
-                "level": 2
-            },
-            "content": [
-                {
-                    "type": "text",
-                    "text": "Capítulo"
-                }
-            ]
-        },
-        {
-            "type": "paragraph",
-            "content": [
-                {
-                    "type": "text",
-                    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
-                }
-            ]
-        },
-        {
-            "type": "paragraph"
-        }
-    ]
-}
+export default function MyEditor({ editorMarkdown, handlePublish, submitting }: any) {
+    const [chapter, setChapter] = useState('');
+    const [subject, setSubject] = useState('');
+    const [technology, setTechnology] = useState('html');
+    const [chapterId, setChapterId] = useState(uuidv4());
+    const [editorContent, setEditorContent] = useState(editorMarkdown);
 
-export default function MyEditor({ handlePublish, submitting }: any) {
-    const [chapter, setChapter] = useState('')
-    const [subject, setSubject] = useState('')
-    const [technology, setTechnology] = useState('html')
-    const [chapterId, setChapterId] = useState(uuidv4())
     const editor = useEditor({
         extensions,
-        content: initialContent,
-    })
+        content: editorContent,
+    });
+
+    useEffect(() => {
+        if (editor) {
+            editor.commands.setContent(editorMarkdown.content || editorContent);
+        }
+    }, [editor, editorMarkdown]);
+
+    console.log('editor', editor)
+
+    const handlePublishClick = () => {
+        if (editor) {
+            const json = editor.getJSON();
+            handlePublish({ chapterId, content: json, chapter, subject, technology });
+        } else {
+            console.log('Editor not initialized');
+        }
+    };
 
     const MenuBar = () => {
         if (!editor) {
-            return null
+            return null;
         }
 
         return (
             <div className='mb-10'>
                 <button
                     onClick={() => editor.chain().focus().toggleBold().run()}
-                    disabled={
-                        !editor.can().chain().focus().toggleBold().run()
-                    }
+                    disabled={!editor.can().chain().focus().toggleBold().run()}
                     className={editor.isActive('bold') ? 'is-active' : ''}
                 >
                     bold
                 </button>
                 <button
                     onClick={() => editor.chain().focus().toggleItalic().run()}
-                    disabled={
-                        !editor.can().chain().focus().toggleItalic().run()
-                    }
+                    disabled={!editor.can().chain().focus().toggleItalic().run()}
                     className={editor.isActive('italic') ? 'is-active' : ''}
                 >
                     italic
                 </button>
                 <button
                     onClick={() => editor.chain().focus().toggleStrike().run()}
-                    disabled={
-                        !editor.can().chain().focus().toggleStrike().run()
-                    }
+                    disabled={!editor.can().chain().focus().toggleStrike().run()}
                     className={editor.isActive('strike') ? 'is-active' : ''}
                 >
                     strike
                 </button>
                 <button
                     onClick={() => editor.chain().focus().toggleCode().run()}
-                    disabled={
-                        !editor.can().chain().focus().toggleCode().run()
-                    }
+                    disabled={!editor.can().chain().focus().toggleCode().run()}
                     className={editor.isActive('code') ? 'is-active' : ''}
                 >
                     code
@@ -178,17 +159,13 @@ export default function MyEditor({ handlePublish, submitting }: any) {
                 </button>
                 <button
                     onClick={() => editor.chain().focus().undo().run()}
-                    disabled={
-                        !editor.can().chain().focus().undo().run()
-                    }
+                    disabled={!editor.can().chain().focus().undo().run()}
                 >
                     undo
                 </button>
                 <button
                     onClick={() => editor.chain().focus().redo().run()}
-                    disabled={
-                        !editor.can().chain().focus().redo().run()
-                    }
+                    disabled={!editor.can().chain().focus().redo().run()}
                 >
                     redo
                 </button>
@@ -199,17 +176,8 @@ export default function MyEditor({ handlePublish, submitting }: any) {
                     purple
                 </button>
             </div>
-        )
-    }
-
-    const handlePublishClick = () => {
-        if (editor) {
-            const json = editor.getJSON()
-            handlePublish({ chapterId, content: json, chapter, subject, technology })
-        } else {
-            console.log('Editor not initialized')
-        }
-    }
+        );
+    };
 
     return (
         <>
