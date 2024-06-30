@@ -130,6 +130,20 @@ export const getMarkdown = async (technology: string) => {
   return data;
 };
 
+export const getMarkdownBySubject = async (subject: string) => {
+  const { data, error } = await supabaseClientPublic
+    .from("markdown_content")
+    .select("*")
+    .eq('subject', subject);
+
+  if (error) {
+    console.error('Error fetching:', error.message);
+    return [];
+  }
+
+  return data;
+};
+
 export const getMenu = async (technology: string) => {
   const { data, error } = await supabaseClientPublic
     .from("menu")

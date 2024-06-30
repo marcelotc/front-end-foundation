@@ -6,7 +6,7 @@ import { SkeletonCard } from "../components/contentSkeleton"
 
 import MainWrapper from '../components/mainWrapper';
 import ContentOutput from '../components/contentOutput'
-import { getMarkdown } from '../../../utils/supabase/requests';
+import { getMarkdownBySubject } from '../../../utils/supabase/requests';
 
 interface MarkdownData {
     id: string;
@@ -17,13 +17,13 @@ interface MarkdownData {
 export default function JavaScript() {
     const [markdown, setMarkdown] = useState<MarkdownData[] | null>(null);
     const [loading, setLoading] = useState(false);
-    const { setTechnology } = useContext(SideMenuContext);
+    const { setTechnology, menuSubject } = useContext(SideMenuContext);
 
     useEffect(() => {
         const loadMarkdown = async () => {
             try {
                 setLoading(true);
-                const data = await getMarkdown('javascript');
+                const data = await getMarkdownBySubject(menuSubject);
                 setMarkdown(data as MarkdownData[]);
             } catch (error) {
                 console.error('Error loading markdown:', error);
@@ -33,7 +33,7 @@ export default function JavaScript() {
         };
         setTechnology('javascript')
         loadMarkdown();
-    }, []);
+    }, [menuSubject]);
 
     return (
         <MainWrapper markdown={markdown}>

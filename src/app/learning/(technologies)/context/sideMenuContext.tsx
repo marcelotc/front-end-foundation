@@ -5,8 +5,10 @@ import React, { createContext, useState } from 'react';
 const SideMenuContext = createContext({
     menuOpen: false,
     technology: '',
+    menuSubject: '',
     setTechnology: (value: string) => {},
-    toggleMenu: () => { }
+    toggleMenu: () => { },
+    setMenuSubject: (value: string) => {},
 });
 
 export const SideMenuProvider = ({
@@ -16,13 +18,14 @@ export const SideMenuProvider = ({
 }) => {
     const [menuOpen, setMenuOpen] = useState(true);
     const [technology, setTechnology] = useState('');
+    const [menuSubject, setMenuSubject] = useState('');
 
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
     };
 
     return (
-        <SideMenuContext.Provider value={{ menuOpen, toggleMenu, technology, setTechnology }}>
+        <SideMenuContext.Provider value={{ menuOpen, toggleMenu, technology, setTechnology, menuSubject, setMenuSubject }}>
             {children}
         </SideMenuContext.Provider>
     );

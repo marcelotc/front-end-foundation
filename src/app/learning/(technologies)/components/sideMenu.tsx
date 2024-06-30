@@ -26,9 +26,9 @@ interface SideMenuContent {
 }
 
 export default function SideMenu() {
-  const { menuOpen, toggleMenu, technology } = useContext(SideMenuContext);
+  const { menuOpen, toggleMenu, technology, setMenuSubject } = useContext(SideMenuContext);
 
-  const [menu, setMenu] = useState<any>(null);
+  const [menuContent, setMenuContent] = useState<any>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ export default function SideMenu() {
         try {
           setLoading(true);
           const data = await getMenu(technology);
-          setMenu(data as any);
+          setMenuContent(data as any);
         } catch (error) {
           console.error('Error loading markdown:', error);
         } finally {
@@ -54,7 +54,7 @@ export default function SideMenu() {
       <Collapsible className="space-y-2">
         <CollapsibleTrigger asChild>
           <div className="flex items-center justify-between space-x-4 px-4 cursor-pointer">
-            <Typography variant="smallText" as="p" className="text-white">
+            <Typography variant="smallText" as="p" className="text-white" onClick={() => setMenuSubject(subject)}>
               {subject}
             </Typography>
           </div>
@@ -63,33 +63,9 @@ export default function SideMenu() {
     )
   };
 
-  /*const renderSubjects = (subjects: Subject[]) => {
-    return subjects.map((subject, index) => (
-      <Collapsible key={index} className="space-y-2">
-        <CollapsibleTrigger asChild>
-          <div className="flex items-center justify-between space-x-4 px-4 cursor-pointer">
-            <Typography variant="smallText" as="p" className="text-white">
-              {subject.subjectName}
-            </Typography>
-            <div>
-              <ChevronDown color="white" size={20} />
-              <span className="sr-only">Toggle</span>
-            </div>
-          </div>
-        </CollapsibleTrigger>
-        <CollapsibleContent className="space-y-4 px-4 overflow-hidden transition-[max-height] duration-300 [data-state=open]:max-h-[1000px] [data-state=closed]:max-h-0">
-          <Typography variant="smallText" as="p" className="text-white">
-            {subject.content}
-          </Typography>
-          {subject.subjects && subject.subjects.length > 0 && renderSubjects(subject.subjects)}
-        </CollapsibleContent>
-      </Collapsible>
-    ));
-  };*/
-
   return (
     <nav className={`my-5 mr-4 rounded-tr-[10px] rounded-br-[10px] bg-[#1b1b1d] dark:bg-gray-800 md:block fixed top-16 bottom-20 z-10 animate-fade-right transition-all duration-300 ${menuOpen ? 'w-64' : 'w-10'}`}>
-      {loading || !menu ? (
+      {loading || !menuContent ? (
         <div className='flex flex-col gap-5 p-5'>
           <Skeleton className="h-[20px] w-full rounded-xl" />
           <Skeleton className="h-[20px] w-full rounded-xl" />
@@ -109,12 +85,12 @@ export default function SideMenu() {
                   {technology.toUpperCase()}
                 </Typography>
               </div>
-              {menu && menu.map((menu: any, index: any) => (
+              {menuContent && menuContent.map((menuContent: any, index: any) => (
                 <Collapsible key={index} className="space-y-2">
                   <CollapsibleTrigger asChild>
                     <div className="flex items-center justify-between space-x-4 px-4 cursor-pointer">
                       <Typography variant="smallText" as="p" className="text-white">
-                        {menu.chapter}
+                        {menuContent.chapter}
                       </Typography>
                       <div>
                         <ChevronDown color="white" size={20} />
@@ -123,7 +99,7 @@ export default function SideMenu() {
                     </div>
                   </CollapsibleTrigger>
                   <CollapsibleContent className="space-y-4 px-4 overflow-hidden transition-[max-height] duration-300 [data-state=open]:max-h-[1000px] [data-state=closed]:max-h-0">
-                    {renderSubjects(menu.subject)}
+                    {renderSubjects(menuContent.subject)}
                   </CollapsibleContent>
                 </Collapsible>
               ))}
