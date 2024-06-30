@@ -1,43 +1,48 @@
 'use client';
 
-import React, { useContext, useEffect, useState } from 'react';
-import SideMenuContext from '../context/sideMenuContext';
+import React, { useContext, useEffect } from 'react';
+import SideMenuContext, { } from '../context/sideMenuContext';
 import { SkeletonCard } from "../components/contentSkeleton"
+import Image from "next/image";
+import htmlLogo from "../../../../../public/html-logo.png";
 
 import MainWrapper from '../components/mainWrapper';
 import ContentOutput from '../components/contentOutput'
-import { getMarkdown, getMarkdownBySubject } from '../../../utils/supabase/requests';
-
-interface MarkdownData {
-    id: string;
-    content: string;
-    chapter: string;
-}
 
 export default function Html() {
-    const [markdown, setMarkdown] = useState<MarkdownData[] | null>(null);
-    const [loading, setLoading] = useState(false);
-    const { setTechnology, menuSubject } = useContext(SideMenuContext);
+    const { setTechnology, technology, markdown, loadingContent } = useContext(SideMenuContext);
 
     useEffect(() => {
-        const loadMarkdown = async () => {
-            try {
-                setLoading(true);
-                const data = await getMarkdownBySubject(menuSubject);
-                setMarkdown(data as MarkdownData[]);
-            } catch (error) {
-                console.error('Error loading markdown:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
         setTechnology('html')
-        loadMarkdown();
-    }, [menuSubject]);
+    }, [technology]);
 
     return (
         <MainWrapper markdown={markdown}>
-            {loading || !markdown ? <SkeletonCard /> : <ContentOutput content={markdown ? markdown[0]?.content : ''} />}
-        </MainWrapper>
+            {!markdown && !loadingContent && (
+                <>
+                    <div className='flex items-center justify-center'>
+                        <Image
+                            src={htmlLogo}
+                            width={200}
+                            height={200}
+                            alt="HTML logo"
+                        />
+                    </div>
+                    <div className='mt-10'>
+                        HTML is the standard markup language for creating Web pages.
+
+                        What is HTML?
+                        HTML stands for Hyper Text Markup Language
+                        HTML is the standard markup language for creating Web pages
+                        HTML describes the structure of a Web page
+                        HTML consists of a series of elements
+                        HTML elements tell the browser how to display the content
+                        HTML elements label pieces of content such as "this is a heading", "this is a paragraph", "this is a link", etc.
+                    </div>
+                </>
+            )
+            }
+            {loadingContent ? <SkeletonCard /> : <ContentOutput content={markdown ? markdown[0]?.content : ''} />}
+        </MainWrapper >
     );
 }

@@ -1,14 +1,33 @@
 'use client'
 
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, Dispatch, SetStateAction } from 'react';
 
-const SideMenuContext = createContext({
+export interface MarkdownData {
+    id: string;
+    content: string;
+    chapter: string;
+}
+
+interface SideMenuContextType {
+    menuOpen: boolean;
+    technology: string;
+    loadingContent: boolean;
+    markdown: MarkdownData[] | null;
+    setTechnology: (value: string) => void;
+    setMarkdown: Dispatch<SetStateAction<MarkdownData[] | null>>
+    toggleMenu: () => void;
+    setLoadingContent: (value: boolean) => void;
+}
+
+const SideMenuContext = createContext<SideMenuContextType>({
     menuOpen: false,
     technology: '',
-    menuSubject: '',
-    setTechnology: (value: string) => {},
-    toggleMenu: () => { },
-    setMenuSubject: (value: string) => {},
+    markdown: null,
+    loadingContent: false,
+    setMarkdown: () => {},
+    setTechnology: () => {},
+    toggleMenu: () => {},
+    setLoadingContent: () => {},
 });
 
 export const SideMenuProvider = ({
@@ -18,14 +37,14 @@ export const SideMenuProvider = ({
 }) => {
     const [menuOpen, setMenuOpen] = useState(true);
     const [technology, setTechnology] = useState('');
-    const [menuSubject, setMenuSubject] = useState('');
+    const [markdown, setMarkdown] = useState<MarkdownData[] | null>(null);
+    const [loadingContent, setLoadingContent] = useState(false);
 
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
     };
-
     return (
-        <SideMenuContext.Provider value={{ menuOpen, toggleMenu, technology, setTechnology, menuSubject, setMenuSubject }}>
+        <SideMenuContext.Provider value={{ menuOpen, toggleMenu, technology, setTechnology, markdown, setMarkdown, setLoadingContent, loadingContent }}>
             {children}
         </SideMenuContext.Provider>
     );

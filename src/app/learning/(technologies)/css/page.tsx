@@ -1,43 +1,48 @@
 'use client';
 
-import React, { useContext, useEffect, useState } from 'react';
-import SideMenuContext from '../context/sideMenuContext';
+import React, { useContext, useEffect } from 'react';
+import SideMenuContext, { } from '../context/sideMenuContext';
 import { SkeletonCard } from "../components/contentSkeleton"
+import Image from "next/image";
+import cssLogo from "../../../../../public/css-logo.png";
 
 import MainWrapper from '../components/mainWrapper';
 import ContentOutput from '../components/contentOutput'
-import { getMarkdownBySubject } from '../../../utils/supabase/requests';
-
-interface MarkdownData {
-    id: string;
-    content: string;
-    chapter: string;
-}
 
 export default function Css() {
-    const [markdown, setMarkdown] = useState<MarkdownData[] | null>(null);
-    const [loading, setLoading] = useState(false);
-    const { setTechnology, menuSubject } = useContext(SideMenuContext);
+    const { setTechnology, technology, markdown, loadingContent } = useContext(SideMenuContext);
 
     useEffect(() => {
-        const loadMarkdown = async () => {
-            try {
-                setLoading(true);
-                const data = await getMarkdownBySubject(menuSubject);
-                setMarkdown(data as MarkdownData[]);
-            } catch (error) {
-                console.error('Error loading markdown:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
         setTechnology('css')
-        loadMarkdown();
-    }, [menuSubject]);
+    }, [technology]);
 
     return (
         <MainWrapper markdown={markdown}>
-            {loading || !markdown ? <SkeletonCard /> : <ContentOutput content={markdown ? markdown[0]?.content : ''} />}
-        </MainWrapper>
+            {!markdown && !loadingContent && (
+                <>
+                    <div className='flex items-center justify-center'>
+                        <Image
+                            src={cssLogo}
+                            width={200}
+                            height={200}
+                            alt="css logo"
+                        />
+                    </div>
+                    <div className='mt-10'>
+                        css is the standard markup language for creating Web pages.
+
+                        What is css?
+                        css stands for Hyper Text Markup Language
+                        css is the standard markup language for creating Web pages
+                        css describes the structure of a Web page
+                        css consists of a series of elements
+                        css elements tell the browser how to display the content
+                        css elements label pieces of content such as "this is a heading", "this is a paragraph", "this is a link", etc.
+                    </div>
+                </>
+            )
+            }
+            {loadingContent ? <SkeletonCard /> : <ContentOutput content={markdown ? markdown[0]?.content : ''} />}
+        </MainWrapper >
     );
 }
