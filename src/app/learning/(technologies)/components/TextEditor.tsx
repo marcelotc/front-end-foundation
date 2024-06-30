@@ -8,6 +8,8 @@ import StarterKit from '@tiptap/starter-kit';
 import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { v4 as uuidv4 } from 'uuid';
+import { getMenuChapters } from '../../../utils/supabase/requests';
+import { usePathname } from 'next/navigation';
 
 const extensions = [
     Color.configure(),
@@ -19,8 +21,10 @@ export default function MyEditor({ editorMarkdown, handlePublish, submitting }: 
     const [chapter, setChapter] = useState('');
     const [subject, setSubject] = useState('');
     const [technology, setTechnology] = useState('html');
+    const [chapters, setChapters] = useState<string[]>([]);
     const [chapterId, setChapterId] = useState(uuidv4());
     const [editorContent, setEditorContent] = useState(editorMarkdown);
+    const pathname = usePathname();
 
     const editor = useEditor({
         extensions,
@@ -29,11 +33,19 @@ export default function MyEditor({ editorMarkdown, handlePublish, submitting }: 
 
     useEffect(() => {
         if (editor) {
-            editor.commands.setContent(editorMarkdown.content || editorContent);
+            editor.commands.setContent(editorMarkdown?.content || editorContent);
         }
     }, [editor, editorMarkdown]);
 
-    console.log('editor', editor)
+    useEffect(() => {
+        const fetchChapters = async () => {
+            const fetchedChapters = await getMenuChapters();
+            const chapterArray = fetchedChapters.map(ch => ch.chapter);
+            setChapters(chapterArray);
+        };
+
+        fetchChapters();
+    }, []);
 
     const handlePublishClick = () => {
         if (editor) {
@@ -182,6 +194,22 @@ export default function MyEditor({ editorMarkdown, handlePublish, submitting }: 
     return (
         <>
             <MenuBar />
+            {pathname !== '/admin' && (
+                <label>
+                    Chapters:
+                    <select
+                        value={chapter}
+                        className="border border-gray-300 rounded m-3"
+                        onChange={(e) => setChapter(e.target.value)}
+                    >
+                        {chapters.map((ch, index) => (
+                            <option key={index} value={ch}>
+                                {ch}
+                            </option>
+                        ))}
+                    </select>
+                </label>
+            )}
             <label>
                 Chapter:
                 <input
@@ -219,5 +247,5 @@ export default function MyEditor({ editorMarkdown, handlePublish, submitting }: 
                 {submitting ? 'Publishing...' : 'Publish'}
             </Button>
         </>
-    )
+    );
 }

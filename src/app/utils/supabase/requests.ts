@@ -143,3 +143,16 @@ export const getMenu = async (technology: string) => {
 
   return data;
 };
+
+export const getMenuChapters = async () => {
+  const { data, error } = await supabaseClientPublic
+    .from("menu")
+    .select("chapter")
+
+  if (error) {
+    console.error('Error fetching:', error.message);
+    return [];
+  }
+
+  return data;
+};

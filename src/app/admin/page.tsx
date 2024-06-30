@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useAuth } from '@clerk/nextjs';
 import { useSession } from '@clerk/clerk-react'
 import { Button } from '@/components/ui/button'
+import { Typography } from "@/components/ui/typography"
 import { useRouter } from 'next/navigation';
 import TextEditor from '../learning/(technologies)/components/TextEditor'
 import { postMarkdown } from '../utils/supabase/requests';
@@ -41,9 +42,12 @@ export default function Admin() {
 
     return (
         <div className='m-[60px] border-solid border-2 border-black p-10'>
-            <div className='flex items-center justify-center'>
+            <div className='flex justify-between mb-14'>
+                <Typography variant="extra3LargeText" as="h1">
+                    Create new post
+                </Typography>
                 <Button size={"lg"} onClick={() => router.push('/admin/posts')} className='mb-5'>
-                    Check posts
+                    Edit post
                 </Button>
             </div>
             <TextEditor handlePublish={handlePublish} submitting={submitting} />

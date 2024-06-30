@@ -2,7 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '@clerk/nextjs';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
+import { Typography } from "@/components/ui/typography"
 import { getMarkdown, postMarkdown, putMarkdown } from '../../utils/supabase/requests';
 import TextEditor from '../../learning/(technologies)/components/TextEditor';
 
@@ -13,6 +15,7 @@ interface MarkdownData {
 }
 
 export default function Posts() {
+    const router = useRouter();
     const [markdown, setMarkdown] = useState<MarkdownData[] | null>(null);
     const [technologyPost, setTechnologyPost] = useState('html');
     const [loading, setLoading] = useState(false);
@@ -49,6 +52,14 @@ export default function Posts() {
 
     return (
         <div className='m-[60px] border-solid border-2 border-black p-10'>
+            <div className='flex justify-between mb-14'>
+                <Typography variant="extra3LargeText" as="h1">
+                    Edit post
+                </Typography>
+                <Button size={"lg"} onClick={() => router.push('/admin')} className='mb-5'>
+                    New post
+                </Button>
+            </div>
             <label>
                 Choose Technology posts:
                 <select
