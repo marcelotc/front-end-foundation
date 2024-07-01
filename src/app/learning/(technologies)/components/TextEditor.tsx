@@ -1,14 +1,15 @@
 'use client';
 
-import './styles.css';
+import React, { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { Color } from '@tiptap/extension-color';
 import TextStyle from '@tiptap/extension-text-style';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { v4 as uuidv4 } from 'uuid';
 import { getMenuChapters } from '../../../utils/supabase/requests';
+import './styles.css';
 
 const extensions = [
     Color.configure(),
@@ -17,6 +18,7 @@ const extensions = [
 ];
 
 export default function MyEditor({ editorMarkdown, handlePublish, submitting }: any) {
+    const pathname = usePathname();
     const [chapter, setChapter] = useState('');
     const [subject, setSubject] = useState('');
     const [technology, setTechnology] = useState('html');
@@ -46,7 +48,6 @@ export default function MyEditor({ editorMarkdown, handlePublish, submitting }: 
     }, [technology, newPostType]);
 
     const handlePublishClick = () => {
-        console.log('chapter', chapter)
         if (editor) {
             const json = editor.getJSON();
             handlePublish({ chapterId: uuidv4(), content: json, chapter, subject, technology });
@@ -194,67 +195,71 @@ export default function MyEditor({ editorMarkdown, handlePublish, submitting }: 
         <>
             <MenuBar />
             <div className='flex flex-col'>
-                <div className='mb-5'>
-                    <Button size={"sm"} onClick={() => {
-                        setNewPostType('newChapter')
-                        setChapter('')
-                    }}>
-                        New chapter
-                    </Button>
-                    <Button size={"sm"} onClick={() => setNewPostType('chooseChapter')}>
-                        Choose chapter
-                    </Button>
-                </div>
-                <div>
-                    {newPostType === 'chooseChapter' && (
-                        <label>
-                            Chapters:
-                            <select
-                                value={chapter}
-                                className="border border-gray-300 rounded m-3"
-                                onChange={(e) => setChapter(e.target.value)}
-                            >
-                                {chapters.map((ch, index) => (
-                                    <option key={index} value={ch}>
-                                        {ch}
-                                    </option>
-                                ))}
-                            </select>
-                        </label>
-                    )}
-                    {newPostType === 'newChapter' && (
-                        <label>
-                            Chapter:
-                            <input
-                                type="text"
-                                value={chapter}
-                                className="border border-gray-300 rounded m-3"
-                                onChange={(e) => setChapter(e.target.value)}
-                            />
-                        </label>
-                    )}
-                    <label>
-                        Subject:
-                        <input
-                            type="text"
-                            value={subject}
-                            className="border border-gray-300 rounded m-3"
-                            onChange={(e) => setSubject(e.target.value)}
-                        />
-                    </label>
-                    <label>
-                        Technology:
-                        <select
-                            value={technology}
-                            className="border border-gray-300 rounded m-3"
-                            onChange={(e) => setTechnology(e.target.value)}
-                        >
-                            <option value="html">HTML</option>
-                            <option value="css">CSS</option>
-                            <option value="javascript">JavaScript</option>
-                        </select>
-                    </label>
-                </div>
+                {pathname === '/admin' && (
+                    <>
+                        <div className='mb-5'>
+                            <Button size={"sm"} onClick={() => {
+                                setNewPostType('newChapter')
+                                setChapter('')
+                            }}>
+                                New chapter
+                            </Button>
+                            <Button size={"sm"} onClick={() => setNewPostType('chooseChapter')}>
+                                Choose chapter
+                            </Button>
+                        </div>
+                        <div>
+                            {newPostType === 'chooseChapter' && (
+                                <label>
+                                    Chapters:
+                                    <select
+                                        value={chapter}
+                                        className="border border-gray-300 rounded m-3"
+                                        onChange={(e) => setChapter(e.target.value)}
+                                    >
+                                        {chapters.map((ch, index) => (
+                                            <option key={index} value={ch}>
+                                                {ch}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </label>
+                            )}
+                            {newPostType === 'newChapter' && (
+                                <label>
+                                    Chapter:
+                                    <input
+                                        type="text"
+                                        value={chapter}
+                                        className="border border-gray-300 rounded m-3"
+                                        onChange={(e) => setChapter(e.target.value)}
+                                    />
+                                </label>
+                            )}
+                            <label>
+                                Subject:
+                                <input
+                                    type="text"
+                                    value={subject}
+                                    className="border border-gray-300 rounded m-3"
+                                    onChange={(e) => setSubject(e.target.value)}
+                                />
+                            </label>
+                            <label>
+                                Technology:
+                                <select
+                                    value={technology}
+                                    className="border border-gray-300 rounded m-3"
+                                    onChange={(e) => setTechnology(e.target.value)}
+                                >
+                                    <option value="html">HTML</option>
+                                    <option value="css">CSS</option>
+                                    <option value="javascript">JavaScript</option>
+                                </select>
+                            </label>
+                        </div>
+                    </>
+                )}
             </div>
             <div className='my-[10px] border-solid border-2 border-black p-5'>
                 <EditorContent editor={editor} />

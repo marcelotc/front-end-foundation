@@ -116,51 +116,21 @@ export const putMarkdown = async ({ token, content, chapter, subject, technology
   const { data: markdownData, error: markdownError } = await supabase
     .from('markdown_content')
     .update({
-      chapter: chapter,
-      technology: technology,
       content: {
         content,
       },
+      chapter: chapter,
       subject: subject,
+      technology: technology,
     })
-    .eq('id', contentId)
-    .select();
+    .eq('id', contentId);
 
   if (markdownError) {
     console.error('Error updating markdown content:', markdownError.message);
     return null;
   }
 
-  const { data: menuData, error: menuError } = await supabase
-    .from('menu')
-    .update({
-      chapter: chapter,
-      technology: technology,
-      subject: subject,
-    })
-    .eq('content_id', contentId)
-    .select();
-
-  if (menuError) {
-    console.error('Error updating menu:', menuError.message);
-    return null;
-  }
-
-  return { markdownData, menuData };
-};
-
-export const getMarkdown = async (technology: string) => {
-  const { data, error } = await supabaseClientPublic
-    .from("markdown_content")
-    .select("*")
-    .eq('technology', technology);
-
-  if (error) {
-    console.error('Error fetching:', error.message);
-    return [];
-  }
-
-  return data;
+  return { markdownData };
 };
 
 export const getMarkdownBySubjectTechnologyChapter = async (subject: string, technology: string, chapter: string) => {
@@ -198,6 +168,22 @@ export const getMenuChapters = async (technology: string) => {
   const { data, error } = await supabaseClientPublic
     .from("menu")
     .select("chapter")
+    .eq('technology', technology)
+    .order('created_at', { ascending: true });
+
+  if (error) {
+    console.error('Error fetching:', error.message);
+    return [];
+  }
+
+  return data;
+};
+
+export const getMenuChaptersSubjects = async (technology: string, chapter: string) => {
+  const { data, error } = await supabaseClientPublic
+    .from("menu")
+    .select("subjects")
+    .eq('chapter', chapter)
     .eq('technology', technology)
     .order('created_at', { ascending: true });
 

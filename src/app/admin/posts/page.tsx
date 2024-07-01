@@ -5,7 +5,7 @@ import { useAuth } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Typography } from "@/components/ui/typography"
-import { getMarkdown, postMarkdown, putMarkdown } from '../../utils/supabase/requests';
+import { getMarkdownBySubjectTechnologyChapter, postMarkdown, putMarkdown, getMenuChapters, getMenuChaptersSubjects } from '../../utils/supabase/requests';
 import TextEditor from '../../learning/(technologies)/components/TextEditor';
 
 interface MarkdownData {
@@ -18,30 +18,29 @@ export default function Posts() {
     const router = useRouter();
     const [markdown, setMarkdown] = useState<MarkdownData[] | null>(null);
     const [technologyPost, setTechnologyPost] = useState('html');
-    const [loading, setLoading] = useState(false);
+    const [chapters, setChapters] = useState<string[]>([]);
+    const [subjects, setSubjects] = useState<string[]>([]);
+    const [selectedChapter, setSelectedChapter] = useState('');
+    const [selectedSubject, setSelectedSubject] = useState('');
     const [submitting, setSubmitting] = useState(false);
     const { userId, getToken } = useAuth();
 
     const handleLoadPosts = async () => {
         try {
-            setLoading(true);
-            const data = await getMarkdown(technologyPost);
+            const data = await getMarkdownBySubjectTechnologyChapter(selectedSubject, technologyPost, selectedChapter);
             setMarkdown(data as MarkdownData[]);
         } catch (error) {
             console.error('Error loading markdown:', error);
         } finally {
-            setLoading(false);
         }
     };
 
-    const handlePublish = async ({ chapter, chapterId, content, menu, subject, technology }: any) => {
+    const handlePublish = async ({ content }: any) => {
         try {
             setSubmitting(true);
             const token = await getToken({ template: 'supabase' });
             if (markdown && markdown[0]) {
-                await putMarkdown({ userId, token, content, chapter, subject, technology, contentId: markdown[0].id });
-            } else {
-                await postMarkdown({ userId, token, content, chapterId, chapter, menu, subject, technology });
+                await putMarkdown({ userId, token, content, selectedChapter, selectedSubject, technologyPost, contentId: markdown[0].id });
             }
         } catch (error) {
             console.error('An error occurred:', error);
@@ -49,6 +48,26 @@ export default function Posts() {
             setSubmitting(false);
         }
     };
+
+    useEffect(() => {
+        const fetchChapters = async () => {
+            const fetchedChapters = await getMenuChapters(technologyPost);
+            const chapterArray = fetchedChapters.map(ch => ch.chapter);
+            setChapters(chapterArray);
+        };
+
+        fetchChapters();
+    }, [technologyPost]);
+
+    useEffect(() => {
+        const fetchSubjects = async () => {
+            const fetchedSubjects = await getMenuChaptersSubjects(technologyPost, selectedChapter);
+            const subjectArray = fetchedSubjects.map(item => item.subjects).flat();
+            setSubjects(subjectArray);
+        };
+
+        fetchSubjects();
+    }, [technologyPost, selectedChapter]);
 
     return (
         <div className='m-[60px] border-solid border-2 border-black p-10'>
@@ -61,7 +80,7 @@ export default function Posts() {
                 </Button>
             </div>
             <label>
-                Choose Technology posts:
+                Technology:
                 <select
                     value={technologyPost}
                     className="border border-gray-300 rounded m-3"
@@ -72,7 +91,40 @@ export default function Posts() {
                     <option value="javascript">JavaScript</option>
                 </select>
             </label>
-            <Button size={"lg"} onClick={handleLoadPosts} className='mb-5'>
+            <label>
+                Chapters:
+                <select
+                    value={selectedChapter}
+                    className="border border-gray-300 rounded m-3"
+                    onChange={(e) => {
+                        setSelectedChapter(e.target.value)
+                        setSelectedSubject('')
+                    }}
+                >
+                    <option value="" disabled>Select a chapter</option>
+                    {chapters.map((ch, index) => (
+                        <option key={index} value={ch}>
+                            {ch}
+                        </option>
+                    ))}
+                </select>
+            </label>
+            <label>
+                Subjects:
+                <select
+                    value={selectedSubject}
+                    className="border border-gray-300 rounded m-3"
+                    onChange={(e) => setSelectedSubject(e.target.value)}
+                >
+                    <option value="" disabled>Select a subject</option>
+                    {subjects.map((sub, index) => (
+                        <option key={index} value={sub}>
+                            {sub}
+                        </option>
+                    ))}
+                </select>
+            </label>
+            <Button size={"lg"} onClick={handleLoadPosts} className='mb-5' disabled={!selectedChapter || !selectedSubject || !technologyPost}>
                 Load posts
             </Button>
             {markdown && markdown[0] && (
