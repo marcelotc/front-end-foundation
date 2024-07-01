@@ -58,59 +58,92 @@ export const postMarkdown = async ({ userId, token, content, chapter, subject, t
 
   const contentId = markdownData[0].id;
 
-  const { data: menuData, error: menuError } = await supabase
+  const { data: existingMenuData, error: existingMenuError } = await supabase
     .from('menu')
-    .insert({
-      user_id: userId,
-      chapter: chapter,
-      technology: technology,
-      subject: subject,
-      content_id: contentId,
-    })
-    .select();
+    .select('id, subjects')
+    .eq('user_id', userId)
+    .eq('chapter', chapter)
+    .eq('technology', technology)
+    .single();
 
-  if (menuError) {
-    console.error('Error posting menu:', menuError.message);
+  if (existingMenuError && existingMenuError.code !== 'PGRST116') {
+    console.error('Error checking existing menu:', existingMenuError.message);
     return null;
   }
 
-  return { markdownData, menuData };
+  if (existingMenuData) {
+    const updatedSubjects = Array.from(new Set([...existingMenuData.subjects, subject]));
+
+    const { data: updatedMenuData, error: updateMenuError } = await supabase
+      .from('menu')
+      .update({
+        subjects: updatedSubjects,
+        content_id: contentId,
+      })
+      .eq('id', existingMenuData.id)
+      .select();
+
+    if (updateMenuError) {
+      console.error('Error updating menu:', updateMenuError.message);
+      return null;
+    }
+
+    return { markdownData, menuData: updatedMenuData };
+  } else {
+    const { data: menuData, error: menuError } = await supabase
+      .from('menu')
+      .insert({
+        user_id: userId,
+        chapter: chapter,
+        technology: technology,
+        subjects: [subject],
+        content_id: contentId,
+      })
+      .select();
+
+    if (menuError) {
+      console.error('Error posting menu:', menuError.message);
+      return null;
+    }
+
+    return { markdownData, menuData };
+  }
 };
 
-export const putMarkdown = async ({ userId, token, content, chapter, subject, technology, contentId }: any) => {
+export const putMarkdown = async ({ token, content, chapter, subject, technology, contentId }: any) => {
   const supabase = await supabaseClientWithAuth(token);
 
   const { data: markdownData, error: markdownError } = await supabase
-      .from('markdown_content')
-      .update({
-          chapter: chapter,
-          technology: technology,
-          content: {
-              content,
-          },
-          subject: subject,
-      })
-      .eq('id', contentId)
-      .select();
+    .from('markdown_content')
+    .update({
+      chapter: chapter,
+      technology: technology,
+      content: {
+        content,
+      },
+      subject: subject,
+    })
+    .eq('id', contentId)
+    .select();
 
   if (markdownError) {
-      console.error('Error updating markdown content:', markdownError.message);
-      return null;
+    console.error('Error updating markdown content:', markdownError.message);
+    return null;
   }
 
   const { data: menuData, error: menuError } = await supabase
-      .from('menu')
-      .update({
-          chapter: chapter,
-          technology: technology,
-          subject: subject,
-      })
-      .eq('content_id', contentId)
-      .select();
+    .from('menu')
+    .update({
+      chapter: chapter,
+      technology: technology,
+      subject: subject,
+    })
+    .eq('content_id', contentId)
+    .select();
 
   if (menuError) {
-      console.error('Error updating menu:', menuError.message);
-      return null;
+    console.error('Error updating menu:', menuError.message);
+    return null;
   }
 
   return { markdownData, menuData };
@@ -130,11 +163,13 @@ export const getMarkdown = async (technology: string) => {
   return data;
 };
 
-export const getMarkdownBySubject = async (subject: string) => {
+export const getMarkdownBySubjectTechnologyChapter = async (subject: string, technology: string, chapter: string) => {
   const { data, error } = await supabaseClientPublic
     .from("markdown_content")
     .select("*")
-    .eq('subject', subject);
+    .eq('subject', subject)
+    .eq('technology', technology)
+    .eq('chapter', chapter);
 
   if (error) {
     console.error('Error fetching:', error.message);
@@ -148,7 +183,8 @@ export const getMenu = async (technology: string) => {
   const { data, error } = await supabaseClientPublic
     .from("menu")
     .select("*")
-    .eq('technology', technology);
+    .eq('technology', technology)
+    .order('created_at', { ascending: true });
 
   if (error) {
     console.error('Error fetching:', error.message);
@@ -158,10 +194,12 @@ export const getMenu = async (technology: string) => {
   return data;
 };
 
-export const getMenuChapters = async () => {
+export const getMenuChapters = async (technology: string) => {
   const { data, error } = await supabaseClientPublic
     .from("menu")
     .select("chapter")
+    .eq('technology', technology)
+    .order('created_at', { ascending: true });
 
   if (error) {
     console.error('Error fetching:', error.message);

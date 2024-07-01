@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import SideMenuContext, { MarkdownData } from '../context/sideMenuContext';
 import { CollapsibleTrigger, CollapsibleContent, Collapsible } from "@/components/ui/collapsible";
 import { Typography } from "@/components/ui/typography";
-import { getMarkdownBySubject } from '../../../utils/supabase/requests';
+import { getMarkdownBySubjectTechnologyChapter } from '../../../utils/supabase/requests';
 import { ChevronDown, ChevronLeft, ChevronRight, Code2 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton"
 import { getMenu } from '../../../utils/supabase/requests';
@@ -35,10 +35,10 @@ export default function SideMenu() {
     loadMenu();
   }, [technology]);
 
-  const handleFetchContent = async (subject: string) => {
+  const handleFetchContent = async (subject: string, chapter: string) => {
     try {
       setLoadingContent(true);
-      const data = await getMarkdownBySubject(subject);
+      const data = await getMarkdownBySubjectTechnologyChapter(subject, technology, chapter);
       setMarkdown(data as MarkdownData[]);
     } catch (error) {
       console.error('Error loading markdown:', error);
@@ -47,29 +47,31 @@ export default function SideMenu() {
     }
   }
 
-  const renderSubjects = (subject: string) => {
-    const activeLink = subject === selectedSubject
+  const renderSubjects = (subjects: string[], chapter: string) => {
+    return subjects.map((subject, index) => {
+      const isActive = subject === selectedSubject;
 
-    return (
-      <Collapsible className="space-y-2">
-        <CollapsibleTrigger asChild>
-          <div
-            className={clsx(
-              "flex items-center justify-between space-x-4 px-4 cursor-pointer",
-              activeLink && "bg-gray-700 p-3 rounded-sm"
-            )}
-            onClick={() => {
-              handleFetchContent(subject)
-              setSelectedSubject(subject);
-            }}
-          >
-            <Typography variant="smallText" as="p" className="text-white">
-              {subject}
-            </Typography>
-          </div>
-        </CollapsibleTrigger>
-      </Collapsible>
-    );
+      return (
+        <Collapsible key={index} className="space-y-2">
+          <CollapsibleTrigger asChild>
+            <div
+              className={clsx(
+                "flex items-center justify-between space-x-4 px-4 cursor-pointer",
+                isActive && "bg-gray-700 p-3 rounded-sm"
+              )}
+              onClick={() => {
+                handleFetchContent(subject, chapter);
+                setSelectedSubject(subject);
+              }}
+            >
+              <Typography variant="smallText" as="p" className="text-white">
+                {subject}
+              </Typography>
+            </div>
+          </CollapsibleTrigger>
+        </Collapsible>
+      );
+    });
   };
 
   return (
@@ -108,7 +110,7 @@ export default function SideMenu() {
                     </div>
                   </CollapsibleTrigger>
                   <CollapsibleContent className="space-y-4 px-4 overflow-hidden transition-[max-height] duration-300 [data-state=open]:max-h-[1000px] [data-state=closed]:max-h-0">
-                    {renderSubjects(menuContent.subject)}
+                    {renderSubjects(menuContent.subjects, menuContent.chapter)}
                   </CollapsibleContent>
                 </Collapsible>
               ))}

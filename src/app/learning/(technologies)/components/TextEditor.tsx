@@ -9,7 +9,6 @@ import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { v4 as uuidv4 } from 'uuid';
 import { getMenuChapters } from '../../../utils/supabase/requests';
-import { usePathname } from 'next/navigation';
 
 const extensions = [
     Color.configure(),
@@ -22,10 +21,8 @@ export default function MyEditor({ editorMarkdown, handlePublish, submitting }: 
     const [subject, setSubject] = useState('');
     const [technology, setTechnology] = useState('html');
     const [chapters, setChapters] = useState<string[]>([]);
-    const [chapterId, setChapterId] = useState(uuidv4());
     const [newPostType, setNewPostType] = useState('');
     const [editorContent, setEditorContent] = useState(editorMarkdown);
-    const pathname = usePathname();
 
     const editor = useEditor({
         extensions,
@@ -40,18 +37,19 @@ export default function MyEditor({ editorMarkdown, handlePublish, submitting }: 
 
     useEffect(() => {
         const fetchChapters = async () => {
-            const fetchedChapters = await getMenuChapters();
+            const fetchedChapters = await getMenuChapters(technology);
             const chapterArray = fetchedChapters.map(ch => ch.chapter);
             setChapters(chapterArray);
         };
 
         fetchChapters();
-    }, []);
+    }, [technology, newPostType]);
 
     const handlePublishClick = () => {
+        console.log('chapter', chapter)
         if (editor) {
             const json = editor.getJSON();
-            handlePublish({ chapterId, content: json, chapter, subject, technology });
+            handlePublish({ chapterId: uuidv4(), content: json, chapter, subject, technology });
         } else {
             console.log('Editor not initialized');
         }
@@ -197,7 +195,10 @@ export default function MyEditor({ editorMarkdown, handlePublish, submitting }: 
             <MenuBar />
             <div className='flex flex-col'>
                 <div className='mb-5'>
-                    <Button size={"sm"} onClick={() => setNewPostType('newChapter')}>
+                    <Button size={"sm"} onClick={() => {
+                        setNewPostType('newChapter')
+                        setChapter('')
+                    }}>
                         New chapter
                     </Button>
                     <Button size={"sm"} onClick={() => setNewPostType('chooseChapter')}>
@@ -221,15 +222,17 @@ export default function MyEditor({ editorMarkdown, handlePublish, submitting }: 
                             </select>
                         </label>
                     )}
-                    <label>
-                        Chapter:
-                        <input
-                            type="text"
-                            value={chapter}
-                            className="border border-gray-300 rounded m-3"
-                            onChange={(e) => setChapter(e.target.value)}
-                        />
-                    </label>
+                    {newPostType === 'newChapter' && (
+                        <label>
+                            Chapter:
+                            <input
+                                type="text"
+                                value={chapter}
+                                className="border border-gray-300 rounded m-3"
+                                onChange={(e) => setChapter(e.target.value)}
+                            />
+                        </label>
+                    )}
                     <label>
                         Subject:
                         <input
