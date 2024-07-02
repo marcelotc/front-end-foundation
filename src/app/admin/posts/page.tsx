@@ -6,7 +6,7 @@ import { useAuth } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Typography } from "@/components/ui/typography"
-import { getMarkdownBySubjectTechnologyChapter, putMarkdown, getMenuChapters, getMenuChaptersSubjects, deleteSubjectFromMenu } from '../../utils/supabase/requests';
+import { getMarkdownBySubjectTechnologyChapter, putMarkdown, getMenuChapters, getMenuChaptersSubjects, deletePost } from '../../utils/supabase/requests';
 import TextEditor from '../../learning/(technologies)/components/TextEditor';
 
 interface MarkdownData {
@@ -92,7 +92,7 @@ export default function Posts() {
         try {
             const token = await getToken({ template: 'supabase' });
 
-            const result = await deleteSubjectFromMenu({
+            const result = await deletePost({
                 userId,
                 token,
                 chapter: selectedChapter,

@@ -195,7 +195,7 @@ export const getMenuChaptersSubjects = async (technology: string, chapter: strin
   return data;
 };
 
-export const deleteSubjectFromMenu = async ({ userId, token, chapter, technology, subject, contentId }: any) => {
+export const deletePost = async ({ userId, token, chapter, technology, subject, contentId }: any) => {
   const supabase = await supabaseClientWithAuth(token);
 
   const { data: existingMenuData, error: existingMenuError } = await supabase
