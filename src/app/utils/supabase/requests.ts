@@ -194,3 +194,68 @@ export const getMenuChaptersSubjects = async (technology: string, chapter: strin
 
   return data;
 };
+
+export const deleteSubjectFromMenu = async ({ userId, token, chapter, technology, subject, contentId }: any) => {
+  const supabase = await supabaseClientWithAuth(token);
+
+  const { data: existingMenuData, error: existingMenuError } = await supabase
+    .from('menu')
+    .select('id, subjects')
+    .eq('user_id', userId)
+    .eq('chapter', chapter)
+    .eq('technology', technology)
+    .single();
+
+  if (existingMenuError) {
+    console.error('Error checking existing menu:', existingMenuError.message);
+    return null;
+  }
+
+  if (existingMenuData) {
+    const updatedSubjects = existingMenuData.subjects.filter((sub: string) => sub.trim().toLowerCase() !== subject.trim().toLowerCase());
+    
+    let updatedMenuData = null;
+    if (updatedSubjects.length > 0) {
+      const { data, error: updateMenuError } = await supabase
+        .from('menu')
+        .update({
+          subjects: updatedSubjects,
+        })
+        .eq('id', existingMenuData.id)
+        .select();
+      updatedMenuData = data;
+
+      if (updateMenuError) {
+        console.error('Error updating menu:', updateMenuError.message);
+        return null;
+      }
+    } else {
+      // If no subjects left, delete the menu entry
+      const { error: deleteMenuError } = await supabase
+        .from('menu')
+        .delete()
+        .eq('id', existingMenuData.id);
+
+      if (deleteMenuError) {
+        console.error('Error deleting menu:', deleteMenuError.message);
+        return null;
+      }
+    }
+
+    // Delete the corresponding markdown content
+    const { data: markdownData, error: markdownError } = await supabase
+      .from('markdown_content')
+      .delete()
+      .eq('id', contentId);
+
+    if (markdownError) {
+      console.error('Error deleting markdown content:', markdownError.message);
+      return null;
+    }
+
+    return { updatedMenuData, markdownData };
+  } else {
+    console.error('Menu not found for the given user, chapter, and technology');
+    return null;
+  }
+};

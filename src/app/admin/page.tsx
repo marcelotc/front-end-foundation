@@ -29,11 +29,28 @@ export default function Admin() {
         try {
             setSubmitting(true);
             const token = await getToken({ template: 'supabase' });
-            await postMarkdown({ userId, token, content, chapterId, chapter, menu, subject, technology });
+
+            const result = await postMarkdown({
+                userId,
+                token,
+                content,
+                chapterId,
+                chapter,
+                menu,
+                subject,
+                technology
+            });
+
             setSubmitting(false);
 
+            if (result) {
+                alert('Content published successfully.');
+            } else {
+                alert('Failed to publish content. Please check the console for errors.');
+            }
         } catch (error) {
             console.error('An error occurred:', error);
+            alert('An error occurred. Please try again.');
             setSubmitting(false);
         } finally {
             setSubmitting(false);

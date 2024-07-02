@@ -23,7 +23,7 @@ export default function MyEditor({ editorMarkdown, handlePublish, submitting }: 
     const [subject, setSubject] = useState('');
     const [technology, setTechnology] = useState('html');
     const [chapters, setChapters] = useState<string[]>([]);
-    const [newPostType, setNewPostType] = useState('');
+    const [newPostType, setNewPostType] = useState('newChapter');
     const [editorContent, setEditorContent] = useState(editorMarkdown);
 
     const editor = useEditor({
