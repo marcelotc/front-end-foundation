@@ -4,6 +4,7 @@ import './styles.css'
 
 import { Color } from '@tiptap/extension-color'
 import TextStyle from '@tiptap/extension-text-style'
+import { mergeAttributes } from "@tiptap/react";
 import Image from '@tiptap/extension-image'
 import { EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
@@ -14,6 +15,32 @@ const extensions = [
     TextStyle.configure(),
     StarterKit.configure(),
     Image.configure(),
+    Image.extend({
+        addAttributes() {
+          return {
+            style: {
+              default: null,
+              parseHTML: (element) => ({
+                style: element.getAttribute("style"),
+              }),
+              renderHTML: (attributes) => {
+                if (!attributes.style) return {};
+                return {
+                  style: attributes.style,
+                };
+              },
+            },
+          };
+        },
+        renderHTML({ HTMLAttributes }) {
+          const { style } = HTMLAttributes;
+          return [
+            "figure",
+            { style },
+            ["img", mergeAttributes(this.options.HTMLAttributes, HTMLAttributes)]
+          ];
+        }
+      })
 ]
 
 export default function contentOutput({content}: any) {
