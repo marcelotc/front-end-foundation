@@ -2,22 +2,30 @@
     Front-End-Foundation
 </h1>
 
-<h4 align="center">
-  A web platform focused in teaching the foundation of front-end development
-</h4>
+<h3 align="center">
+  A full stack CMS web platform focused on teaching the foundation of front-end development
+</h3>
 
 <p align="center">
-  <a href="#rocket-technologies">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#memo-license">License</a>
+  <a href="#rocket-technologies">Technologies</a> &nbsp; | &nbsp;  <a href="https://front-end-foundation.vercel.app/" target="_blank">Website</a>
 </p>
+
 
 <div align="center">
   <img src="public/homepage.png" alt="Homepage Screenshot"/>
-  <img src="public/htmlpage.png" alt="htmlpage Screenshot"/>
-  <img src="public/postpage.png" alt="postpage Screenshot"/>
-    <h1 align="center">
- Fully customized CMS using supabase to store the content: 
-</h1>
+  <img src="public/htmlpage.png" alt="HTML page Screenshot"/>
+  <img src="public/postpage.png" alt="Post page Screenshot"/>
+  <h2 align="center">
+    Fully customized CMS using Supabase to store the content: 
+  </h2>
   <img src="public/cmsoverview.gif" alt="CMS Overview GIF"/>
-  <img src="public/editpost.gif" alt="CMS Overview GIF"/>
+  <img src="public/editpost.gif" alt="Edit post GIF"/>
 </div>
+
+## :rocket: Technologies
+
+- [Next.js](https://nextjs.org/)
+- [Typescript](https://www.typescriptlang.org/)
+- [Shadcn](https://ui.shadcn.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Supabase](https://supabase.io/)
