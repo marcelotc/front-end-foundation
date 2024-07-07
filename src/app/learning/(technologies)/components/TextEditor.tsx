@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import ImageResize from 'tiptap-extension-resize-image';
 import { usePathname } from 'next/navigation';
 import { Color } from '@tiptap/extension-color';
 import TextStyle from '@tiptap/extension-text-style';
@@ -9,7 +10,6 @@ import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { Button } from '@/components/ui/button';
 import { v4 as uuidv4 } from 'uuid';
-import ReactImage from "../../../../utils/textEditorConfig";
 import { getMenuChapters, uploadImage } from '../../../utils/supabase/requests';
 import './styles.css';
 
@@ -17,7 +17,7 @@ const extensions = [
     Color.configure(),
     TextStyle.configure(),
     StarterKit.configure(),
-    ReactImage.configure(),
+    ImageResize.configure(),
 ];
 
 export default function MyEditor({ editorMarkdown, handlePublish, submitting }: any) {
@@ -28,8 +28,6 @@ export default function MyEditor({ editorMarkdown, handlePublish, submitting }: 
     const [chapters, setChapters] = useState<string[]>([]);
     const [newPostType, setNewPostType] = useState('newChapter');
     const [editorContent, setEditorContent] = useState(editorMarkdown);
-    const [image, setImage] = useState<File | null>(null);
-    const [imageId, setImageId] = useState("");
     const { getToken } = useAuth();
 
     const editor = useEditor({
@@ -194,15 +192,13 @@ export default function MyEditor({ editorMarkdown, handlePublish, submitting }: 
                         input.onchange = async (e: any) => {
                             var file = e.target.files[0];
                             const newUuid = uuidv4();
-                            setImageId(newUuid); 
-                            setImage(file);
 
                             if (file) {
                                 const token = await getToken({ template: 'supabase' });
                                 await uploadImage({ image: file, token, imageId: newUuid });
 
                                 const url = `https://bsafsspqwxcudibbkjps.supabase.co/storage/v1/object/public/images/${newUuid}`;
-                                editor.commands.insertContent(`<react-component src="${url}" />`);
+                                editor.commands.insertContent(`<img src="${url}" />`);
                             }
                         };
                     }}

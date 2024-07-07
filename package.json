@@ -32,6 +32,7 @@
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "tailwindcss-animated": "^1.0.1",
+    "tiptap-extension-resize-image": "^1.1.8",
     "uuid": "^10.0.0"
   },
   "devDependencies": {
