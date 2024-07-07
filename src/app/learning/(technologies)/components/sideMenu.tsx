@@ -89,31 +89,33 @@ export default function SideMenu() {
       ) : (
         <>
           {menuOpen ? (
-            <div className="space-y-6 p-2">
+            <div>
               <div className="flex items-center space-x-2 p-3">
                 <Code2 color="white" size={20} />
                 <Typography variant="largeText" as="p" className="text-white cursor-pointer" onClick={() => setMarkdown(null)}>
                   {technology.toUpperCase()}
                 </Typography>
               </div>
-              {menuContent && menuContent.map((menuContent: any, index: number) => (
-                <Collapsible key={index} className="space-y-2">
-                  <CollapsibleTrigger asChild>
-                    <div className="flex items-center justify-between space-x-4 px-4 cursor-pointer">
-                      <Typography variant="smallText" as="p" className="text-white">
-                        {menuContent.chapter}
-                      </Typography>
-                      <div>
-                        <ChevronDown color="white" size={20} />
-                        <span className="sr-only">Toggle</span>
+              <div className='space-y-6 p-2 m-2 overflow-y-scroll overflow-x-hidden h-[600px]'>
+                {menuContent && menuContent.map((menuContent: any, index: number) => (
+                  <Collapsible key={index} className="space-y-2">
+                    <CollapsibleTrigger asChild>
+                      <div className="flex items-center justify-between space-x-4 px-4 cursor-pointer">
+                        <Typography variant="smallText" as="p" className="text-white">
+                          {menuContent.chapter}
+                        </Typography>
+                        <div>
+                          <ChevronDown color="white" size={20} />
+                          <span className="sr-only">Toggle</span>
+                        </div>
                       </div>
-                    </div>
-                  </CollapsibleTrigger>
-                  <CollapsibleContent className="space-y-4 px-4 overflow-hidden transition-[max-height] duration-300 [data-state=open]:max-h-[1000px] [data-state=closed]:max-h-0">
-                    {renderSubjects(menuContent.subjects, menuContent.chapter)}
-                  </CollapsibleContent>
-                </Collapsible>
-              ))}
+                    </CollapsibleTrigger>
+                    <CollapsibleContent className="space-y-4 px-4 overflow-hidden transition-[max-height] duration-300 [data-state=open]:max-h-[1000px] [data-state=closed]:max-h-0">
+                      {renderSubjects(menuContent.subjects, menuContent.chapter)}
+                    </CollapsibleContent>
+                  </Collapsible>
+                ))}
+              </div>
             </div>
           ) : null}
         </>
