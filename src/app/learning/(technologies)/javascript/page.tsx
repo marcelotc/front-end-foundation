@@ -29,15 +29,10 @@ export default function Javascript() {
                         />
                     </div>
                     <div className='mt-10'>
-                        javascript is the standard markup language for creating Web pages.
-
-                        What is javascript?
-                        javascript stands for Hyper Text Markup Language
-                        javascript is the standard markup language for creating Web pages
-                        javascript describes the structure of a Web page
-                        javascript consists of a series of elements
-                        javascript elements tell the browser how to display the content
-                        javascript elements label pieces of content such as "this is a heading", "this is a paragraph", "this is a link", etc.
+                        <b>JavaScript</b> is a versatile programming language that brings interactivity to web pages. Unlike HTML and CSS, which focus on structure and style,
+                        JavaScript allows developers to create dynamic content that can respond to user actions. It can modify HTML and CSS in real-time, enabling features
+                        such as form validation, content updates, and animations. JavaScript is essential for creating modern, interactive web applications, making the browsing
+                        experience more engaging and user-friendly.
                     </div>
                 </>
             )

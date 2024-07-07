@@ -29,16 +29,12 @@ export default function Html() {
                         />
                     </div>
                     <div className='mt-10'>
-                        HTML is the standard markup language for creating Web pages.
-
-                        What is HTML?
-                        HTML stands for Hyper Text Markup Language
-                        HTML is the standard markup language for creating Web pages
-                        HTML describes the structure of a Web page
-                        HTML consists of a series of elements
-                        HTML elements tell the browser how to display the content
-                        HTML elements label pieces of content such as "this is a heading", "this is a paragraph", "this is a link", etc.
+                        <b>HTML</b>, which stands for Hyper Text Markup Language, is the foundational language used for creating web pages.
+                        It provides the basic structure of a webpage, allowing developers to organize and label content. HTML consists of a series of elements,
+                        each serving a specific purpose, such as defining headings, paragraphs, and links. These elements guide the browser on how to display the content,
+                        making it possible to construct complex and structured web pages.
                     </div>
+
                 </>
             )
             }

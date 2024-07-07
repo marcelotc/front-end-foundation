@@ -29,15 +29,10 @@ export default function Css() {
                         />
                     </div>
                     <div className='mt-10'>
-                        css is the standard markup language for creating Web pages.
-
-                        What is css?
-                        css stands for Hyper Text Markup Language
-                        css is the standard markup language for creating Web pages
-                        css describes the structure of a Web page
-                        css consists of a series of elements
-                        css elements tell the browser how to display the content
-                        css elements label pieces of content such as "this is a heading", "this is a paragraph", "this is a link", etc.
+                        <b>CSS</b>, or Cascading Style Sheets, is the language used to style HTML documents. It describes how HTML elements should be displayed,
+                        offering control over the presentation of web pages. With CSS, developers can set the layout, colors, fonts, and overall design, ensuring a
+                        consistent and appealing appearance across different devices and screen sizes. CSS enhances the user experience by enabling visually engaging and
+                        responsive web designs.
                     </div>
                 </>
             )
