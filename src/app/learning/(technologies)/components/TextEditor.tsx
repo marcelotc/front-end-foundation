@@ -191,13 +191,17 @@ export default function MyEditor({ editorMarkdown, handlePublish, submitting }: 
                         event.preventDefault();
                         var input: any = document.getElementById("fileUpload");
                         input.click();
-                        input.onchange = (e: any) => {
+                        input.onchange = async (e: any) => {
                             var file = e.target.files[0];
                             const newUuid = uuidv4();
                             setImageId(newUuid); 
                             setImage(file);
-                            const url = URL.createObjectURL(file);
+
                             if (file) {
+                                const token = await getToken({ template: 'supabase' });
+                                await uploadImage({ image: file, token, imageId: newUuid });
+
+                                const url = `https://bsafsspqwxcudibbkjps.supabase.co/storage/v1/object/public/images/${newUuid}`;
                                 editor.commands.insertContent(`<react-component src="${url}" />`);
                             }
                         };
@@ -209,19 +213,10 @@ export default function MyEditor({ editorMarkdown, handlePublish, submitting }: 
         );
     };
 
-    const handleUploadImage = async () => {
-        const token = await getToken({ template: 'supabase' });
-        await uploadImage({ image, token, imageId });
-    };
-
     const handlePublishClick = () => {
         if (editor) {
-            editor.commands.insertContent(`<react-component src="https://bsafsspqwxcudibbkjps.supabase.co/storage/v1/object/public/images/${imageId}" />`);
             const json = editor.getJSON();
-            console.log('jsonjson', json)
             handlePublish({ chapterId: uuidv4(), content: json, chapter, subject, technology });
-            handleUploadImage();
-
         } else {
             console.log('Editor not initialized');
         }
