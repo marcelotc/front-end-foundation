@@ -5,7 +5,7 @@ import SideMenuContext, { MarkdownData } from '../context/sideMenuContext';
 import { CollapsibleTrigger, CollapsibleContent, Collapsible } from "@/components/ui/collapsible";
 import { Typography } from "@/components/ui/typography";
 import { getMarkdownBySubjectTechnologyChapter } from '../../../utils/supabase/requests';
-import { ChevronDown, ChevronLeft, ChevronRight, Code2 } from "lucide-react";
+import { ChevronDown, ChevronUp, ChevronLeft, ChevronRight, Code2 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton"
 import { getMenu } from '../../../utils/supabase/requests';
 import clsx from 'clsx';
@@ -15,6 +15,7 @@ export default function SideMenu() {
 
   const [menuContent, setMenuContent] = useState<any>(null);
   const [loadingMenu, setLoadingMenu] = useState(false);
+  const [openChapters, setOpenChapters] = useState<number[]>([]);
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
 
   useEffect(() => {
@@ -46,6 +47,15 @@ export default function SideMenu() {
       setLoadingContent(false);
     }
   }
+
+  const toggleChapter = (index: number) => {
+    const isOpen = openChapters.includes(index);
+    if (isOpen) {
+      setOpenChapters(openChapters.filter(item => item !== index));
+    } else {
+      setOpenChapters([...openChapters, index]);
+    }
+  };
 
   const renderSubjects = (subjects: string[], chapter: string) => {
     return subjects.map((subject, index) => {
@@ -89,28 +99,33 @@ export default function SideMenu() {
       ) : (
         <>
           {menuOpen ? (
-            <div>
+            <div className='fade-edge-bottom'>
               <div className="flex items-center space-x-2 p-3">
                 <Code2 color="white" size={20} />
                 <Typography variant="largeText" as="p" className="text-white cursor-pointer" onClick={() => setMarkdown(null)}>
                   {technology.toUpperCase()}
                 </Typography>
               </div>
-              <div className='space-y-6 p-2 m-2 overflow-y-scroll overflow-x-hidden h-[600px]'>
+              <div className='space-y-6 px-2 pb-10 m-2 overflow-y-scroll overflow-x-hidden h-[600px]'>
                 {menuContent && menuContent.map((menuContent: any, index: number) => (
                   <Collapsible key={index} className="space-y-2">
                     <CollapsibleTrigger asChild>
-                      <div className="flex items-center justify-between space-x-4 px-4 cursor-pointer">
+                      <div
+                        className="flex items-center justify-between space-x-4 px-4 cursor-pointer"
+                        onClick={() => toggleChapter(index)}
+                      >
                         <Typography variant="smallText" as="p" className="text-white">
                           {menuContent.chapter}
                         </Typography>
                         <div>
-                          <ChevronDown color="white" size={20} />
-                          <span className="sr-only">Toggle</span>
+                          {openChapters.includes(index) ? <ChevronUp color="white" size={20} /> : <ChevronDown color="white" size={20} />}
                         </div>
                       </div>
                     </CollapsibleTrigger>
-                    <CollapsibleContent className="space-y-4 px-4 overflow-hidden transition-[max-height] duration-300 [data-state=open]:max-h-[1000px] [data-state=closed]:max-h-0">
+                    <CollapsibleContent className={clsx(
+                      "space-y-4 px-4 overflow-hidden transition-[max-height] duration-300",
+                      openChapters.includes(index) ? "max-h-[1000px]" : "max-h-0"
+                    )}>
                       {renderSubjects(menuContent.subjects, menuContent.chapter)}
                     </CollapsibleContent>
                   </Collapsible>
