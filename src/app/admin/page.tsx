@@ -20,10 +20,10 @@ export default function Admin() {
     const userRole = checkUserRole(session);
 
     useEffect(() => {
-        if (userRole !== 'org:admin' && userRole !== null) {
+        if (userRole !== 'org:admin' && session !== undefined) {
             router.push('/');
         }
-    }, [userRole]);
+    }, [userRole, session]);
 
     async function handlePublish({ chapter, chapterId, content, menu, subject, technology }: any) {
         try {

@@ -3,11 +3,13 @@
 import React, { useState, useEffect } from 'react';
 import { Trash2Icon } from "lucide-react";
 import { useAuth } from '@clerk/nextjs';
+import { useSession } from '@clerk/clerk-react'
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Typography } from "@/components/ui/typography"
 import { getMarkdownBySubjectTechnologyChapter, putMarkdown, getMenuChapters, getMenuChaptersSubjects, deletePost } from '../../utils/supabase/requests';
 import TextEditor from '../../learning/(technologies)/components/TextEditor';
+import { checkUserRole } from '../../../utils/userUtils';
 
 interface MarkdownData {
     id: string;
@@ -25,6 +27,14 @@ export default function Posts() {
     const [selectedSubject, setSelectedSubject] = useState('');
     const [submitting, setSubmitting] = useState(false);
     const { userId, getToken } = useAuth();
+    const { session } = useSession();
+    const userRole = checkUserRole(session);
+
+    useEffect(() => {
+        if (userRole !== 'org:admin' && session !== undefined) {
+            router.push('/');
+        }
+    }, [userRole, session]);
 
     const handleLoadPosts = async () => {
         try {
