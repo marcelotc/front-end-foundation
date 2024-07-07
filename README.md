@@ -10,6 +10,25 @@
   <a href="#rocket-technologies">Technologies</a> &nbsp; | &nbsp;  <a href="https://front-end-foundation.vercel.app/" target="_blank">Website</a>
 </p>
 
+> [!NOTE]
+> Under construction
+
+## :sparkles: Features
+
+- [x] Learning pages:
+  - [x] HTML
+  - [x] CSS
+  - [x] JavaScript
+- [x] Admin page:
+  - [x] Abble to add a post
+  - [x] Abble to edit a post
+  - [x] Abble to delete a post
+  - [x] Abble to list a post
+- [x] Auth page using clerk
+- [] Roadmap page
+- [] Progress tracking page
+- [] Learning path calendar page
+- [] Quizzes page
 
 <div align="center">
   <img src="public/homepage.png" alt="Homepage Screenshot"/>
@@ -29,3 +48,5 @@
 - [Shadcn](https://ui.shadcn.com/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Supabase](https://supabase.io/)
+- [Clerk](https://clerk.dev/)
+
