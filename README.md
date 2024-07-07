@@ -11,9 +11,13 @@
   <a href="#memo-license">License</a>
 </p>
 
-
 <div align="center">
-  <img src="public/homepage.png" alt="Homepage Screenshot" width="500"/>
-  <br />
-  <img src="public/cmsoverview.gif" alt="CMS Overview GIF" width="500"/>
+  <img src="public/homepage.png" alt="Homepage Screenshot"/>
+  <img src="public/htmlpage.png" alt="htmlpage Screenshot"/>
+  <img src="public/postpage.png" alt="postpage Screenshot"/>
+    <h1 align="center">
+ Fully customized CMS using supabase to store the content: 
+</h1>
+  <img src="public/cmsoverview.gif" alt="CMS Overview GIF"/>
+  <img src="public/editpost.gif" alt="CMS Overview GIF"/>
 </div>
