@@ -4,17 +4,20 @@ import React, { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { Color } from '@tiptap/extension-color';
 import TextStyle from '@tiptap/extension-text-style';
+import { useAuth } from '@clerk/nextjs';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { Button } from '@/components/ui/button';
 import { v4 as uuidv4 } from 'uuid';
-import { getMenuChapters } from '../../../utils/supabase/requests';
+import ReactImage from "../../../../utils/textEditorConfig";
+import { getMenuChapters, uploadImage } from '../../../utils/supabase/requests';
 import './styles.css';
 
 const extensions = [
     Color.configure(),
     TextStyle.configure(),
     StarterKit.configure(),
+    ReactImage.configure(),
 ];
 
 export default function MyEditor({ editorMarkdown, handlePublish, submitting }: any) {
@@ -25,6 +28,9 @@ export default function MyEditor({ editorMarkdown, handlePublish, submitting }: 
     const [chapters, setChapters] = useState<string[]>([]);
     const [newPostType, setNewPostType] = useState('newChapter');
     const [editorContent, setEditorContent] = useState(editorMarkdown);
+    const [image, setImage] = useState<File | null>(null);
+    const [imageId, setImageId] = useState("");
+    const { getToken } = useAuth();
 
     const editor = useEditor({
         extensions,
@@ -47,14 +53,6 @@ export default function MyEditor({ editorMarkdown, handlePublish, submitting }: 
         fetchChapters();
     }, [technology, newPostType]);
 
-    const handlePublishClick = () => {
-        if (editor) {
-            const json = editor.getJSON();
-            handlePublish({ chapterId: uuidv4(), content: json, chapter, subject, technology });
-        } else {
-            console.log('Editor not initialized');
-        }
-    };
 
     const MenuBar = () => {
         if (!editor) {
@@ -187,8 +185,46 @@ export default function MyEditor({ editorMarkdown, handlePublish, submitting }: 
                 >
                     purple
                 </button>
+
+                <button
+                    onClick={(event) => {
+                        event.preventDefault();
+                        var input: any = document.getElementById("fileUpload");
+                        input.click();
+                        input.onchange = (e: any) => {
+                            var file = e.target.files[0];
+                            const newUuid = uuidv4();
+                            setImageId(newUuid); 
+                            setImage(file);
+                            const url = URL.createObjectURL(file);
+                            if (file) {
+                                editor.commands.insertContent(`<react-component src="${url}" />`);
+                            }
+                        };
+                    }}
+                >
+                    Add Image
+                </button>
             </div>
         );
+    };
+
+    const handleUploadImage = async () => {
+        const token = await getToken({ template: 'supabase' });
+        await uploadImage({ image, token, imageId });
+    };
+
+    const handlePublishClick = () => {
+        if (editor) {
+            editor.commands.insertContent(`<react-component src="https://bsafsspqwxcudibbkjps.supabase.co/storage/v1/object/public/images/${imageId}" />`);
+            const json = editor.getJSON();
+            console.log('jsonjson', json)
+            handlePublish({ chapterId: uuidv4(), content: json, chapter, subject, technology });
+            handleUploadImage();
+
+        } else {
+            console.log('Editor not initialized');
+        }
     };
 
     return (
@@ -263,6 +299,7 @@ export default function MyEditor({ editorMarkdown, handlePublish, submitting }: 
             </div>
             <div className='my-[10px] border-solid border-2 border-black p-5'>
                 <EditorContent editor={editor} />
+                <input id="fileUpload" type="file" style={{ display: "none" }} />
             </div>
             <Button size={"lg"} onClick={handlePublishClick}>
                 {submitting ? 'Publishing...' : 'Publish'}

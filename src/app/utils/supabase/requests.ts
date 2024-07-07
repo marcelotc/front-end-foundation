@@ -259,3 +259,23 @@ export const deletePost = async ({ userId, token, chapter, technology, subject, 
     return null;
   }
 };
+
+export const uploadImage = async ({ image, token, imageId }: any) => {
+  if (!image) return;
+
+  try {
+    const supabase = await supabaseClientWithAuth(token);
+
+    const { error } = await supabase.storage
+      .from('images')
+      .upload(imageId, image)
+
+
+    if (error) {
+      throw error;
+    }
+
+  } catch (err: any) {
+    console.error('err:', err);
+  }
+};
