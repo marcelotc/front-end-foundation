@@ -6,11 +6,11 @@ import { Typography } from "@/components/ui/typography"
 import { Button } from "@/components/ui/button"
 import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet"
 import { DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
-import ModeToggle from "@/components/mode-toggle"
+//import ModeToggle from "@/components/mode-toggle"
 import { CircleUserRound, Menu, User, LogOut } from "lucide-react"
 
 export default function MainHeader() {
-    const { isLoaded, isSignedIn, user } = useUser();
+    const { isSignedIn, user } = useUser();
 
     return (
         <header className="flex h-16 w-full py-6 items-center justify-between pr-4 md:pr-6 bg-[#1b1b1d] z-10">
@@ -45,12 +45,6 @@ export default function MainHeader() {
                                 href="/About"
                             >
                                 About
-                            </Link>
-                            <Link
-                                className="flex items-center gap-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
-                                href="/Contact"
-                            >
-                                Contact
                             </Link>
                         </div>
                     </SheetContent>
@@ -91,15 +85,7 @@ export default function MainHeader() {
                     </Typography>
                 </Link>
                 <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
-                <Link
-                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
-                    href="/contact"
-                >
-                    <Typography variant="p" as="h1" className="text-white">
-                        CONTACT
-                    </Typography>
-                </Link>
-                <ModeToggle />
+                {/*<ModeToggle />*/}
                 {isSignedIn ? (
                     <div className="flex justify-center items-center gap-4">
                         <Typography variant="p" as="h1" className="text-white">
