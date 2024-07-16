@@ -25,10 +25,10 @@
   - [x] Abble to delete a post
   - [x] Abble to list a post
 - [x] Auth page using clerk
-- [] Roadmap page
-- [] Progress tracking page
-- [] Learning path calendar page
-- [] Quizzes page
+- [ ] Roadmap page
+- [ ] Progress tracking page
+- [ ] Learning path calendar page
+- [ ] Quizzes page
 
 <div align="center">
   <img src="public/homepage.png" alt="Homepage Screenshot"/>
