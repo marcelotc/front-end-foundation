@@ -42,9 +42,27 @@ export default function MainHeader() {
                             </Link>
                             <Link
                                 className="flex items-center gap-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
-                                href="/About"
+                                href="/about"
                             >
                                 About
+                            </Link>
+                            <Link
+                                className="flex items-center gap-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
+                                href="/learning/html"
+                            >
+                                HTML
+                            </Link>
+                            <Link
+                                className="flex items-center gap-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
+                                href="/learning/css"
+                            >
+                                CSS
+                            </Link>
+                            <Link
+                                className="flex items-center gap-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
+                                href="/learning/javascript"
+                            >
+                                JAVASCRIPT
                             </Link>
                         </div>
                     </SheetContent>
@@ -71,7 +89,7 @@ export default function MainHeader() {
                     className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
                     href="/"
                 >
-                    <Typography variant="p" as="h1" className="text-white">
+                    <Typography variant="smallText" as="h1" className="text-white">
                         HOME
                     </Typography>
                 </Link>
@@ -80,8 +98,35 @@ export default function MainHeader() {
                     className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
                     href="/about"
                 >
-                    <Typography variant="p" as="h1" className="text-white">
+                    <Typography variant="smallText" as="h1" className="text-white">
                         ABOUT
+                    </Typography>
+                </Link>
+                <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
+                <Link
+                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
+                    href="/learning/html"
+                >
+                    <Typography variant="smallText" as="h1" className="text-white">
+                        HTML
+                    </Typography>
+                </Link>
+                <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
+                <Link
+                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
+                    href="/learning/css"
+                >
+                    <Typography variant="smallText" as="h1" className="text-white">
+                        CSS
+                    </Typography>
+                </Link>
+                <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
+                <Link
+                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
+                    href="/learning/javascript"
+                >
+                    <Typography variant="smallText" as="h1" className="text-white">
+                        JAVASCRIPT
                     </Typography>
                 </Link>
                 <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
