@@ -73,18 +73,18 @@ export default function Home() {
 
                 <div className="flex flex-col justify-center items-center gap-4 mt-10 py-10 animate-fade-up">
                     <div className="flex gap-4">
-                        <Link href={'/learning/path'}>
+                        <Link href={'/roadmap'}>
                             <div className="flex bg-[#1b1b1d] w-[400px] h-[200px] rounded-xl hover:opacity-95 cursor-pointer">
                                 <div className="flex items-center justify-between w-full p-10">
                                     <Typography variant="largeText" as="h1" className="text-white">
-                                        Define your
-                                        learning path calendar
+                                        Check the
+                                        front-end roadmap
                                     </Typography>
                                     <Image
-                                        src={pathImage}
+                                        src={roadMapImage}
                                         width={100}
                                         height={100}
-                                        alt="path image"
+                                        alt="road map image"
                                     />
                                 </div>
                             </div>
@@ -106,18 +106,18 @@ export default function Home() {
                         </Link>
                     </div>
                     <div className="flex gap-4">
-                        <Link href={'/roadmap'}>
+                    <Link href={'/learning/path'}>
                             <div className="flex bg-[#1b1b1d] w-[400px] h-[200px] rounded-xl hover:opacity-95 cursor-pointer">
                                 <div className="flex items-center justify-between w-full p-10">
                                     <Typography variant="largeText" as="h1" className="text-white">
-                                        Check the
-                                        front-end roadmap
+                                        Define your
+                                        learning path calendar
                                     </Typography>
                                     <Image
-                                        src={roadMapImage}
+                                        src={pathImage}
                                         width={100}
                                         height={100}
-                                        alt="road map image"
+                                        alt="path image"
                                     />
                                 </div>
                             </div>
