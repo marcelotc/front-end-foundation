@@ -4,123 +4,13 @@ import { useState } from "react";
 import { ChevronDown, ChevronUp, CheckCircle2, Circle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
-
-interface Subject {
-    name: string;
-    checked: boolean;
-}
-
-interface Section {
-    id: number;
-    title: string;
-    subjects: Subject[];
-}
-
-interface CollapsibleSectionProps {
-    id: number;
-    title: string;
-    timelineData: Section[];
-    learnPath: string;
-    isOpen: boolean;
-    onToggle: (id: number) => void;
-}
+import { cssData, htmlData, jsData, CollapsibleSectionProps, Section } from './htmlData';
+import { Progress } from "@/components/ui/progress";
 
 export default function Roadmap() {
     const [openSections, setOpenSections] = useState<Record<number, boolean>>({});
 
-    const htmlData: Section[] = [
-        {
-            id: 1,
-            title: "HTML - Introduction and Basics",
-            subjects: [
-                { name: "Introduction to HTML", checked: false },
-                { name: "Tags and Attributes", checked: false },
-                { name: "Basic Elements", checked: false }
-            ],
-        },
-        {
-            id: 2,
-            title: "Intermediate",
-            subjects: [
-                { name: "Forms", checked: false },
-                { name: "Semantic HTML", checked: false },
-                { name: "Multimedia Elements", checked: false },
-                { name: "Responsive Design", checked: false }
-            ],
-        },
-        {
-            id: 3,
-            title: "Advanced",
-            subjects: [
-                { name: "HTML APIs", checked: false },
-                { name: "Custom Data Attributes", checked: false },
-                { name: "Web Components", checked: false },
-                { name: "Accessibility", checked: false }
-            ],
-        }
-    ];
-
-    const cssData: Section[] = [
-        {
-            id: 1,
-            title: "CSS - Basics",
-            subjects: [
-                { name: "Introduction to CSS", checked: false },
-                { name: "Selectors and Properties", checked: false },
-                { name: "Basic Styling", checked: false }
-            ],
-        },
-        {
-            id: 2,
-            title: "Intermediate",
-            subjects: [
-                { name: "Flexbox", checked: false },
-                { name: "Grid Layout", checked: false },
-                { name: "Responsive Design", checked: false }
-            ],
-        },
-        {
-            id: 3,
-            title: "Advanced",
-            subjects: [
-                { name: "Animations", checked: false },
-                { name: "Transitions", checked: false },
-                { name: "Custom Properties", checked: false }
-            ],
-        }
-    ];
-
-    const jsData: Section[] = [
-        {
-            id: 1,
-            title: "JavaScript - Basics",
-            subjects: [
-                { name: "Introduction to JavaScript", checked: false },
-                { name: "Variables and Data Types", checked: false },
-                { name: "Basic Operations", checked: false }
-            ],
-        },
-        {
-            id: 2,
-            title: "Intermediate",
-            subjects: [
-                { name: "Functions", checked: false },
-                { name: "Objects and Arrays", checked: false },
-                { name: "DOM Manipulation", checked: false }
-            ],
-        },
-        {
-            id: 3,
-            title: "Advanced",
-            subjects: [
-                { name: "Asynchronous JavaScript", checked: false },
-                { name: "Promises", checked: false },
-                { name: "ES6+ Features", checked: false }
-            ],
-        }
-    ];
-
-    function CollapsibleSection({ id, title, timelineData, learnPath, isOpen, onToggle }: CollapsibleSectionProps) {
+    function CollapsibleSection({ id, title, timelineData, learnPath, isOpen, onToggle, progressValue }: CollapsibleSectionProps) {
         const [subjects, setSubjects] = useState<Section[]>(timelineData);
         const router = useRouter();
 
@@ -150,6 +40,7 @@ export default function Roadmap() {
                     </h1>
                     {isOpen ? <ChevronUp size={24} color="#fff" /> : <ChevronDown size={24} color="#fff" />}
                 </div>
+                <Progress value={progressValue} className="my-3" /> 
                 {isOpen && (
                     <ol className="relative border-l border-gray-200 dark:border-gray-700 mt-4">
                         {subjects.map((section, sectionIndex) => (
@@ -206,6 +97,7 @@ export default function Roadmap() {
                     learnPath="/learning/html"
                     isOpen={openSections[1] || false}
                     onToggle={handleToggle}
+                    progressValue={50} 
                 />
                 <CollapsibleSection
                     id={2}
@@ -214,6 +106,7 @@ export default function Roadmap() {
                     learnPath="/learning/css"
                     isOpen={openSections[2] || false}
                     onToggle={handleToggle}
+                    progressValue={33}  
                 />
                 <CollapsibleSection
                     id={3}
@@ -222,6 +115,7 @@ export default function Roadmap() {
                     learnPath="/learning/javascript"
                     isOpen={openSections[3] || false}
                     onToggle={handleToggle}
+                    progressValue={75}  
                 />
             </main>
         </section>
