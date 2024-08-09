@@ -13,7 +13,7 @@ export default function MainHeader() {
     const { isSignedIn, user } = useUser();
 
     return (
-        <header className="flex h-16 w-full py-6 items-center justify-between pr-4 md:pr-6 bg-[#1b1b1d] z-10">
+        <header className="flex h-16 w-full py-6 items-center justify-between pr-4 lg:pr-6 bg-[#1b1b1d] z-10">
             <Link href={'/'}>
                 <div className="pl-[46px] pr-[50px] h-full cursor-pointer hover:opacity-60 ">
                     <Typography variant="mutedText" as="h1" className="text-white font-semibold">
@@ -24,7 +24,7 @@ export default function MainHeader() {
                     </Typography>
                 </div>
             </Link>
-            <div className="flex items-center gap-4 md:hidden">
+            <div className="flex items-center gap-4 lg:hidden">
                 <Sheet>
                     <SheetTrigger asChild>
                         <Button size="icon" variant="link">
@@ -84,7 +84,7 @@ export default function MainHeader() {
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
-            <nav className="hidden items-center gap-4 md:flex">
+            <nav className="hidden items-center gap-4 lg:flex">
                 <Link
                     className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
                     href="/"
