@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useContext, useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation'
 import SideMenuContext, { MarkdownData } from '../context/sideMenuContext';
 import { CollapsibleTrigger, CollapsibleContent, Collapsible } from "@/components/ui/collapsible";
 import { Typography } from "@/components/ui/typography";
@@ -11,6 +12,9 @@ import { getMenu } from '../../../utils/supabase/requests';
 import clsx from 'clsx';
 
 export default function SideMenu() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
   const { menuOpen, toggleMenu, technology, setMarkdown, setLoadingContent } = useContext(SideMenuContext);
 
   const [menuContent, setMenuContent] = useState<any>(null);
@@ -26,7 +30,7 @@ export default function SideMenu() {
           const data = await getMenu(technology);
           setMenuContent(data as any);
         } catch (error) {
-          console.error('Error loading markdown:', error);
+          console.error('Error loading menu:', error);
         } finally {
           setLoadingMenu(false);
         }
@@ -36,17 +40,32 @@ export default function SideMenu() {
     loadMenu();
   }, [technology]);
 
-  const handleFetchContent = async (subject: string, chapter: string) => {
+  useEffect(() => {
+    const subject = searchParams.get('subject');
+    const chapter = searchParams.get('chapter');
+    const technologyUrl = searchParams.get('technology');
+
+    if (subject && chapter && technologyUrl) {
+      setSelectedSubject(subject);
+      handleFetchContent(subject, chapter, technologyUrl);
+    }
+  }, [searchParams]);
+
+  const handleFetchContent = async (subject: string, chapter: string, technologyUrl: string) => {
     try {
       setLoadingContent(true);
-      const data = await getMarkdownBySubjectTechnologyChapter(subject, technology, chapter);
+      const data = await getMarkdownBySubjectTechnologyChapter(subject, technologyUrl || technology, chapter);
       setMarkdown(data as MarkdownData[]);
     } catch (error) {
       console.error('Error loading markdown:', error);
     } finally {
       setLoadingContent(false);
     }
-  }
+  };
+
+  const handleSubjectClick = (subject: string, chapter: string, technology: string) => {
+    router.push(`?subject=${subject}&chapter=${chapter}&technology=${technology}`);
+  };
 
   const toggleChapter = (index: number) => {
     const isOpen = openChapters.includes(index);
@@ -69,10 +88,7 @@ export default function SideMenu() {
                 "flex items-center justify-between space-x-4 px-4 cursor-pointer",
                 isActive && "bg-gray-700 p-3 rounded-sm"
               )}
-              onClick={() => {
-                handleFetchContent(subject, chapter);
-                setSelectedSubject(subject);
-              }}
+              onClick={() => handleSubjectClick(subject, chapter, technology)}
             >
               <Typography variant="smallText" as="p" className="text-white">
                 {subject}
@@ -147,5 +163,5 @@ export default function SideMenu() {
         </div>
       </div>
     </nav>
-  )
+  );
 }

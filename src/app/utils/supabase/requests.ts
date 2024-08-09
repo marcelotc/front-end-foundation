@@ -129,6 +129,20 @@ export const getMenu = async (technology: string) => {
   return data;
 };
 
+export const getAllMenu = async () => {
+  const { data, error } = await supabaseClientPublic
+    .from("menu")
+    .select("*")
+    .order('created_at', { ascending: true });
+
+  if (error) {
+    console.error('Error fetching:', error.message);
+    return [];
+  }
+
+  return data;
+};
+
 export const getMenuChapters = async (technology: string) => {
   const { data, error } = await supabaseClientPublic
     .from("menu")
