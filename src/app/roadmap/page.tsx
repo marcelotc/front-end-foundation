@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChevronDown, ChevronUp, CheckCircle2, Circle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
@@ -10,8 +10,9 @@ import { Progress } from "@/components/ui/progress";
 export default function Roadmap() {
     const [openSections, setOpenSections] = useState<Record<number, boolean>>({});
 
-    function CollapsibleSection({ id, title, timelineData, learnPath, isOpen, onToggle, progressValue }: CollapsibleSectionProps) {
+    function CollapsibleSection({ id, title, timelineData, learnPath, isOpen, onToggle }: CollapsibleSectionProps) {
         const [subjects, setSubjects] = useState<Section[]>(timelineData);
+        const [progressValue, setProgressValue] = useState(0);
         const router = useRouter();
 
         const toggleCheck = (sectionId: number, subjectIndex: number) => {
@@ -28,6 +29,15 @@ export default function Roadmap() {
                 return section;
             }));
         };
+
+        useEffect(() => {
+            const totalSubjects = subjects.reduce((acc, section) => acc + section.subjects.length, 0);
+            const checkedSubjects = subjects.reduce((acc, section) => {
+                return acc + section.subjects.filter(subject => subject.checked).length;
+            }, 0);
+            const progress = (checkedSubjects / totalSubjects) * 100;
+            setProgressValue(progress);
+        }, [subjects]);
 
         return (
             <div className="bg-[#1b1b1d] p-8 mb-10 rounded-lg">
@@ -97,7 +107,6 @@ export default function Roadmap() {
                     learnPath="/learning/html"
                     isOpen={openSections[1] || false}
                     onToggle={handleToggle}
-                    progressValue={50} 
                 />
                 <CollapsibleSection
                     id={2}
@@ -106,7 +115,6 @@ export default function Roadmap() {
                     learnPath="/learning/css"
                     isOpen={openSections[2] || false}
                     onToggle={handleToggle}
-                    progressValue={33}  
                 />
                 <CollapsibleSection
                     id={3}
@@ -115,7 +123,6 @@ export default function Roadmap() {
                     learnPath="/learning/javascript"
                     isOpen={openSections[3] || false}
                     onToggle={handleToggle}
-                    progressValue={75}  
                 />
             </main>
         </section>

@@ -16,7 +16,6 @@ export interface CollapsibleSectionProps {
     timelineData: Section[];
     learnPath: string;
     isOpen: boolean;
-    progressValue: number;
     onToggle: (id: number) => void;
 }
 
