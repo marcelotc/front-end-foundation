@@ -1,13 +1,13 @@
 'use client'
 
 import React, { useContext, useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation';
 import SideMenuContext, { MarkdownData } from '../context/sideMenuContext';
 import { CollapsibleTrigger, CollapsibleContent, Collapsible } from "@/components/ui/collapsible";
 import { Typography } from "@/components/ui/typography";
 import { getMarkdownBySubjectTechnologyChapter } from '../../../utils/supabase/requests';
 import { ChevronDown, ChevronUp, ChevronLeft, ChevronRight, Code2 } from "lucide-react";
-import { Skeleton } from "@/components/ui/skeleton"
+import { Skeleton } from "@/components/ui/skeleton";
 import { getMenu } from '../../../utils/supabase/requests';
 import clsx from 'clsx';
 
@@ -19,7 +19,7 @@ export default function SideMenu() {
 
   const [menuContent, setMenuContent] = useState<any>(null);
   const [loadingMenu, setLoadingMenu] = useState(false);
-  const [openChapters, setOpenChapters] = useState<number[]>([]);
+  const [openChapters, setOpenChapters] = useState<string[]>([]);
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
 
   useEffect(() => {
@@ -40,14 +40,14 @@ export default function SideMenu() {
     loadMenu();
   }, [technology]);
 
-  useEffect(() => {
-    const subject = searchParams.get('subject');
-    const chapter = searchParams.get('chapter');
-    const technologyUrl = searchParams.get('technology');
+  const subjectUrl = searchParams.get('subject');
+  const chapterUrl = searchParams.get('chapter');
+  const technologyUrl = searchParams.get('technology');
 
-    if (subject && chapter && technologyUrl) {
-      setSelectedSubject(subject);
-      handleFetchContent(subject, chapter, technologyUrl);
+  useEffect(() => {
+    if (subjectUrl && chapterUrl && technologyUrl) {
+      setSelectedSubject(subjectUrl);
+      handleFetchContent(subjectUrl, chapterUrl, technologyUrl);
     }
   }, [searchParams]);
 
@@ -67,12 +67,12 @@ export default function SideMenu() {
     router.push(`?subject=${subject}&chapter=${chapter}&technology=${technology}`);
   };
 
-  const toggleChapter = (index: number) => {
-    const isOpen = openChapters.includes(index);
+  const toggleChapter = (chapter: string) => {
+    const isOpen = openChapters.includes(chapter);
     if (isOpen) {
-      setOpenChapters(openChapters.filter(item => item !== index));
+      setOpenChapters(openChapters.filter(item => item !== chapter));
     } else {
-      setOpenChapters([...openChapters, index]);
+      setOpenChapters([...openChapters, chapter]);
     }
   };
 
@@ -128,19 +128,19 @@ export default function SideMenu() {
                     <CollapsibleTrigger asChild>
                       <div
                         className="flex items-center justify-between space-x-4 px-4 cursor-pointer"
-                        onClick={() => toggleChapter(index)}
+                        onClick={() => toggleChapter(menuContent.chapter)}
                       >
                         <Typography variant="smallText" as="p" className="text-white">
                           {menuContent.chapter}
                         </Typography>
                         <div>
-                          {openChapters.includes(index) ? <ChevronUp color="white" size={20} /> : <ChevronDown color="white" size={20} />}
+                          {openChapters.includes(menuContent.chapter) ? <ChevronUp color="white" size={20} /> : <ChevronDown color="white" size={20} />}
                         </div>
                       </div>
                     </CollapsibleTrigger>
                     <CollapsibleContent className={clsx(
                       "space-y-4 px-4 overflow-hidden transition-[max-height] duration-300",
-                      openChapters.includes(index) ? "max-h-[1000px]" : "max-h-0"
+                      openChapters.includes(menuContent.chapter) ? "max-h-[1000px]" : "max-h-0"
                     )}>
                       {renderSubjects(menuContent.subjects, menuContent.chapter)}
                     </CollapsibleContent>
