@@ -182,7 +182,7 @@ export default function Roadmap() {
 
     return (
         <section className={`flex flex-col ${!isAnySectionOpen ? 'h-full' : ''}`}>
-            <main className="flex-1 px-4 md:px-6 mt-36">
+            <main className="flex-1 px-4 md:px-6 mt-10">
                 <CollapsibleSection
                     id={1}
                     title="HTML"
