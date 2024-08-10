@@ -101,7 +101,7 @@ export default function Roadmap() {
     const [progressValues, setProgressValues] = useState({
         html: 0,
         css: 0,
-        js: 0,
+        javascript: 0,
     });
 
     const updateProgress = (technology: keyof typeof sectionsData, updatedSubjects: Section[]) => {
@@ -210,7 +210,7 @@ export default function Roadmap() {
                     learnPath="/learning/javascript?"
                     isOpen={openSections[3] || false}
                     onToggle={handleToggle}
-                    progressValue={progressValues.js}
+                    progressValue={progressValues.javascript}
                     toggleCheck={(sectionId, subjectIndex) => toggleCheck('javascript', sectionId, subjectIndex)}
                 />
             </main>
