@@ -1,13 +1,13 @@
 "use client";
-import { useUser, SignOutButton } from "@clerk/nextjs";
 
-import Link from "next/link"
-import { Typography } from "@/components/ui/typography"
-import { Button } from "@/components/ui/button"
-import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet"
-import { DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
+import { useUser, SignOutButton } from "@clerk/nextjs";
+import Link from "next/link";
+import { Typography } from "@/components/ui/typography";
+import { Button } from "@/components/ui/button";
+import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet";
+import { DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu";
 //import ModeToggle from "@/components/mode-toggle"
-import { CircleUserRound, Menu, User, LogOut } from "lucide-react"
+import { CircleUserRound, Menu, User, LogOut } from "lucide-react";
 
 export default function MainHeader() {
     const { isSignedIn, user } = useUser();
@@ -45,6 +45,12 @@ export default function MainHeader() {
                                 href="/about"
                             >
                                 About
+                            </Link>
+                            <Link
+                                className="flex items-center gap-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
+                                href="/roadmap"
+                            >
+                                Roadmap
                             </Link>
                             <Link
                                 className="flex items-center gap-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
@@ -105,6 +111,15 @@ export default function MainHeader() {
                 <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
                 <Link
                     className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
+                    href="/roadmap"
+                >
+                    <Typography variant="smallText" as="h1" className="text-white">
+                        ROADMAP
+                    </Typography>
+                </Link>
+                <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
+                <Link
+                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
                     href="/learning/html"
                 >
                     <Typography variant="smallText" as="h1" className="text-white">
@@ -154,6 +169,6 @@ export default function MainHeader() {
                     </Link>
                 )}
             </nav>
-        </header >
-    )
+        </header>
+    );
 }

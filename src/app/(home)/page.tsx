@@ -28,7 +28,7 @@ export default function Home() {
                         </div>
                         <Link href={'/learning/path'} className="block w-min">
                             <Button size={"lg"}>
-                                Start your learning path
+                                Start your learning path calendar
                             </Button>
                         </Link>
                     </div>
