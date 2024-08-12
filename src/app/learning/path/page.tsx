@@ -111,7 +111,7 @@ export default function MinimalisticCalendar() {
         <div className='h-full'>
             {/* Tutorial Section */}
             {isTutorialVisible ? (
-                <section className="border rounded-lg border-black p-4 bg-gray-100 text-black m-4 relative">
+                <section className="border rounded-lg border-black p-4 bg-gray-50 text-black m-4 relative">
                     <div className="absolute top-4 right-4 cursor-pointer">
                         <CircleX
                             size={24}
@@ -133,7 +133,7 @@ export default function MinimalisticCalendar() {
 
             <div className="flex flex-col md:flex-row md:space-x-8 p-4">
                 {/* Calendar Section */}
-                <section className="flex-1 mb-8 md:mb-0 border rounded-lg border-black p-4">
+                <section className="flex-1 mb-8 md:mb-0 border rounded-lg border-black bg-gray-50 p-4">
                     <Typography variant="extraLargeText" as="h2" className="mb-4 text-center font-bold">
                         1. Calendar
                     </Typography>
@@ -171,7 +171,7 @@ export default function MinimalisticCalendar() {
 
                 {/* Context List Section */}
                 <section
-                    className={`flex-1 border rounded-lg border-black p-4 ${startDate === null || endDate === null ? 'opacity-35 pointer-events-none' : ''}`}
+                    className={`flex-1 border rounded-lg border-black bg-gray-50 p-4 ${startDate === null || endDate === null ? 'opacity-35 pointer-events-none' : ''}`}
                 >
                     <Typography variant="extraLargeText" as="h2" className="mb-4 text-center font-bold">
                         2. Select things to Learn
