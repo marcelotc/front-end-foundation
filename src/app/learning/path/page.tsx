@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Typography } from "@/components/ui/typography";
 import { Button } from '@/components/ui/button';
-import { InfoIcon, CircleX } from 'lucide-react';
+import { Checkbox } from "@/components/ui/checkbox";
+import { InfoIcon, CircleX, Plus, Minus } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { getAllMenu } from '../../utils/supabase/requests';
 
 export default function MinimalisticCalendar() {
     const today = new Date();
@@ -14,8 +16,11 @@ export default function MinimalisticCalendar() {
     const [selectedMonth, setSelectedMonth] = useState(currentMonth);
     const [startDate, setStartDate] = useState<{ day: number; month: number } | null>(null);
     const [endDate, setEndDate] = useState<{ day: number; month: number } | null>(null);
+    const [hoveredDay, setHoveredDay] = useState<number | null>(null); 
     const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
     const [isTutorialVisible, setIsTutorialVisible] = useState(true);
+    const [sectionsData, setSectionsData] = useState<any>({});
+    const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({});
     const router = useRouter();
 
     const monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -50,6 +55,14 @@ export default function MinimalisticCalendar() {
         }
     };
 
+    const handleMouseEnter = (day: number) => {
+        setHoveredDay(day);
+    };
+
+    const handleMouseLeave = () => {
+        setHoveredDay(null);
+    };
+
     const isSelected = (day: number, month: number) => {
         if (startDate && endDate) {
             const start = new Date(today.getFullYear(), startDate.month, startDate.day);
@@ -60,12 +73,27 @@ export default function MinimalisticCalendar() {
         return startDate && startDate.day === day && startDate.month === month;
     };
 
+    const isHovered = (day: number) => {
+        if (!startDate || hoveredDay === null) return false;
+        if (startDate && !endDate) {
+            return day >= startDate.day && day <= hoveredDay;
+        }
+        return false;
+    };
+
     const toggleSubjectSelection = (subject: string) => {
         setSelectedSubjects(prevSubjects =>
             prevSubjects.includes(subject)
                 ? prevSubjects.filter(sub => sub !== subject)
                 : [...prevSubjects, subject]
         );
+    };
+
+    const toggleExpand = (technology: string) => {
+        setExpandedSections(prevState => ({
+            ...prevState,
+            [technology]: !prevState[technology]
+        }));
     };
 
     const handleConfirm = () => {
@@ -76,6 +104,44 @@ export default function MinimalisticCalendar() {
         }).toString();
 
         router.push(`/learning/path/schedule?${queryParams}`);
+    };
+
+    useEffect(() => {
+        const loadMenu = async () => {
+            try {
+                const data = await getAllMenu();
+                const organized = organizeByTechnology(data);
+                setSectionsData(organized);
+            } catch (error) {
+                console.error('Error loading menu:', error);
+            }
+        };
+
+        loadMenu();
+    }, []);
+
+    const organizeByTechnology = (menuContent: any) => {
+        return menuContent?.reduce((acc: any, item: any) => {
+            const { technology, chapter, subjects } = item;
+
+            if (!acc[technology]) {
+                acc[technology] = [];
+            }
+
+            const section: any = {
+                id: acc[technology].length + 1,
+                title: chapter,
+                technology: technology,
+                subjects: subjects.map((subject: any) => ({
+                    name: subject,
+                    checked: false
+                }))
+            };
+
+            acc[technology].push(section);
+
+            return acc;
+        }, {});
     };
 
     return (
@@ -124,14 +190,17 @@ export default function MinimalisticCalendar() {
                             ))}
                         </select>
 
-                        <div className="grid grid-cols-7 gap-2">
+                        <div className="grid grid-cols-12 gap-2">
                             {[...Array(daysInMonth)].map((_, day) => (
                                 <div
                                     key={day}
                                     onClick={() => handleDayClick(day + 1)}
-                                    className={`w-10 h-10 flex items-center justify-center cursor-pointer border border-black hover:bg-black hover:text-white transition-colors duration-200 ${isSelected(day + 1, selectedMonth) ? 'bg-black text-white' : ''
-                                        } ${selectedMonth === currentMonth && day + 1 === currentDay ? 'bg-gray-300' : ''
-                                        }`}
+                                    onMouseEnter={() => handleMouseEnter(day + 1)}
+                                    onMouseLeave={handleMouseLeave}
+                                    className={`w-10 h-10 flex items-center justify-center cursor-pointer border border-black transition-colors duration-200
+                                        ${isSelected(day + 1, selectedMonth) || isHovered(day + 1) ? 'bg-black text-white' : ''}
+                                        ${selectedMonth === currentMonth && day + 1 === currentDay ? 'bg-gray-300' : ''}
+                                    `}
                                 >
                                     {day + 1}
                                 </div>
@@ -145,95 +214,58 @@ export default function MinimalisticCalendar() {
                     className={`flex-1 border rounded-lg border-black p-4 ${startDate === null || endDate === null ? 'opacity-35 pointer-events-none' : ''}`}
                 >
                     <Typography variant="extraLargeText" as="h2" className="mb-4 text-center font-bold">
-                        2. Things to Learn
+                        2. Select things to Learn
                     </Typography>
-                    <ul className="list-disc list-inside">
-                        <li
-                            onClick={() => startDate !== null && endDate !== null && toggleSubjectSelection("Learn React")}
-                            className={`cursor-pointer ${selectedSubjects.includes("Learn React") ? 'font-bold' : ''}`}
-                        >
-                            Learn React
-                        </li>
-                        <li
-                            onClick={() => startDate !== null && endDate !== null && toggleSubjectSelection("Understand TypeScript")}
-                            className={`cursor-pointer ${selectedSubjects.includes("Understand TypeScript") ? 'font-bold' : ''}`}
-                        >
-                            Understand TypeScript
-                        </li>
-                        <li
-                            onClick={() => startDate !== null && endDate !== null && toggleSubjectSelection("Explore Tailwind CSS")}
-                            className={`cursor-pointer ${selectedSubjects.includes("Explore Tailwind CSS") ? 'font-bold' : ''}`}
-                        >
-                            Explore Tailwind CSS
-                        </li>
-                        <li
-                            onClick={() => startDate !== null && endDate !== null && toggleSubjectSelection("Study JavaScript ES6+")}
-                            className={`cursor-pointer ${selectedSubjects.includes("Study JavaScript ES6+") ? 'font-bold' : ''}`}
-                        >
-                            Study JavaScript ES6+
-                        </li>
-                        <li
-                            onClick={() => startDate !== null && endDate !== null && toggleSubjectSelection("Practice Responsive Design")}
-                            className={`cursor-pointer ${selectedSubjects.includes("Practice Responsive Design") ? 'font-bold' : ''}`}
-                        >
-                            Practice Responsive Design
-                        </li>
-                    </ul>
-                </section>
-
-                {/* Details Section */}
-                <section
-                    className={`flex-1 border rounded-lg border-black p-4 mt-8 md:mt-0 ${selectedSubjects.length === 0 ? 'opacity-35' : ''}`}
-                >
-                    <Typography variant="extraLargeText" as="h2" className="mb-4 text-center font-bold">
-                        3. Learning Path Calendar
-                    </Typography>
-                    <div className="flex mb-4 gap-4">
-                        {startDate && (
-                            <div className='flex gap-1'>
-                                <div>
-                                    <Typography variant="p" as="p" className='font-bold'>
-                                        Start Date:
+                    <div className="overflow-y-auto max-h-64">
+                        {Object.keys(sectionsData).map((technology) => (
+                            <div key={technology}>
+                                <div
+                                    className="cursor-pointer flex items-center mt-4 mb-2"
+                                    onClick={() => toggleExpand(technology)}
+                                >
+                                    <Typography variant="largeText" as="h3" className="font-semibold">
+                                        {technology}
                                     </Typography>
+                                    <div className="ml-4">
+                                        {expandedSections[technology] ? <Minus size={15} /> : <Plus size={15} />}
+                                    </div>
                                 </div>
-                                <div>
-                                    <Typography variant="p" as="p">
-                                        {startDate.day} {monthNames[startDate.month]}
-                                    </Typography>
-                                </div>
+                                {expandedSections[technology] && (
+                                    <div className="ml-4">
+                                        {sectionsData[technology].map((section: any) => (
+                                            <div key={section.id}>
+                                                <Typography variant="h4" as="h4" className="mt-2">
+                                                    {section.title}
+                                                </Typography>
+                                                <div className="ml-4">
+                                                    {section.subjects.map((subject: any, index: number) => (
+                                                        <label key={index} className="flex items-center cursor-pointer my-2">
+                                                            <Checkbox
+                                                                checked={selectedSubjects.includes(subject.name)}
+                                                                onCheckedChange={() => toggleSubjectSelection(subject.name)}
+                                                                className="mr-2"
+                                                            />
+                                                            <Typography variant="smallText">
+                                                                {subject.name}
+                                                            </Typography>
+                                                        </label>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
-                        )}
-                        {endDate && (
-                            <div className='flex gap-1'>
-                                <div>
-                                    <Typography variant="p" as="p" className='font-bold'>
-                                        End Date:
-                                    </Typography>
-                                </div>
-                                <div>
-                                    <Typography variant="p" as="p">
-                                        {endDate.day} {monthNames[endDate.month]}
-                                    </Typography>
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                    <Typography variant="p" as="p" className="mb-2 font-bold">
-                        Selected Subjects:
-                    </Typography>
-                    <ul className="list-disc list-inside">
-                        {selectedSubjects.map((subject, index) => (
-                            <li key={index}>{subject}</li>
                         ))}
-                    </ul>
-                    <Button
-                        onClick={handleConfirm}
-                        disabled={startDate === null || endDate === null || selectedSubjects.length === 0}
-                        className={'mt-4 w-full bottom-0'}
-                    >
-                        Confirm
-                    </Button>
+                    </div>
                 </section>
+            </div>
+
+            {/* Confirm Selection Button */}
+            <div className="p-4">
+                <Button onClick={handleConfirm} disabled={startDate === null || endDate === null || selectedSubjects.length === 0}>
+                    Confirm Selection
+                </Button>
             </div>
         </div>
     );

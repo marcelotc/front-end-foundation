@@ -15,6 +15,8 @@ export default function Schedule() {
     const parsedEndDate = endDateParam ? JSON.parse(endDateParam) : null;
     const parsedSubjects = subjectsParam ? JSON.parse(subjectsParam) : [];
 
+    console.log('subjectsParam', subjectsParam)
+
     const monthNames = [
         "January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
