@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ChevronDown, ChevronUp, CheckCircle2, Circle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import { Progress } from "@/components/ui/progress";
-import { getAllMenu } from '../utils/supabase/requests';
+import { useMenuData } from '@/app/hooks/useMenuData'; 
 
 interface Subject {
     name: string;
@@ -97,7 +97,7 @@ function CollapsibleSection({
 
 export default function Roadmap() {
     const [openSections, setOpenSections] = useState<Record<number, boolean>>({});
-    const [sectionsData, setSectionsData] = useState<any>({});
+    const { sectionsData, setSectionsData } = useMenuData(); 
     const [progressValues, setProgressValues] = useState({
         html: 0,
         css: 0,
@@ -138,44 +138,6 @@ export default function Roadmap() {
             ...prev,
             [id]: !prev[id]
         }));
-    };
-
-    useEffect(() => {
-        const loadMenu = async () => {
-            try {
-                const data = await getAllMenu();
-                const organized = organizeByTechnology(data);
-                setSectionsData(organized);
-            } catch (error) {
-                console.error('Error loading menu:', error);
-            }
-        };
-
-        loadMenu();
-    }, []);
-
-    const organizeByTechnology = (menuContent: any) => {
-        return menuContent?.reduce((acc: { [x: string]: Section[]; }, item: { technology: string; chapter: string; subjects: string[]; }) => {
-            const { technology, chapter, subjects } = item;
-
-            if (!acc[technology]) {
-                acc[technology] = [];
-            }
-
-            const section: Section = {
-                id: acc[technology].length + 1,
-                title: chapter,
-                technology: technology,
-                subjects: subjects.map(subject => ({
-                    name: subject,
-                    checked: false
-                }))
-            };
-
-            acc[technology].push(section);
-
-            return acc;
-        }, {});
     };
 
     const isAnySectionOpen = Object.values(openSections).includes(true);

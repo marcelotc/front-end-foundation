@@ -6,7 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from "@/components/ui/checkbox";
 import { InfoIcon, CircleX, Plus, Minus } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { getAllMenu } from '../../utils/supabase/requests';
+import { getAllMenu } from '@/app/utils/supabase/requests';
+import { useMenuData } from '@/app/hooks/useMenuData'; 
 
 export default function MinimalisticCalendar() {
     const today = new Date();
@@ -19,8 +20,8 @@ export default function MinimalisticCalendar() {
     const [hoveredDay, setHoveredDay] = useState<number | null>(null); 
     const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
     const [isTutorialVisible, setIsTutorialVisible] = useState(true);
-    const [sectionsData, setSectionsData] = useState<any>({});
     const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({});
+    const { sectionsData } = useMenuData(); 
     const router = useRouter();
 
     const monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -106,44 +107,6 @@ export default function MinimalisticCalendar() {
         router.push(`/learning/path/schedule?${queryParams}`);
     };
 
-    useEffect(() => {
-        const loadMenu = async () => {
-            try {
-                const data = await getAllMenu();
-                const organized = organizeByTechnology(data);
-                setSectionsData(organized);
-            } catch (error) {
-                console.error('Error loading menu:', error);
-            }
-        };
-
-        loadMenu();
-    }, []);
-
-    const organizeByTechnology = (menuContent: any) => {
-        return menuContent?.reduce((acc: any, item: any) => {
-            const { technology, chapter, subjects } = item;
-
-            if (!acc[technology]) {
-                acc[technology] = [];
-            }
-
-            const section: any = {
-                id: acc[technology].length + 1,
-                title: chapter,
-                technology: technology,
-                subjects: subjects.map((subject: any) => ({
-                    name: subject,
-                    checked: false
-                }))
-            };
-
-            acc[technology].push(section);
-
-            return acc;
-        }, {});
-    };
-
     return (
         <div className='h-full'>
             {/* Tutorial Section */}
@@ -160,9 +123,6 @@ export default function MinimalisticCalendar() {
                     </Typography>
                     <Typography>
                         <strong>2. Pick things to learn:</strong> Select subjects to learn between the selected dates.
-                    </Typography>
-                    <Typography>
-                        <strong>3. Confirm path calendar:</strong> Review and confirm the selected subjects and dates.
                     </Typography>
                 </section>
             ) : (
