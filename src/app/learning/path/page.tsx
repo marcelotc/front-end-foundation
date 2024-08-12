@@ -98,10 +98,28 @@ export default function MinimalisticCalendar() {
     };
 
     const handleConfirm = () => {
+        const startMonth = startDate ? startDate.month : null;
+        const endMonth = endDate ? endDate.month : null;
+
+        const getMonthsInRange = (startMonth: number, endMonth: number) => {
+            const months = [];
+            let currentMonth = startMonth;
+
+            while (currentMonth <= endMonth) {
+                months.push(currentMonth);
+                currentMonth++;
+            }
+
+            return months;
+        };
+
+        const months = startMonth !== null && endMonth !== null ? getMonthsInRange(startMonth, endMonth) : [];
+
         const queryParams = new URLSearchParams({
             startDate: JSON.stringify(startDate),
             endDate: JSON.stringify(endDate),
-            subjects: JSON.stringify(selectedSubjects)
+            subjects: JSON.stringify(selectedSubjects),
+            months: JSON.stringify(months)
         }).toString();
 
         router.push(`/learning/path/schedule?${queryParams}`);
