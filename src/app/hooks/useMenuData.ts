@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getAllMenu } from '../utils/supabase/requests';
+import { getAllMenu } from '@/app/utils/supabase/requests';
 
 interface Subject {
     name: string;

@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Typography } from "@/components/ui/typography";
 import { Button } from '@/components/ui/button';
 import { Checkbox } from "@/components/ui/checkbox";
 import { InfoIcon, CircleX, Plus, Minus } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { getAllMenu } from '@/app/utils/supabase/requests';
-import { useMenuData } from '@/app/hooks/useMenuData'; 
+import { Skeleton } from "@/components/ui/skeleton";
+import { useMenuData } from '@/app/hooks/useMenuData';
 
 export default function MinimalisticCalendar() {
     const today = new Date();
@@ -17,11 +17,11 @@ export default function MinimalisticCalendar() {
     const [selectedMonth, setSelectedMonth] = useState(currentMonth);
     const [startDate, setStartDate] = useState<{ day: number; month: number } | null>(null);
     const [endDate, setEndDate] = useState<{ day: number; month: number } | null>(null);
-    const [hoveredDay, setHoveredDay] = useState<number | null>(null); 
+    const [hoveredDay, setHoveredDay] = useState<number | null>(null);
     const [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
     const [isTutorialVisible, setIsTutorialVisible] = useState(true);
     const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({});
-    const { sectionsData } = useMenuData(); 
+    const { sectionsData, loading } = useMenuData();
     const router = useRouter();
 
     const monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -177,46 +177,56 @@ export default function MinimalisticCalendar() {
                         2. Select things to Learn
                     </Typography>
                     <div className="overflow-y-auto max-h-64">
-                        {Object.keys(sectionsData).map((technology) => (
-                            <div key={technology}>
-                                <div
-                                    className="cursor-pointer flex items-center mt-4 mb-2"
-                                    onClick={() => toggleExpand(technology)}
-                                >
-                                    <Typography variant="largeText" as="h3" className="font-semibold">
-                                        {technology}
-                                    </Typography>
-                                    <div className="ml-4">
-                                        {expandedSections[technology] ? <Minus size={15} /> : <Plus size={15} />}
-                                    </div>
-                                </div>
-                                {expandedSections[technology] && (
-                                    <div className="ml-4">
-                                        {sectionsData[technology].map((section: any) => (
-                                            <div key={section.id}>
-                                                <Typography variant="h4" as="h4" className="mt-2">
-                                                    {section.title}
-                                                </Typography>
-                                                <div className="ml-4">
-                                                    {section.subjects.map((subject: any, index: number) => (
-                                                        <label key={index} className="flex items-center cursor-pointer my-2">
-                                                            <Checkbox
-                                                                checked={selectedSubjects.includes(subject.name)}
-                                                                onCheckedChange={() => toggleSubjectSelection(subject.name)}
-                                                                className="mr-2"
-                                                            />
-                                                            <Typography variant="smallText">
-                                                                {subject.name}
-                                                            </Typography>
-                                                        </label>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                )}
+                        {loading ? (
+                            <div className='flex flex-col gap-5 p-5'>
+                                <Skeleton className="h-[20px] w-full rounded-xl" />
+                                <Skeleton className="h-[20px] w-full rounded-xl" />
+                                <Skeleton className="h-[20px] w-full rounded-xl" />
+                                <Skeleton className="h-[20px] w-full rounded-xl" />
+                                <Skeleton className="h-[20px] w-full rounded-xl" />
                             </div>
-                        ))}
+                        ) : (
+                            Object.keys(sectionsData).map((technology) => (
+                                <div key={technology}>
+                                    <div
+                                        className="cursor-pointer flex items-center mt-4 mb-2"
+                                        onClick={() => toggleExpand(technology)}
+                                    >
+                                        <Typography variant="largeText" as="h3" className="font-semibold">
+                                            {technology}
+                                        </Typography>
+                                        <div className="ml-4">
+                                            {expandedSections[technology] ? <Minus size={15} /> : <Plus size={15} />}
+                                        </div>
+                                    </div>
+                                    {expandedSections[technology] && (
+                                        <div className="ml-4">
+                                            {sectionsData[technology].map((section: any) => (
+                                                <div key={section.id}>
+                                                    <Typography variant="h4" as="h4" className="mt-2">
+                                                        {section.title}
+                                                    </Typography>
+                                                    <div className="ml-4">
+                                                        {section.subjects.map((subject: any, index: number) => (
+                                                            <label key={index} className="flex items-center cursor-pointer my-2">
+                                                                <Checkbox
+                                                                    checked={selectedSubjects.includes(subject.name)}
+                                                                    onCheckedChange={() => toggleSubjectSelection(subject.name)}
+                                                                    className="mr-2"
+                                                                />
+                                                                <Typography variant="smallText">
+                                                                    {subject.name}
+                                                                </Typography>
+                                                            </label>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            ))
+                        )}
                     </div>
                 </section>
             </div>
