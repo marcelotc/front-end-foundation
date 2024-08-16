@@ -122,7 +122,7 @@ export default function SideMenu() {
                   {technology.toUpperCase()}
                 </Typography>
               </div>
-              <div className='space-y-6 px-2 pb-10 m-2 overflow-y-scroll overflow-x-hidden h-[600px]'>
+              <div className='space-y-6 px-2 pb-10 m-2'>
                 {menuContent && menuContent.map((menuContent: any, index: number) => (
                   <Collapsible key={index} className="space-y-2">
                     <CollapsibleTrigger asChild>
