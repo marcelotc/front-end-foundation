@@ -43,10 +43,9 @@ function CollapsibleSection({
     const router = useRouter();
 
     return (
-        <div className="bg-[#1b1b1d] p-8 mb-10 rounded-lg">
+        <div className="bg-[#1b1b1d] p-8 mb-10 rounded-lg cursor-pointer" onClick={() => onToggle(id)}>
             <div
-                className="flex justify-between items-center cursor-pointer"
-                onClick={() => onToggle(id)}
+                className="flex justify-between items-center"
             >
                 <h1 className={`text-xl font-semibold text-white dark:text-white`}>
                     {title}
@@ -69,7 +68,10 @@ function CollapsibleSection({
                                     <li
                                         key={subjectIndex}
                                         className="group flex items-center w-1/4 mb-1 text-white dark:text-gray-400 p-3 rounded-md transition-colors duration-100 cursor-pointer hover:bg-[#ffa500] hover:text-black relative"
-                                        onClick={() => toggleCheck(section.id, subjectIndex)}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            toggleCheck(section.id, subjectIndex)
+                                        }}
                                     >
                                         {subject.checked ? <CheckCircle2 size={20} color="#00ff00" /> : <Circle size={20} color="#ffffff" />}
                                         <span className="ml-2">{subject.name}</span>

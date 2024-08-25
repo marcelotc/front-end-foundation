@@ -137,10 +137,10 @@ export default function MinimalisticCalendar() {
                         />
                     </div>
                     <Typography>
-                        <strong>1. Pick Dates:</strong> Select a start and end date on the calendar.
+                        <strong>1. Select Dates:</strong> Select a start and end date on the calendar.
                     </Typography>
                     <Typography>
-                        <strong>2. Pick things to learn:</strong> Select subjects to learn between the selected dates.
+                        <strong>2. Select subjects to learn:</strong> Select subjects to learn between the date ranges.
                     </Typography>
                 </section>
             ) : (
@@ -192,7 +192,7 @@ export default function MinimalisticCalendar() {
                     className={`flex-1 border rounded-lg border-black bg-gray-50 p-4 ${startDate === null || endDate === null ? 'opacity-35 pointer-events-none' : ''}`}
                 >
                     <Typography variant="extraLargeText" as="h2" className="mb-4 text-center font-bold">
-                        2. Select things to Learn
+                        2. Select subjects to Learn
                     </Typography>
                     <div className="overflow-y-auto max-h-64">
                         {loading ? (
