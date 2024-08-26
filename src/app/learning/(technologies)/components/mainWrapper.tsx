@@ -1,76 +1,26 @@
-'use client'
-
-import React, { useContext, useState, useEffect } from 'react';
+import { useContext, useState, useEffect } from 'react';
+import SideMenuContext from '@/app/learning/(technologies)/context/sideMenuContext';
 import { Typography } from "@/components/ui/typography";
 import { Button } from "@/components/ui/button";
-import { useRouter } from 'next/navigation';
 import clsx from 'clsx';
 
-import SideMenuContext, { MenuContentItem } from '../context/sideMenuContext';
+import useSubjectNavigation from '@/app/hooks/useSubjectNavigation';
 
 interface MainWrapperProps {
     children: React.ReactNode;
     markdown?: Array<{ chapter: string, subject: string }>;
-    loadingContent: boolean;
-}
-
-interface FlatSubject {
-    chapterIndex: number;
-    subjectIndex: number;
-    subject: string;
-    chapterTitle: string;
-    technology: string;
 }
 
 export default function MainWrapper({
     children,
     markdown,
-    loadingContent
 }: MainWrapperProps) {
-    const { menuOpen, menuContent } = useContext(SideMenuContext);
-    const [currentSubjectIndex, setCurrentSubjectIndex] = useState(0);
-    const router = useRouter();
-
-    const flatSubjects: FlatSubject[] = menuContent?.flatMap((chapter: MenuContentItem, chapterIndex: number) =>
-        chapter.subjects.map((subject: string, subjectIndex: number) => ({
-            chapterIndex,
-            subjectIndex,
-            subject,
-            chapterTitle: chapter.chapter,
-            technology: chapter.technology,
-        }))
-    ) || [];
-
-    useEffect(() => {
-        if (flatSubjects.length > 0 && flatSubjects[currentSubjectIndex]) {
-            const currentSubject = flatSubjects[currentSubjectIndex];
-            markdown = [{
-                chapter: currentSubject.chapterTitle,
-                subject: currentSubject.subject,
-            }];
-        }
-    }, [currentSubjectIndex, flatSubjects, markdown]);
-
-    function goToSubject(index: number) {
-        if (index >= 0 && index < flatSubjects.length) {
-            const { subject, chapterTitle, technology } = flatSubjects[index];
-            const url = `${technology}?subject=${encodeURIComponent(subject)}&chapter=${encodeURIComponent(chapterTitle)}&technology=${encodeURIComponent(technology)}`;
-            router.push(url);
-            setCurrentSubjectIndex(index);
-        }
-    }
-
-    function goToPreviousSubject() {
-        if (currentSubjectIndex > 0) {
-            goToSubject(currentSubjectIndex - 1);
-        }
-    }
-
-    function goToNextSubject() {
-        if (currentSubjectIndex < flatSubjects.length - 1) {
-            goToSubject(currentSubjectIndex + 1);
-        }
-    }
+    const {
+        goToPreviousSubject,
+        goToNextSubject,
+        technologyUrl
+    } = useSubjectNavigation();
+    const { menuOpen } = useContext(SideMenuContext);
 
     return (
         <main className={clsx("flex-1 mr-8 transition-all duration-300",
@@ -86,7 +36,7 @@ export default function MainWrapper({
                 {children}
             </div>
 
-            {!loadingContent ?
+            {technologyUrl !== null ?
                 (
                     <div className='flex justify-between mt-5'>
                         <Button size={"sm"} onClick={goToPreviousSubject} className='mb-5'>

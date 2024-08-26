@@ -17,7 +17,7 @@ export default function Css() {
     }, [technology]);
 
     return (
-        <MainWrapper markdown={markdown ?? undefined} loadingContent={loadingContent}>
+        <MainWrapper markdown={markdown ?? undefined}>
             {!markdown && !loadingContent && (
                 <>
                     <div className='flex items-center justify-center'>
