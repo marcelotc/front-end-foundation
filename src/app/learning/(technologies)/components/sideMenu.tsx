@@ -15,9 +15,8 @@ export default function SideMenu() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const { menuOpen, toggleMenu, technology, setMarkdown, setLoadingContent } = useContext(SideMenuContext);
+  const { menuOpen, toggleMenu, technology, setMarkdown, setLoadingContent, setMenuContent, menuContent } = useContext(SideMenuContext);
 
-  const [menuContent, setMenuContent] = useState<any>(null);
   const [loadingMenu, setLoadingMenu] = useState(false);
   const [openChapters, setOpenChapters] = useState<string[]>([]);
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
@@ -118,7 +117,10 @@ export default function SideMenu() {
             <div className='fade-edge-bottom'>
               <div className="flex items-center space-x-2 p-3">
                 <Code2 color="white" size={20} />
-                <Typography variant="largeText" as="p" className="text-white cursor-pointer" onClick={() => setMarkdown(null)}>
+                <Typography variant="largeText" as="p" className="text-white cursor-pointer" onClick={() => {
+                  setMarkdown(null);
+                  router.push(`/learning/${technologyUrl}`);
+                }}>
                   {technology.toUpperCase()}
                 </Typography>
               </div>

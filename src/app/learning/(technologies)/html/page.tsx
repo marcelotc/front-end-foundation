@@ -1,23 +1,23 @@
 'use client';
 
 import React, { useContext, useEffect } from 'react';
-import SideMenuContext, { } from '../context/sideMenuContext';
-import { SkeletonCard } from "../components/contentSkeleton"
+import SideMenuContext from '../context/sideMenuContext';
+import { SkeletonCard } from "../components/contentSkeleton";
 import Image from "next/image";
 import htmlLogo from "../../../../../public/html-logo.png";
 
 import MainWrapper from '../components/mainWrapper';
-import ContentOutput from '../components/contentOutput'
+import ContentOutput from '../components/contentOutput';
 
 export default function Html() {
     const { setTechnology, technology, markdown, loadingContent } = useContext(SideMenuContext);
 
     useEffect(() => {
-        setTechnology('html')
+        setTechnology('html');
     }, [technology]);
 
     return (
-        <MainWrapper markdown={markdown}>
+        <MainWrapper markdown={markdown ?? undefined} loadingContent={loadingContent}>
             {!markdown && !loadingContent && (
                 <>
                     <div className='flex items-center justify-center'>
@@ -34,11 +34,9 @@ export default function Html() {
                         each serving a specific purpose, such as defining headings, paragraphs, and links. These elements guide the browser on how to display the content,
                         making it possible to construct complex and structured web pages.
                     </div>
-
                 </>
-            )
-            }
+            )}
             {loadingContent ? <SkeletonCard /> : <ContentOutput content={markdown ? markdown[0]?.content : ''} />}
-        </MainWrapper >
+        </MainWrapper>
     );
 }

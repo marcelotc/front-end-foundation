@@ -17,7 +17,7 @@ export default function Javascript() {
     }, [technology]);
 
     return (
-        <MainWrapper markdown={markdown}>
+        <MainWrapper markdown={markdown ?? undefined} loadingContent={loadingContent}>
             {!markdown && !loadingContent && (
                 <>
                     <div className='flex items-center justify-center'>
