@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from 'react';
+import { useContext } from 'react';
 import SideMenuContext from '@/app/learning/(technologies)/context/sideMenuContext';
 import { Typography } from "@/components/ui/typography";
 import { Button } from "@/components/ui/button";
@@ -20,7 +20,7 @@ export default function MainWrapper({
         goToNextSubject,
         technologyUrl
     } = useSubjectNavigation();
-    const { menuOpen } = useContext(SideMenuContext);
+    const { menuOpen, loadingContent } = useContext(SideMenuContext);
 
     return (
         <main className={clsx("flex-1 mr-8 transition-all duration-300",
@@ -36,7 +36,7 @@ export default function MainWrapper({
                 {children}
             </div>
 
-            {technologyUrl !== null ?
+            {/*{technologyUrl !== null && !loadingContent ?
                 (
                     <div className='flex justify-between mt-5'>
                         <Button size={"sm"} onClick={goToPreviousSubject} className='mb-5'>
@@ -46,7 +46,7 @@ export default function MainWrapper({
                             Next
                         </Button>
                     </div>
-                ) : null}
+                ) : null}*/}
         </main>
     );
 }
