@@ -38,6 +38,6 @@ export default function Javascript() {
             )
             }
             {loadingContent ? <SkeletonCard /> : <ContentOutput content={markdown ? markdown[0]?.content : ''} />}
-        </MainWrapper >
+        </MainWrapper>
     );
 }

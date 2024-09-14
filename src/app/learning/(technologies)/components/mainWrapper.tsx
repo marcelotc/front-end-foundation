@@ -1,10 +1,12 @@
 import { useContext } from 'react';
+import { BookCheck } from 'lucide-react';
 import SideMenuContext from '@/app/learning/(technologies)/context/sideMenuContext';
 import { Typography } from "@/components/ui/typography";
-import { Button } from "@/components/ui/button";
+import { useSaveToLocalStorage } from "@/app/hooks/useSaveToLocalStorage";
 import clsx from 'clsx';
 
 import useSubjectNavigation from '@/app/hooks/useSubjectNavigation';
+import { Button } from '@/components/ui/button';
 
 interface MainWrapperProps {
     children: React.ReactNode;
@@ -15,12 +17,13 @@ export default function MainWrapper({
     children,
     markdown,
 }: MainWrapperProps) {
-    const {
+    /*const {
         goToPreviousSubject,
         goToNextSubject,
         technologyUrl
-    } = useSubjectNavigation();
+    } = useSubjectNavigation();*/
     const { menuOpen, loadingContent } = useContext(SideMenuContext);
+    const { handleSaveToLearningProgress } = useSaveToLocalStorage();
 
     return (
         <main className={clsx("flex-1 mr-8 transition-all duration-300",
@@ -34,6 +37,14 @@ export default function MainWrapper({
             </Typography>
             <div className={clsx("overflow-y-auto bg-gray-100 p-6 mt-5 dark:bg-gray-900 shadow-md")}>
                 {children}
+            </div>
+
+            <div className='flex justify-center mt-5'>
+                <Button size={"sm"} onClick={handleSaveToLearningProgress} className='mb-5 bg-green-800'>
+                    Complete subject
+                    &nbsp;
+                    <BookCheck />
+                </Button>
             </div>
 
             {/*{technologyUrl !== null && !loadingContent ?
