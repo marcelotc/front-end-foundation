@@ -17,7 +17,7 @@ export default function Home() {
         <section className="flex flex-col">
             <main className="flex-1 px-4 md:px-6 mt-32">
                 <div className="flex flex-col md:flex-row justify-between gap-8">
-                    <div className="space-y-4 animate-fade-down">
+                    <div className="space-y-4">
                         <div>
                             <Typography variant="extra3LargeText" as="h1">
                                 Leverage your front-end skills
@@ -32,7 +32,7 @@ export default function Home() {
                             </Button>
                         </Link>
                     </div>
-                    <div className="flex flex-col items-center gap-3 animate-fade-down border-2 border-[#1b1b1d] p-3 rounded-xl">
+                    <div className="flex flex-col items-center gap-3 border-2 border-[#1b1b1d] p-3 rounded-xl">
                         <div className="flex justify-center gap-4">
                             <Link href={'/learning/html'}>
                                 <Image
@@ -71,7 +71,7 @@ export default function Home() {
                     </div>
                 </div>
 
-                <div className="flex flex-col justify-center items-center gap-4 mt-10 py-10 animate-fade-up">
+                <div className="flex flex-col justify-center items-center gap-4 mt-10 py-10">
                     <div className="flex flex-wrap gap-4 justify-center">
                         <Link href={'/roadmap'}>
                             <div className="flex bg-[#1b1b1d] w-full sm:w-[300px] md:w-[400px] h-[200px] rounded-xl hover:opacity-95 cursor-pointer">

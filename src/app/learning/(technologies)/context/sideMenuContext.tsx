@@ -7,6 +7,7 @@ export interface MarkdownData {
     content: string;
     chapter: string;
     subject: string; 
+    technology: string; 
 }
 
 export interface MenuContentItem {

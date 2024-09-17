@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 
 interface MainWrapperProps {
     children: React.ReactNode;
-    markdown?: Array<{ chapter: string, subject: string }>;
+    markdown?: Array<{ chapter: string, subject: string, technology: string }>;
 }
 
 export default function MainWrapper({
@@ -40,11 +40,13 @@ export default function MainWrapper({
             </div>
 
             <div className='flex justify-center mt-5'>
-                <Button size={"sm"} onClick={handleSaveToLearningProgress} className='mb-5 bg-green-800'>
-                    Complete subject
-                    &nbsp;
-                    <BookCheck />
-                </Button>
+                {markdown && markdown.length > 0 && (
+                    <Button size={"sm"} onClick={() => handleSaveToLearningProgress(markdown[0]?.technology, markdown[0]?.chapter, markdown[0]?.subject)} className='mb-5 bg-green-800'>
+                        Complete subject
+                        &nbsp;
+                        <BookCheck />
+                    </Button>
+                )}
             </div>
 
             {/*{technologyUrl !== null && !loadingContent ?

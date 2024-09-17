@@ -11,7 +11,7 @@ export default function ProgressCards() {
 
     return (
         <section className="p-4 md:p-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 animate-fade-up">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <Card className="bg-[#1b1b1d]">
                     <CardHeader>
                         <div className="flex items-center gap-4">
