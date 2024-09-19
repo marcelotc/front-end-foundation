@@ -1,13 +1,13 @@
 "use client";
 
 import { useUser, SignOutButton } from "@clerk/nextjs";
+import { CircleUserRound, Menu, User, LogOut, Home } from "lucide-react";
 import Link from "next/link";
 import { Typography } from "@/components/ui/typography";
 import { Button } from "@/components/ui/button";
 import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet";
 import { DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu";
 //import ModeToggle from "@/components/mode-toggle"
-import { CircleUserRound, Menu, User, LogOut } from "lucide-react";
 
 export default function MainHeader() {
     const { isSignedIn, user } = useUser();
@@ -90,31 +90,20 @@ export default function MainHeader() {
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
-            <nav className="hidden items-center gap-4 lg:flex">
+            <nav className="hidden items-center lg:flex">
                 <Link
                     className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
                     href="/"
                 >
-                    <Typography variant="smallText" as="h1" className="text-white">
-                        HOME
-                    </Typography>
+                    <Home color="white" />
                 </Link>
                 <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
                 <Link
                     className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
                     href="/about"
                 >
-                    <Typography variant="smallText" as="h1" className="text-white">
+                    <Typography variant="smallText" as="h1" className="text-white text-xs">
                         ABOUT
-                    </Typography>
-                </Link>
-                <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
-                <Link
-                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
-                    href="/roadmap"
-                >
-                    <Typography variant="smallText" as="h1" className="text-white">
-                        ROADMAP
                     </Typography>
                 </Link>
                 <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
@@ -122,7 +111,7 @@ export default function MainHeader() {
                     className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
                     href="/learning/html"
                 >
-                    <Typography variant="smallText" as="h1" className="text-white">
+                    <Typography variant="smallText" as="h1" className="text-white text-xs">
                         HTML
                     </Typography>
                 </Link>
@@ -131,7 +120,7 @@ export default function MainHeader() {
                     className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
                     href="/learning/css"
                 >
-                    <Typography variant="smallText" as="h1" className="text-white">
+                    <Typography variant="smallText" as="h1" className="text-white text-xs">
                         CSS
                     </Typography>
                 </Link>
@@ -140,8 +129,44 @@ export default function MainHeader() {
                     className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
                     href="/learning/javascript"
                 >
-                    <Typography variant="smallText" as="h1" className="text-white">
+                    <Typography variant="smallText" as="h1" className="text-white text-xs">
                         JAVASCRIPT
+                    </Typography>
+                </Link>
+                <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
+                <Link
+                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
+                    href="/roadmap"
+                >
+                    <Typography variant="smallText" as="h1" className="text-white text-xs">
+                        ROADMAP
+                    </Typography>
+                </Link>
+                <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
+                <Link
+                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
+                    href="/learning/progress"
+                >
+                    <Typography variant="smallText" as="h1" className="text-white text-xs">
+                        LEARNING PROGRESS
+                    </Typography>
+                </Link>
+                <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
+                <Link
+                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
+                    href="/quiz"
+                >
+                    <Typography variant="smallText" as="h1" className="text-white text-xs">
+                        QUIZZES
+                    </Typography>
+                </Link>
+                <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
+                <Link
+                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
+                    href="/learning/path"
+                >
+                    <Typography variant="smallText" as="h1" className="text-white text-xs">
+                        LEARNING PATH CALENDAR
                     </Typography>
                 </Link>
                 <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
@@ -161,7 +186,7 @@ export default function MainHeader() {
                         </SignOutButton>
                     </div>
                 ) : (
-                    <Link href="/sign-in" className="flex justify-center items-center gap-4">
+                    <Link href="/sign-in" className="flex justify-center items-center gap-4 ml-3">
                         <User color="white" />
                         <Typography variant="smallText" as="p" className="text-white block !m-0">
                             Sign in

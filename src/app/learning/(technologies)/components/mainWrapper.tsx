@@ -3,6 +3,7 @@ import { BookCheck } from 'lucide-react';
 import SideMenuContext from '@/app/learning/(technologies)/context/sideMenuContext';
 import { Typography } from "@/components/ui/typography";
 import { useSaveToLocalStorage } from "@/app/hooks/useSaveToLocalStorage";
+import { Toaster } from 'sonner'
 import clsx from 'clsx';
 
 import useSubjectNavigation from '@/app/hooks/useSubjectNavigation';
@@ -60,6 +61,7 @@ export default function MainWrapper({
                         </Button>
                     </div>
                 ) : null}*/}
+            <Toaster richColors closeButton />
         </main>
     );
 }

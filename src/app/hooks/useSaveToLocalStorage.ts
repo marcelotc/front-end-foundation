@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { toast } from 'sonner'
 
 export function useSaveToLocalStorage() {
 
@@ -33,6 +34,8 @@ export function useSaveToLocalStorage() {
         }
 
         localStorage.setItem('learningProgress', JSON.stringify(learningProgress));
+
+        toast.success('Subject completed!')
     }
 
     return { handleSaveToLearningPath, handleSaveToRoadMap, handleSaveToQuizz, handleSaveToLearningProgress };
