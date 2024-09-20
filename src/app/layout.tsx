@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import MainHeader from "@/components/main-header"
 import MainFooter from "@/components/main-footer"
 import FloatingProgressTracker from "@/components/floating-progress-tracker"
+import FloatingInfo from "@/components/floating-info"
 import "@/styles/globals.css"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans", });
@@ -32,6 +33,7 @@ export default function RootLayout({
             <MainHeader />
             {children}
             <FloatingProgressTracker />
+            <FloatingInfo />
             <MainFooter />
           </ThemeProvider>
         </body>
