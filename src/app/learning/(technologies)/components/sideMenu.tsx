@@ -6,8 +6,9 @@ import SideMenuContext, { MarkdownData } from '../context/sideMenuContext';
 import { CollapsibleTrigger, CollapsibleContent, Collapsible } from "@/components/ui/collapsible";
 import { Typography } from "@/components/ui/typography";
 import { getMarkdownBySubjectTechnologyChapter } from '../../../utils/supabase/requests';
-import { ChevronDown, ChevronUp, ChevronLeft, ChevronRight, Code2 } from "lucide-react";
+import { ChevronDown, ChevronUp, ChevronLeft, ChevronRight, Code2, Check } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useSaveToLocalStorage } from "@/app/hooks/useSaveToLocalStorage";
 import { getMenu } from '../../../utils/supabase/requests';
 import clsx from 'clsx';
 
@@ -15,11 +16,13 @@ export default function SideMenu() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const { menuOpen, toggleMenu, technology, setMarkdown, setLoadingContent, setMenuContent, menuContent } = useContext(SideMenuContext);
+  const { menuOpen, toggleMenu, technology, setMarkdown, setLoadingContent, setMenuContent, menuContent, progressUpdate } = useContext(SideMenuContext);
+  const { getLearningProgress } = useSaveToLocalStorage();
 
   const [loadingMenu, setLoadingMenu] = useState(false);
   const [openChapters, setOpenChapters] = useState<string[]>([]);
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
+  const [progress, setProgress] = useState<{ chapters: any[] }>({ chapters: [] });
 
   useEffect(() => {
     const loadMenu = async () => {
@@ -50,6 +53,11 @@ export default function SideMenu() {
     }
   }, [searchParams]);
 
+  useEffect(() => {
+    const retrievedProgress = getLearningProgress(technology);
+    setProgress(retrievedProgress);
+  }, [technology, progressUpdate]);
+
   const handleFetchContent = async (subject: string, chapter: string, technologyUrl: string) => {
     try {
       setLoadingContent(true);
@@ -79,19 +87,30 @@ export default function SideMenu() {
     return subjects.map((subject, index) => {
       const isActive = subject === selectedSubject;
 
+      const chapterProgress = progress.chapters.find((progressChapter) => progressChapter.name === chapter);
+      const isSubjectConcluded = chapterProgress?.subjectsConcluded.includes(subject);
+
       return (
         <Collapsible key={index} className="space-y-2">
           <CollapsibleTrigger asChild>
             <div
               className={clsx(
-                "flex items-center justify-between space-x-4 px-4 cursor-pointer",
+                "flex items-center justify-between px-4 cursor-pointer",
                 isActive && "bg-gray-700 p-3 rounded-sm"
               )}
               onClick={() => handleSubjectClick(subject, chapter, technology)}
             >
-              <Typography variant="smallText" as="p" className="text-white">
+              <Typography
+                variant="smallText"
+                as="p"
+                className="text-white truncate flex-grow"
+              >
                 {subject}
               </Typography>
+
+              {isSubjectConcluded && (
+                <Check color="lightgreen" size={20} className="ml-2 flex-shrink-0" />
+              )}
             </div>
           </CollapsibleTrigger>
         </Collapsible>

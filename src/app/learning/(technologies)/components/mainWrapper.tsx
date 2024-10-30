@@ -23,8 +23,17 @@ export default function MainWrapper({
         goToNextSubject,
         technologyUrl
     } = useSubjectNavigation();*/
-    const { menuOpen, loadingContent } = useContext(SideMenuContext);
+    const { menuOpen, progressUpdate, setProgressUpdate, loadingContent } = useContext(SideMenuContext);
     const { handleSaveToLearningProgress } = useSaveToLocalStorage();
+
+    const isMarkdownEmpty = markdown && markdown.length > 0;
+
+    const handleUpdateAndSaveProgress = () => {
+        if (isMarkdownEmpty) {
+            handleSaveToLearningProgress(markdown[0]?.technology, markdown[0]?.chapter, markdown[0]?.subject);
+            setProgressUpdate(!progressUpdate);
+        }
+    }
 
     return (
         <main className={clsx("flex-1 mr-8 transition-all duration-300",
@@ -32,7 +41,7 @@ export default function MainWrapper({
             !menuOpen && "ml-20",
         )}>
             <Typography variant="extra3LargeText" as="h1" className='font-bold'>
-                {markdown && markdown.length > 0 && (
+                {isMarkdownEmpty && (
                     `${markdown[0]?.chapter} - ${markdown[0]?.subject}`
                 )}
             </Typography>
@@ -41,8 +50,8 @@ export default function MainWrapper({
             </div>
 
             <div className='flex justify-center mt-5'>
-                {markdown && markdown.length > 0 && (
-                    <Button size={"sm"} onClick={() => handleSaveToLearningProgress(markdown[0]?.technology, markdown[0]?.chapter, markdown[0]?.subject)} className='mb-5 bg-green-800'>
+                {isMarkdownEmpty && (
+                    <Button size={"sm"} onClick={handleUpdateAndSaveProgress} className='mb-5 bg-green-800'>
                         Complete subject
                         &nbsp;
                         <BookCheck />

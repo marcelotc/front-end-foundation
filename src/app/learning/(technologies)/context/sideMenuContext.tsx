@@ -22,11 +22,13 @@ interface SideMenuContextType {
     loadingContent: boolean;
     markdown: MarkdownData[] | null;
     menuContent: MenuContentItem[] | null;
+    progressUpdate: boolean;
     setTechnology: (value: string) => void;
     setMarkdown: Dispatch<SetStateAction<MarkdownData[] | null>>;
     toggleMenu: () => void;
     setLoadingContent: (value: boolean) => void;
     setMenuContent: Dispatch<SetStateAction<MenuContentItem[] | null>>;
+    setProgressUpdate: Dispatch<SetStateAction<boolean>>;
 }
 
 const SideMenuContext = createContext<SideMenuContextType>({
@@ -35,11 +37,13 @@ const SideMenuContext = createContext<SideMenuContextType>({
     markdown: null,
     loadingContent: false,
     menuContent: null,
+    progressUpdate: false,
     setMarkdown: () => {},
     setTechnology: () => {},
     toggleMenu: () => {},
     setLoadingContent: () => {},
     setMenuContent: () => {},
+    setProgressUpdate: () => {},
 });
 
 export const SideMenuProvider = ({
@@ -52,13 +56,14 @@ export const SideMenuProvider = ({
     const [markdown, setMarkdown] = useState<MarkdownData[] | null>(null);
     const [loadingContent, setLoadingContent] = useState(false);
     const [menuContent, setMenuContent] = useState<MenuContentItem[] | null>(null);
+    const [progressUpdate, setProgressUpdate] = useState(false);
 
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
     };
 
     return (
-        <SideMenuContext.Provider value={{ menuOpen, toggleMenu, technology, setTechnology, markdown, setMarkdown, setLoadingContent, loadingContent, menuContent, setMenuContent }}>
+        <SideMenuContext.Provider value={{ menuOpen, toggleMenu, technology, setTechnology, markdown, setMarkdown, setLoadingContent, loadingContent, menuContent, setMenuContent, progressUpdate, setProgressUpdate }}>
             {children}
         </SideMenuContext.Provider>
     );
