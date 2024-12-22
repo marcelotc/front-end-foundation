@@ -113,16 +113,21 @@ export default function Roadmap() {
         css: 0,
         javascript: 0,
     });
+    const { handleSaveToRoadMap } = useSaveToLocalStorage();
+
+    useEffect(() => {
+        const { progressValues, sectionsData: updatedData } = handleSaveToRoadMap(sectionsData);
+        setProgressValues(progressValues);
+    }, [sectionsData]);
 
     const handleToggle = (id: number) => {
-        setOpenSections(prev => ({
+        setOpenSections((prev) => ({
             ...prev,
-            [id]: !prev[id]
+            [id]: !prev[id],
         }));
     };
 
     const isAnySectionOpen = Object.values(openSections).includes(true);
-    console.log('sectionsData', sectionsData)
 
     return (
         <section className={`flex flex-col ${!isAnySectionOpen ? 'h-full' : ''}`}>
