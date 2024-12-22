@@ -138,7 +138,7 @@ export default function SideMenu() {
                 <Code2 color="white" size={20} />
                 <Typography variant="largeText" as="p" className="text-white cursor-pointer" onClick={() => {
                   setMarkdown(null);
-                  router.push(`/learning/${technologyUrl}`);
+                  router.push(`/learning/${technology}`);
                 }}>
                   {technology.toUpperCase()}
                 </Typography>
