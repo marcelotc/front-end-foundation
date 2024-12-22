@@ -161,7 +161,7 @@ export default function MainHeader() {
                     </Typography>
                 </Link>
                 <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
-                <Link
+                {/*<Link
                     className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
                     href="/learning/path"
                 >
@@ -169,7 +169,7 @@ export default function MainHeader() {
                         LEARNING PATH CALENDAR
                     </Typography>
                 </Link>
-                <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
+                <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />*/}
                 {/*<ModeToggle />*/}
                 {isSignedIn ? (
                     <div className="flex justify-center items-center gap-4 ml-3">

@@ -26,9 +26,9 @@ export default function Home() {
                                 by developing your <b><u>foundation</u></b>
                             </Typography>
                         </div>
-                        <Link href={'/learning/path'} className="block w-min">
+                        <Link href={'/roadmap'} className="block w-min">
                             <Button size={"lg"}>
-                                Start your learning path calendar
+                                Check the front-end roadmap
                             </Button>
                         </Link>
                     </div>
@@ -106,7 +106,7 @@ export default function Home() {
                         </Link>
                     </div>
                     <div className="flex flex-wrap gap-4 justify-center mt-6">
-                        <Link href={'/learning/path'}>
+                        {/*<Link href={'/learning/path'}>
                             <div className="flex bg-[#1b1b1d] w-full sm:w-[300px] md:w-[400px] h-[200px] rounded-xl hover:opacity-95 cursor-pointer">
                                 <div className="flex items-center justify-between w-full p-6 sm:p-8 md:p-10">
                                     <Typography variant="largeText" as="h1" className="text-white">
@@ -121,7 +121,7 @@ export default function Home() {
                                     />
                                 </div>
                             </div>
-                        </Link>
+                        </Link>*/}
                         <Link href={'/learning/progress'}>
                             <div className="flex bg-[#1b1b1d] w-full sm:w-[300px] md:w-[400px] h-[200px] rounded-xl hover:opacity-95 cursor-pointer">
                                 <div className="flex items-center justify-between w-full p-6 sm:p-8 md:p-10">

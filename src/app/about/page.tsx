@@ -13,9 +13,9 @@ export default function About() {
                 <Typography variant="h3" className="mb-4">What's Offered</Typography>
 
                 <ul className="list-disc list-inside mb-8">
-                    <li>
+                    {/*<li>
                         <b>Define Your Learning Path Calendar:</b> Tailor your learning journey with an interactive calendar, designed to help set achievable goals and track progress.
-                    </li>
+                    </li>*/}
                     <li>
                         <b>Quizzes:</b> Test knowledge and reinforce understanding with regularly updated quizzes covering key concepts in HTML, CSS, and JavaScript.
                     </li>
