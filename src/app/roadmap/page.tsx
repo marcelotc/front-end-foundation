@@ -48,9 +48,6 @@ function CollapsibleSection({
         setHtmlProgress(retrievedProgress);
     }, []);
 
-    console.log('htmlProgress', htmlProgress)
-    console.log('timelineData', timelineData)
-
     return (
         <div className="bg-[#1b1b1d] p-8 mb-10 rounded-lg cursor-pointer" onClick={() => onToggle(id)}>
             <div
