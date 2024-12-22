@@ -1,12 +1,11 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { BookCheck } from 'lucide-react';
 import SideMenuContext from '@/app/learning/(technologies)/context/sideMenuContext';
 import { Typography } from "@/components/ui/typography";
 import { useSaveToLocalStorage } from "@/app/hooks/useSaveToLocalStorage";
-import { Toaster } from 'sonner'
+import { Toaster } from 'sonner';
 import clsx from 'clsx';
 
-import useSubjectNavigation from '@/app/hooks/useSubjectNavigation';
 import { Button } from '@/components/ui/button';
 
 interface MainWrapperProps {
@@ -19,12 +18,13 @@ export default function MainWrapper({
     markdown,
 }: MainWrapperProps) {
     /*const {
-        goToPreviousSubject,
-        goToNextSubject,
-        technologyUrl
-    } = useSubjectNavigation();*/
+    goToPreviousSubject,
+    goToNextSubject,
+    technologyUrl
+} = useSubjectNavigation();*/
     const { menuOpen, progressUpdate, setProgressUpdate, loadingContent } = useContext(SideMenuContext);
     const { handleSaveToLearningProgress } = useSaveToLocalStorage();
+    const [showButton, setShowButton] = useState(false);
 
     const isMarkdownEmpty = markdown && markdown.length > 0;
 
@@ -33,7 +33,20 @@ export default function MainWrapper({
             handleSaveToLearningProgress(markdown[0]?.technology, markdown[0]?.chapter, markdown[0]?.subject);
             setProgressUpdate(!progressUpdate);
         }
-    }
+    };
+
+    useEffect(() => {
+        let timeout: NodeJS.Timeout;
+        if (!loadingContent) {
+            timeout = setTimeout(() => {
+                setShowButton(true);
+            }, 800); 
+        } else {
+            setShowButton(false);
+        }
+
+        return () => clearTimeout(timeout);
+    }, [loadingContent]);
 
     return (
         <main className={clsx("flex-1 mr-8 transition-all duration-300",
@@ -50,7 +63,7 @@ export default function MainWrapper({
             </div>
 
             <div className='flex justify-center mt-5'>
-                {isMarkdownEmpty && (
+                {isMarkdownEmpty && showButton && (
                     <Button size={"sm"} onClick={handleUpdateAndSaveProgress} className='mb-5 bg-green-800'>
                         Complete subject
                         &nbsp;
