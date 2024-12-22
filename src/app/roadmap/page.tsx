@@ -1,11 +1,12 @@
 'use client';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChevronDown, ChevronUp, CheckCircle2, Circle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import { Progress } from "@/components/ui/progress";
-import { useMenuData } from '@/app/hooks/useMenuData'; 
+import { useMenuData } from '@/app/hooks/useMenuData';
+import { useSaveToLocalStorage } from "@/app/hooks/useSaveToLocalStorage";
 
 interface Subject {
     name: string;
@@ -27,7 +28,6 @@ interface CollapsibleSectionProps {
     isOpen: boolean;
     onToggle: (id: number) => void;
     progressValue: number;
-    toggleCheck: (sectionId: number, subjectIndex: number) => void;
 }
 
 function CollapsibleSection({
@@ -38,9 +38,18 @@ function CollapsibleSection({
     isOpen,
     onToggle,
     progressValue,
-    toggleCheck
 }: CollapsibleSectionProps) {
     const router = useRouter();
+    const [htmlProgress, setHtmlProgress] = useState();
+    const { getLearningProgress } = useSaveToLocalStorage();
+
+    useEffect(() => {
+        const retrievedProgress = getLearningProgress('html');
+        setHtmlProgress(retrievedProgress);
+    }, []);
+
+    console.log('htmlProgress', htmlProgress)
+    console.log('timelineData', timelineData)
 
     return (
         <div className="bg-[#1b1b1d] p-8 mb-10 rounded-lg cursor-pointer" onClick={() => onToggle(id)}>
@@ -70,7 +79,6 @@ function CollapsibleSection({
                                         className="group flex items-center w-1/4 mb-1 text-white dark:text-gray-400 p-3 rounded-md transition-colors duration-100 cursor-pointer hover:bg-[#ffa500] hover:text-black relative"
                                         onClick={(e) => {
                                             e.stopPropagation();
-                                            toggleCheck(section.id, subjectIndex)
                                         }}
                                     >
                                         {subject.checked ? <CheckCircle2 size={20} color="#00ff00" /> : <Circle size={20} color="#ffffff" />}
@@ -99,41 +107,12 @@ function CollapsibleSection({
 
 export default function Roadmap() {
     const [openSections, setOpenSections] = useState<Record<number, boolean>>({});
-    const { sectionsData, setSectionsData } = useMenuData(); 
+    const { sectionsData } = useMenuData();
     const [progressValues, setProgressValues] = useState({
         html: 0,
         css: 0,
         javascript: 0,
     });
-
-    const updateProgress = (technology: keyof typeof sectionsData, updatedSubjects: Section[]) => {
-        const totalSubjects = updatedSubjects.reduce((acc, section) => acc + section.subjects.length, 0);
-        const checkedSubjects = updatedSubjects.reduce((acc, section) => {
-            return acc + section.subjects.filter(subject => subject.checked).length;
-        }, 0);
-        const progress = (checkedSubjects / totalSubjects) * 100;
-
-        setProgressValues(prev => ({ ...prev, [technology]: progress }));
-    };
-
-    const toggleCheck = (technology: keyof typeof sectionsData, sectionId: number, subjectIndex: number) => {
-        setSectionsData((prevData: any) => {
-            const updatedSubjects = prevData[technology].map((section: Section) => {
-                if (section.id === sectionId) {
-                    const updatedSectionSubjects = section.subjects.map((subject, index) => {
-                        if (index === subjectIndex) {
-                            return { ...subject, checked: !subject.checked };
-                        }
-                        return subject;
-                    });
-                    return { ...section, subjects: updatedSectionSubjects };
-                }
-                return section;
-            });
-            updateProgress(technology, updatedSubjects);
-            return { ...prevData, [technology]: updatedSubjects };
-        });
-    };
 
     const handleToggle = (id: number) => {
         setOpenSections(prev => ({
@@ -143,6 +122,7 @@ export default function Roadmap() {
     };
 
     const isAnySectionOpen = Object.values(openSections).includes(true);
+    console.log('sectionsData', sectionsData)
 
     return (
         <section className={`flex flex-col ${!isAnySectionOpen ? 'h-full' : ''}`}>
@@ -155,7 +135,6 @@ export default function Roadmap() {
                     isOpen={openSections[1] || false}
                     onToggle={handleToggle}
                     progressValue={progressValues.html}
-                    toggleCheck={(sectionId, subjectIndex) => toggleCheck('html', sectionId, subjectIndex)}
                 />
                 <CollapsibleSection
                     id={2}
@@ -165,7 +144,6 @@ export default function Roadmap() {
                     isOpen={openSections[2] || false}
                     onToggle={handleToggle}
                     progressValue={progressValues.css}
-                    toggleCheck={(sectionId, subjectIndex) => toggleCheck('css', sectionId, subjectIndex)}
                 />
                 <CollapsibleSection
                     id={3}
@@ -175,7 +153,6 @@ export default function Roadmap() {
                     isOpen={openSections[3] || false}
                     onToggle={handleToggle}
                     progressValue={progressValues.javascript}
-                    toggleCheck={(sectionId, subjectIndex) => toggleCheck('javascript', sectionId, subjectIndex)}
                 />
             </main>
         </section>

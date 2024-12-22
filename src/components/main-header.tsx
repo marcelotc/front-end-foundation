@@ -172,7 +172,7 @@ export default function MainHeader() {
                 <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
                 {/*<ModeToggle />*/}
                 {isSignedIn ? (
-                    <div className="flex justify-center items-center gap-4">
+                    <div className="flex justify-center items-center gap-4 ml-3">
                         <Typography variant="p" as="h1" className="text-white">
                             Hello {user.firstName}!
                         </Typography>

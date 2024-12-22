@@ -1,11 +1,12 @@
-import { useState, useEffect } from 'react';
 import { toast } from 'sonner'
 
 export function useSaveToLocalStorage() {
 
     const handleSaveToLearningPath = () => { }
 
-    const handleSaveToRoadMap = () => { }
+    const handleSaveToRoadMap = () => { 
+        // TO DO
+    }
 
     const handleSaveToQuizz = () => { }
 
