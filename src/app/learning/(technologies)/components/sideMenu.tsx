@@ -5,11 +5,11 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import SideMenuContext, { MarkdownData } from '../context/sideMenuContext';
 import { CollapsibleTrigger, CollapsibleContent, Collapsible } from "@/components/ui/collapsible";
 import { Typography } from "@/components/ui/typography";
-import { getMarkdownBySubjectTechnologyChapter } from '../../../utils/supabase/requests';
+import { getMarkdownBySubjectTechnologyChapter } from '../../../utils/supabase/contentRequests';
 import { ChevronDown, ChevronUp, ChevronLeft, ChevronRight, Code2, Check } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSaveToLocalStorage } from "@/app/hooks/useSaveToLocalStorage";
-import { getMenu } from '../../../utils/supabase/requests';
+import { getMenu } from '../../../utils/supabase/contentRequests';
 import clsx from 'clsx';
 
 export default function SideMenu() {

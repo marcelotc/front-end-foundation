@@ -10,10 +10,11 @@ import MainWrapper from '../components/mainWrapper';
 import ContentOutput from '../components/contentOutput'
 
 export default function Css() {
-    const { setTechnology, technology, markdown, loadingContent } = useContext(SideMenuContext);
+    const { setTechnology, setMarkdown, technology, markdown, loadingContent } = useContext(SideMenuContext);
 
     useEffect(() => {
-        setTechnology('css')
+        setTechnology('css');
+        setMarkdown(null);
     }, [technology]);
 
     return (

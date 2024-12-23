@@ -105,13 +105,13 @@ export default function FloatingProgressTracker() {
                     <CircleX className='cursor-pointer' onClick={toggleTrackerVisibility} />
                 </div>
             )}
-            {!showTracker && (
+            {/*{!showTracker && (
                 <div className="fixed bottom-4 right-4">
                     <Button  onClick={toggleTrackerVisibility}>
                         Show learning objective tracker
                     </Button>
                 </div>
-            )}
+            )}*/}
         </>
     );
 }

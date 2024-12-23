@@ -5,7 +5,7 @@ import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/com
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { getMenu } from '@/app/utils/supabase/requests';
+import { getMenu } from '@/app/utils/supabase/contentRequests';
 import htmlLogo from "../../../../../public/html-logo.png";
 import cssLogo from "../../../../../public/css-logo.png";
 import javascriptLogo from "../../../../../public/javascript-logo.png";

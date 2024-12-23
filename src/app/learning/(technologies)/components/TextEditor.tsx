@@ -10,7 +10,7 @@ import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { Button } from '@/components/ui/button';
 import { v4 as uuidv4 } from 'uuid';
-import { getMenuChapters, uploadImage } from '../../../utils/supabase/requests';
+import { getMenuChapters, uploadImage } from '../../../utils/supabase/contentRequests';
 import './styles.css';
 
 const extensions = [

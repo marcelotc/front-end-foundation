@@ -7,7 +7,7 @@ import { useSession } from '@clerk/clerk-react'
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Typography } from "@/components/ui/typography"
-import { getMarkdownBySubjectTechnologyChapter, putMarkdown, getMenuChapters, getMenuChaptersSubjects, deletePost } from '../../utils/supabase/requests';
+import { getMarkdownBySubjectTechnologyChapter, putMarkdown, getMenuChapters, getMenuChaptersSubjects, deletePost } from '../../utils/supabase/contentRequests';
 import TextEditor from '../../learning/(technologies)/components/TextEditor';
 import { checkUserRole } from '../../../utils/userUtils';
 

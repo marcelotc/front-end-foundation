@@ -24,9 +24,7 @@ export default function FloatingInfo() {
                         <AlertDialogHeader>
                             <AlertDialogTitle>How Your Progress is Saved</AlertDialogTitle>
                             <AlertDialogDescription>
-                                Your progress is stored in your browser's local storage. This means all your learning milestones, completed chapters, and finished subjects are saved directly on your device. No account is required, and your data remains private to you.
-                                This approach ensures you can pick up right where you left off, even if you refresh or close the site. However, please note that clearing your browser's storage will erase your progress.
-                            </AlertDialogDescription>
+                                Your progress is saved in your browser, allowing you to resume anytime. No account is needed, but clearing your browser’s storage will remove it.                            </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
                             <AlertDialogAction>Ok</AlertDialogAction>

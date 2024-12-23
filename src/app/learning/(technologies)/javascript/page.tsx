@@ -10,10 +10,11 @@ import MainWrapper from '../components/mainWrapper';
 import ContentOutput from '../components/contentOutput'
 
 export default function Javascript() {
-    const { setTechnology, technology, markdown, loadingContent } = useContext(SideMenuContext);
+    const { setTechnology, setMarkdown, technology, markdown, loadingContent } = useContext(SideMenuContext);
 
     useEffect(() => {
-        setTechnology('javascript')
+        setTechnology('javascript');
+        setMarkdown(null);
     }, [technology]);
 
     return (
