@@ -11,7 +11,7 @@ import { Typography } from "@/components/ui/typography"
 import { useRouter } from 'next/navigation';
 import TextEditor from '../learning/(technologies)/components/TextEditor'
 import { postMarkdown } from '../utils/supabase/contentRequests';
-import { postQuiz } from '../utils/supabase/quizzRequest';
+import { postQuiz, getAllQuizzes, deleteQuiz } from '../utils/supabase/quizzRequest';
 import { checkUserRole } from '../../utils/userUtils';
 
 export default function Admin() {
@@ -23,6 +23,7 @@ export default function Admin() {
     ]);
     const [technology, setTechnology] = useState('');
     const [description, setDescription] = useState('');
+    const [quizzes, setQuizzes] = useState<any[]>([]);
 
     const { userId, getToken } = useAuth();
     const { session } = useSession();
@@ -195,6 +196,25 @@ export default function Admin() {
         input.click();
     };
 
+    const listQuizzes = async () => {
+        const token: any = await getToken({ template: 'supabase' });
+        const fetchedQuizzes = await getAllQuizzes(token);
+
+        if (fetchedQuizzes.length === 0) {
+            console.log('No quizzes found.');
+        } else {
+            setQuizzes(fetchedQuizzes);
+        }
+    };
+
+    const handleDeleteQuiz = async (quizId: string) => {
+        const token: any = await getToken({ template: 'supabase' });
+        const success = await deleteQuiz({ quizId, token });
+        if (success) {
+            setQuizzes(prevQuizzes => prevQuizzes.filter(quiz => quiz.id !== quizId));
+        }
+    };
+
     const publishQuizz = () => {
         return (
             <div className="m-[60px] border-solid border-2 border-black p-10">
@@ -270,6 +290,7 @@ export default function Admin() {
                             >
                                 Add Option
                             </button>
+                            <button onClick={addQuestion} className="text-blue-500">Add Question</button>
                             <button
                                 onClick={() => removeQuestion(questionIndex)}
                                 className="mt-2 text-red-500"
@@ -278,14 +299,31 @@ export default function Admin() {
                             </button>
                         </div>
                     ))}
-                    <button onClick={addQuestion} className="text-blue-500">Add Question</button>
                     <Button onClick={handleSubmitQuiz} disabled={submitting} size="lg">
                         {submitting ? 'Creating...' : 'Create Quiz'}
                     </Button>
+                    <button onClick={() => listQuizzes()} className="text-blue-500">List Quizzes</button>
+
+                    <div className="mt-6">
+                        <Typography variant="extra3LargeText" as="h2">Quizzes</Typography>
+                        <ul>
+                            {quizzes.map((quiz) => (
+                                <li key={quiz.id} className="flex items-center gap-6 mt-6">
+                                    <button
+                                        onClick={() => handleDeleteQuiz(quiz.id)}
+                                        className="ml-4 text-red-500 hover:text-red-700"
+                                    >
+                                        Delete
+                                    </button>
+                                    <Typography variant={'h6'}>{quiz.title} - {quiz.description}</Typography>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                 </div>
             </div>
         );
-    }
+    };
 
     const renderPublish = () => {
         if (publishSwitch === 'content') {
