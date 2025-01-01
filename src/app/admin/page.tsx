@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from 'react'
+import { v4 as uuidv4 } from 'uuid';
+import { uploadImage } from '@/app/utils/supabase/contentRequests';
 import { CircleArrowLeft } from 'lucide-react'
 import { useAuth } from '@clerk/nextjs';
 import { useSession } from '@clerk/clerk-react'
@@ -164,9 +166,38 @@ export default function Admin() {
         }
     };
 
+    const handleAddImageToOption = async (questionIndex: number, optionIndex: number) => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+
+        input.onchange = async (e: any) => {
+            const file = e.target.files[0];
+            const newUuid = uuidv4();
+
+            if (file) {
+                try {
+                    const token = await getToken({ template: 'supabase' });
+                    await uploadImage({ image: file, token, imageId: newUuid });
+
+                    const url = `https://bsafsspqwxcudibbkjps.supabase.co/storage/v1/object/public/images/${newUuid}`;
+
+                    const updatedQuestions = [...questions];
+                    updatedQuestions[questionIndex].options[optionIndex] = url;
+                    setQuestions(updatedQuestions);
+                } catch (error) {
+                    console.error('Error uploading image:', error);
+                    alert('Failed to upload image. Please try again.');
+                }
+            }
+        };
+
+        input.click();
+    };
+
     const publishQuizz = () => {
         return (
-            <div className='m-[60px] border-solid border-2 border-black p-10'>
+            <div className="m-[60px] border-solid border-2 border-black p-10">
                 <CircleArrowLeft size={30} onClick={() => setPublishSwitch('')} className='cursor-pointer' />
                 <div className='flex flex-col gap-6'>
                     <Typography variant="extra3LargeText" as="h1">Create New Quiz</Typography>
@@ -208,9 +239,17 @@ export default function Admin() {
                                         type="text"
                                         placeholder={`Option ${optionIndex + 1}`}
                                         value={option}
-                                        onChange={(e) => handleOptionChange(questionIndex, optionIndex, e.target.value)}
+                                        onChange={(e) =>
+                                            handleOptionChange(questionIndex, optionIndex, e.target.value)
+                                        }
                                         className="border p-2 rounded-md w-full"
                                     />
+                                    <button
+                                        onClick={() => handleAddImageToOption(questionIndex, optionIndex)}
+                                        className="text-blue-500"
+                                    >
+                                        Add Image
+                                    </button>
                                     <input
                                         type="radio"
                                         name={`correctAnswer-${questionIndex}`}
@@ -246,7 +285,7 @@ export default function Admin() {
                 </div>
             </div>
         );
-    };
+    }
 
     const renderPublish = () => {
         if (publishSwitch === 'content') {
