@@ -17,8 +17,10 @@ export default function Admin() {
     const [publishSwitch, setPublishSwitch] = useState('');
     const [quizTitle, setQuizTitle] = useState('');
     const [questions, setQuestions] = useState([
-        { question: '', options: ['', '', '', ''], correctAnswerIndex: 0 },
+        { question: '', options: [''], correctAnswerIndex: 0 },
     ]);
+    const [technology, setTechnology] = useState('');
+    const [description, setDescription] = useState('');
 
     const { userId, getToken } = useAuth();
     const { session } = useSession();
@@ -78,76 +80,91 @@ export default function Admin() {
                 </div>
                 <TextEditor handlePublish={handlePublish} submitting={submitting} />
             </div>
-        )
-    }
+        );
+    };
+
+
+    const handleQuestionChange = (index: number, value: string) => {
+        const updatedQuestions = [...questions];
+        updatedQuestions[index].question = value;
+        setQuestions(updatedQuestions);
+    };
+
+    const handleOptionChange = (questionIndex: number, optionIndex: number, value: string) => {
+        const updatedQuestions = [...questions];
+        updatedQuestions[questionIndex].options[optionIndex] = value;
+        setQuestions(updatedQuestions);
+    };
+
+    const handleCorrectAnswerChange = (questionIndex: number, value: number) => {
+        const updatedQuestions = [...questions];
+        updatedQuestions[questionIndex].correctAnswerIndex = value;
+        setQuestions(updatedQuestions);
+    };
+
+    const addOption = (questionIndex: number) => {
+        const updatedQuestions = [...questions];
+        updatedQuestions[questionIndex].options.push('');
+        setQuestions(updatedQuestions);
+    };
+
+    const removeOption = (questionIndex: number, optionIndex: number) => {
+        const updatedQuestions = [...questions];
+        updatedQuestions[questionIndex].options = updatedQuestions[questionIndex].options.filter(
+            (_, i) => i !== optionIndex
+        );
+        setQuestions(updatedQuestions);
+    };
+
+    const addQuestion = () => {
+        setQuestions([...questions, { question: '', options: [''], correctAnswerIndex: 0 }]);
+    };
+
+    const removeQuestion = (index: number) => {
+        setQuestions(questions.filter((_, i) => i !== index));
+    };
+
+    const handleSubmitQuiz = async () => {
+        if (!quizTitle || !technology || !description || questions.some(q => !q.question || q.options.some(o => !o))) {
+            alert('Please complete all fields.');
+            return;
+        }
+
+        try {
+            setSubmitting(true);
+            const token = await getToken({ template: 'supabase' });
+
+            const result = await postQuiz({
+                userId,
+                token,
+                technology,
+                title: quizTitle,
+                description,
+                questions: questions.map(q => ({
+                    text: q.question,
+                    correctAnswer: q.options[q.correctAnswerIndex],
+                    choices: q.options,
+                })),
+            });
+
+            if (result) {
+                alert('Quiz created successfully.');
+                setQuizTitle('');
+                setTechnology('');
+                setDescription('');
+                setQuestions([{ question: '', options: [''], correctAnswerIndex: 0 }]);
+            } else {
+                alert('Failed to create quiz. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error creating quiz:', error);
+            alert('An error occurred. Please try again.');
+        } finally {
+            setSubmitting(false);
+        }
+    };
 
     const publishQuizz = () => {
-
-        const handleQuestionChange = (index: number, value: string) => {
-            const updatedQuestions = [...questions];
-            updatedQuestions[index].question = value;
-            setQuestions(updatedQuestions);
-        };
-    
-        const handleOptionChange = (questionIndex: number, optionIndex: number, value: string) => {
-            const updatedQuestions = [...questions];
-            updatedQuestions[questionIndex].options[optionIndex] = value;
-            setQuestions(updatedQuestions);
-        };
-    
-        const handleCorrectAnswerChange = (questionIndex: number, value: number) => {
-            const updatedQuestions = [...questions];
-            updatedQuestions[questionIndex].correctAnswerIndex = value;
-            setQuestions(updatedQuestions);
-        };
-    
-        const addQuestion = () => {
-            setQuestions([...questions, { question: '', options: ['', '', '', ''], correctAnswerIndex: 0 }]);
-        };
-    
-        const removeQuestion = (index: number) => {
-            setQuestions(questions.filter((_, i) => i !== index));
-        };
-    
-        const handleSubmitQuiz = async () => {
-            if (!quizTitle || questions.some(q => !q.question || q.options.some(o => !o))) {
-                alert('Please complete all fields.');
-                return;
-            }
-    
-            try {
-                setSubmitting(true);
-                const token = await getToken({ template: 'supabase' });
-    
-                // Using the postQuiz function here
-                const result = await postQuiz({
-                    userId,
-                    token,
-                    technology: 'HTML', // You can adjust this as needed
-                    title: quizTitle,
-                    description: 'Test your knowledge of HTML basics', // You can adjust this description as needed
-                    questions: questions.map(q => ({
-                        text: q.question,
-                        correctAnswer: q.options[q.correctAnswerIndex],
-                        choices: q.options,
-                    })),
-                });
-    
-                if (result) {
-                    alert('Quiz created successfully.');
-                    setQuizTitle('');
-                    setQuestions([{ question: '', options: ['', '', '', ''], correctAnswerIndex: 0 }]);
-                } else {
-                    alert('Failed to create quiz. Please try again.');
-                }
-            } catch (error) {
-                console.error('Error creating quiz:', error);
-                alert('An error occurred. Please try again.');
-            } finally {
-                setSubmitting(false);
-            }
-        };
-    
         return (
             <div className='m-[60px] border-solid border-2 border-black p-10'>
                 <CircleArrowLeft size={30} onClick={() => setPublishSwitch('')} className='cursor-pointer' />
@@ -158,6 +175,22 @@ export default function Admin() {
                         placeholder="Quiz Title"
                         value={quizTitle}
                         onChange={(e) => setQuizTitle(e.target.value)}
+                        className="border p-2 rounded-md"
+                    />
+                    <select
+                        value={technology}
+                        onChange={(e) => setTechnology(e.target.value)}
+                        className="border p-2 rounded-md"
+                    >
+                        <option value="">Select Technology</option>
+                        <option value="HTML">HTML</option>
+                        <option value="CSS">CSS</option>
+                        <option value="JavaScript">JavaScript</option>
+                    </select>
+                    <textarea
+                        placeholder="Quiz Description"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
                         className="border p-2 rounded-md"
                     />
                     {questions.map((q, questionIndex) => (
@@ -184,9 +217,26 @@ export default function Admin() {
                                         checked={q.correctAnswerIndex === optionIndex}
                                         onChange={() => handleCorrectAnswerChange(questionIndex, optionIndex)}
                                     />
+                                    <button
+                                        onClick={() => removeOption(questionIndex, optionIndex)}
+                                        className="text-red-500"
+                                    >
+                                        Remove Option
+                                    </button>
                                 </div>
                             ))}
-                            <button onClick={() => removeQuestion(questionIndex)} className="mt-2 text-red-500">Remove Question</button>
+                            <button
+                                onClick={() => addOption(questionIndex)}
+                                className="mt-2 text-blue-500"
+                            >
+                                Add Option
+                            </button>
+                            <button
+                                onClick={() => removeQuestion(questionIndex)}
+                                className="mt-2 text-red-500"
+                            >
+                                Remove Question
+                            </button>
                         </div>
                     ))}
                     <button onClick={addQuestion} className="text-blue-500">Add Question</button>
@@ -210,15 +260,14 @@ export default function Admin() {
         return (
             <div className='m-[60px] border-solid border-2 border-black p-10'>
                 <div className='flex justify-evenly mb-14'>
-                    <div className='bg-black hover:opacity-90 text-white p-20 rounded-md cursor-pointer h:b' onClick={() => setPublishSwitch('content')}>Publish Content</div>
+                    <div className='bg-black hover:opacity-90 text-white p-20 rounded-md cursor-pointer' onClick={() => setPublishSwitch('content')}>Publish Content</div>
                     <div className='bg-black hover:opacity-90 text-white p-20 rounded-md cursor-pointer' onClick={() => setPublishSwitch('quizz')}>Publish Quizz</div>
                 </div>
             </div>
-        )
-
-    }
+        );
+    };
 
     return (
         renderPublish()
-    )
+    );
 }
