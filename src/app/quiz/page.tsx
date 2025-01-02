@@ -53,7 +53,7 @@ export default function Quiz() {
     if (!isTechnologySelected) {
         return (
             <section className="flex flex-col h-full items-center mt-20">
-                <Typography variant="extra3LargeText" as="h1" className="mb-4">
+                <Typography variant="extra3LargeText" className="mb-4">
                     Select a Technology to Start
                 </Typography>
                 <div className="flex justify-center gap-6">
@@ -62,7 +62,7 @@ export default function Quiz() {
                             key={index}
                             onClick={() => handleTechnologySelect(tech)}
                             className="flex bg-[#1b1b1d] items-center justify-center w-full sm:w-[300px] md:w-[250px] h-[150px] rounded-xl hover:opacity-95 cursor-pointer">
-                            <Typography variant="largeText" as="h1" className="text-white">
+                            <Typography variant="largeText" className="text-white">
                                 {tech}
                             </Typography>
                         </div>
@@ -76,7 +76,7 @@ export default function Quiz() {
         return (
             <section className="flex flex-col h-full justify-center items-center mt-20">
                 <div className='flex items-center justify-center gap-5'>
-                    <Typography variant="extra3LargeText" as="h1">
+                    <Typography variant="extra3LargeText">
                         Loading Quizzes...
                     </Typography>
                 </div>
@@ -87,7 +87,7 @@ export default function Quiz() {
     if (error) {
         return (
             <section className="flex flex-col h-full justify-center items-center mt-20">
-                <Typography variant="extra3LargeText" as="h1" className="text-red-500">
+                <Typography variant="extra3LargeText" className="text-red-500">
                     {error}
                 </Typography>
             </section>
@@ -96,19 +96,21 @@ export default function Quiz() {
 
     return (
         <section className="flex flex-col px-4 md:px-6 mt-10">
-            <Typography variant="extra3LargeText" as="h1" className="text-center mb-6">
+            <Typography variant="extra3LargeText" className="text-center mb-6">
                 Quizzes on {selectedTechnology}
             </Typography>
 
             {quizzes.length > 0 ? (
                 quizzes.map((quiz) => (
                     <div key={quiz.id} className="bg-slate-50 p-6 rounded-lg shadow-md mb-8">
-                        <Typography variant="extraLargeText" as="h2" className="font-bold mb-3">
-                            {quiz.title}
-                        </Typography>
-                        <Typography className="text-gray-600 mb-4">
-                            {quiz.description}
-                        </Typography>
+                        <div className='text-center mb-10'>
+                            <Typography variant="h2" className="font-bold mb-1">
+                                {quiz.title}
+                            </Typography>
+                            <Typography className="text-gray-600 mb-4" variant="h6">
+                                {quiz.description}
+                            </Typography>
+                        </div>
 
                         <div>
                             {quiz.quiz_questions.map((question: any, index: number) => (
