@@ -40,13 +40,6 @@ function CollapsibleSection({
     progressValue,
 }: CollapsibleSectionProps) {
     const router = useRouter();
-    const [htmlProgress, setHtmlProgress] = useState();
-    const { getLearningProgress } = useSaveToLocalStorage();
-
-    useEffect(() => {
-        const retrievedProgress = getLearningProgress('html');
-        setHtmlProgress(retrievedProgress);
-    }, []);
 
     return (
         <div className="bg-[#1b1b1d] p-8 mb-10 rounded-lg cursor-pointer" onClick={() => onToggle(id)}>

@@ -136,7 +136,7 @@ export const getQuizzesByTechnology = async (technology: string) => {
             .from('quizzes')
             .select('id, title, description, quiz_questions(question, correct_answer, choices)')
             .eq('technology', technology)
-            .order('id', { ascending: true });  
+            .order('id', { ascending: false });  
 
         if (quizError) {
             console.error('Error fetching quizzes by technology:', quizError.message);
