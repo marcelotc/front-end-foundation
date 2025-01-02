@@ -44,9 +44,9 @@ export default function Quiz() {
 
     const handleAnswerSelect = (isCorrect: boolean, event: any) => {
         if (isCorrect) {
-            event.target.classList.add('bg-green-500');
+            event.target.classList.add('bg-green-700');
         } else {
-            event.target.classList.add('bg-red-200');
+            event.target.classList.add('bg-red-700');
         }
     };
 
@@ -102,12 +102,12 @@ export default function Quiz() {
 
             {quizzes.length > 0 ? (
                 quizzes.map((quiz) => (
-                    <div key={quiz.id} className="bg-slate-50 p-6 rounded-lg shadow-md mb-8">
+                    <div key={quiz.id} className="bg-[#1b1b1d] p-6 rounded-lg shadow-md mb-8">
                         <div className='text-center mb-10'>
-                            <Typography variant="h2" className="font-bold mb-1">
+                            <Typography variant="h2" className="font-bold mb-1 text-white">
                                 {quiz.title}
                             </Typography>
-                            <Typography className="text-gray-600 mb-4" variant="h6">
+                            <Typography className="text-gray-400 mb-4" variant="h6">
                                 {quiz.description}
                             </Typography>
                         </div>
@@ -115,15 +115,15 @@ export default function Quiz() {
                         <div>
                             {quiz.quiz_questions.map((question: any, index: number) => (
                                 <div key={index} className="mb-4">
-                                    <Typography className="font-semibold">
+                                    <Typography className="font-semibold text-white">
                                         {question.question}
                                     </Typography>
-                                    <ul className="ml-4 list-disc text-gray-700">
+                                    <ul className="ml-4 list-disc text-gray-400">
                                         {question.choices.map((choice: string, idx: number) => (
                                             <div>
                                                 <li
                                                     key={idx}
-                                                    className="text-sm hover:bg-gray-200 cursor-pointer rounded-sm"
+                                                    className="text-sm hover:bg-gray-600 cursor-pointer rounded-sm"
                                                     onClick={(e) => handleAnswerSelect(choice === question.correct_answer, e)}>
                                                     {isImageUrl(choice) ? (
                                                         <img
@@ -133,8 +133,8 @@ export default function Quiz() {
                                                         />
                                                     ) : (
                                                         <div className='flex gap-3 rounded-sm p-2 mb-2'>
-                                                            <div className='font-bold'>Option {idx + 1}:</div>
-                                                            <div>{choice}</div>
+                                                            <div className='font-bold text-gray-300'>Option {idx + 1}:</div>
+                                                            <div className='font-bold text-white'>{choice}</div>
                                                         </div>
                                                     )}
                                                 </li>
