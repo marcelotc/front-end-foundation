@@ -122,6 +122,7 @@ export const getMenu = async (technology: string) => {
     .from("menu")
     .select("*")
     .eq('technology', technology)
+    //.eq('difficulty', 'Intermediate')
     .order('created_at', { ascending: true });
 
   if (error) {
@@ -167,6 +168,7 @@ export const getMenuChaptersSubjects = async (technology: string, chapter: strin
     .select("subjects")
     .eq('chapter', chapter)
     .eq('technology', technology)
+    .eq('difficulty', 'Intermediate')
     .order('created_at', { ascending: true });
 
   if (error) {
