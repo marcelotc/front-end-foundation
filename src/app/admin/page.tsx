@@ -37,7 +37,7 @@ export default function Admin() {
         }
     }, [userRole, session]);
 
-    async function handlePublish({ chapter, chapterId, content, menu, subject, technology }: any) {
+    async function handlePublish({ chapter, chapterId, content, menu, subject, technology, difficulty }: any) {
         try {
             setSubmitting(true);
             const token = await getToken({ template: 'supabase' });
@@ -50,7 +50,8 @@ export default function Admin() {
                 chapter,
                 menu,
                 subject,
-                technology
+                technology,
+                difficulty
             });
 
             setSubmitting(false);

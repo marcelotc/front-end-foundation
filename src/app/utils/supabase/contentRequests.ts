@@ -1,6 +1,6 @@
 import { supabaseClientWithAuth, supabaseClientPublic } from './supabaseClient';
 
-export const postMarkdown = async ({ userId, token, content, chapter, subject, technology }: any) => {
+export const postMarkdown = async ({ userId, token, content, chapter, subject, technology, difficulty }: any) => {
   const supabase = await supabaseClientWithAuth(token);
 
   const { data: markdownData, error: markdownError } = await supabase
@@ -13,6 +13,7 @@ export const postMarkdown = async ({ userId, token, content, chapter, subject, t
         content,
       },
       subject: subject,
+      difficulty: difficulty,
     })
     .select();
 
@@ -29,6 +30,7 @@ export const postMarkdown = async ({ userId, token, content, chapter, subject, t
     .eq('user_id', userId)
     .eq('chapter', chapter)
     .eq('technology', technology)
+    .eq('difficulty', difficulty)
     .single();
 
   if (existingMenuError && existingMenuError.code !== 'PGRST116') {
@@ -62,6 +64,7 @@ export const postMarkdown = async ({ userId, token, content, chapter, subject, t
         chapter: chapter,
         technology: technology,
         subjects: [subject],
+        difficulty: difficulty,
         content_id: contentId,
       })
       .select();
@@ -104,7 +107,7 @@ export const getMarkdownBySubjectTechnologyChapter = async (subject: string, tec
     .select("*")
     .eq('subject', subject)
     .eq('technology', technology)
-    .eq('chapter', chapter);
+    .eq('chapter', chapter)
 
   if (error) {
     console.error('Error fetching:', error.message);
@@ -192,7 +195,7 @@ export const deletePost = async ({ userId, token, chapter, technology, subject, 
 
   if (existingMenuData) {
     const updatedSubjects = existingMenuData.subjects.filter((sub: string) => sub.trim().toLowerCase() !== subject.trim().toLowerCase());
-    
+
     let updatedMenuData = null;
     if (updatedSubjects.length > 0) {
       const { data, error: updateMenuError } = await supabase

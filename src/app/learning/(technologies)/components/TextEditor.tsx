@@ -24,6 +24,7 @@ export default function MyEditor({ editorMarkdown, handlePublish, submitting }: 
     const pathname = usePathname();
     const [chapter, setChapter] = useState('');
     const [subject, setSubject] = useState('');
+    const [difficulty, setDifficulty] = useState('');
     const [technology, setTechnology] = useState('html');
     const [chapters, setChapters] = useState<string[]>([]);
     const [newPostType, setNewPostType] = useState('newChapter');
@@ -212,7 +213,7 @@ export default function MyEditor({ editorMarkdown, handlePublish, submitting }: 
     const handlePublishClick = () => {
         if (editor) {
             const json = editor.getJSON();
-            handlePublish({ chapterId: uuidv4(), content: json, chapter, subject, technology });
+            handlePublish({ chapterId: uuidv4(), content: json, chapter, subject, technology, difficulty });
         } else {
             console.log('Editor not initialized');
         }
@@ -282,6 +283,18 @@ export default function MyEditor({ editorMarkdown, handlePublish, submitting }: 
                                     <option value="html">HTML</option>
                                     <option value="css">CSS</option>
                                     <option value="javascript">JavaScript</option>
+                                </select>
+                            </label>
+                            <label>
+                                Difficulty:
+                                <select
+                                    value={difficulty}
+                                    className="border border-gray-300 rounded m-3"
+                                    onChange={(e) => setDifficulty(e.target.value)}
+                                >
+                                    <option value="Beginner">Beginner</option>
+                                    <option value="Intermediate">Intermediate</option>
+                                    <option value="Advanced">Advanced</option>
                                 </select>
                             </label>
                         </div>
