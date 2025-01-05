@@ -16,7 +16,7 @@ export default function SideMenu() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const { menuOpen, toggleMenu, technology, markdown, setMarkdown, setLoadingContent, setMenuContent, menuContent, progressUpdate } = useContext(SideMenuContext);
+  const { menuOpen, toggleMenu, technology, setMarkdown, setLoadingContent, setMenuContent, menuContent, progressUpdate } = useContext(SideMenuContext);
   const { getLearningProgress } = useSaveToLocalStorage();
 
   const [loadingMenu, setLoadingMenu] = useState(false);
@@ -82,6 +82,12 @@ export default function SideMenu() {
       setOpenChapters([...openChapters, chapter]);
     }
   };
+
+  useEffect(() => {
+    if (!menuOpen) {
+      setOpenChapters([]);
+    }
+  }, [menuOpen]);
 
   const renderSubjects = (subjects: string[], chapter: string) => {
     return subjects.map((subject, index) => {
