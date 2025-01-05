@@ -24,7 +24,7 @@ export default function MyEditor({ editorMarkdown, handlePublish, submitting }: 
     const pathname = usePathname();
     const [chapter, setChapter] = useState('');
     const [subject, setSubject] = useState('');
-    const [difficulty, setDifficulty] = useState('');
+    const [difficulty, setDifficulty] = useState('Beginner');
     const [technology, setTechnology] = useState('html');
     const [chapters, setChapters] = useState<string[]>([]);
     const [newPostType, setNewPostType] = useState('newChapter');
