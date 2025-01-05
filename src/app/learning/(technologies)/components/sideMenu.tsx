@@ -16,11 +16,10 @@ export default function SideMenu() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const { menuOpen, toggleMenu, technology, setMarkdown, setLoadingContent, setMenuContent, menuContent, progressUpdate } = useContext(SideMenuContext);
+  const { menuOpen, toggleMenu, technology, setMarkdown, setLoadingContent, setMenuContent, menuContent, progressUpdate, openChapters, setOpenChapters } = useContext(SideMenuContext);
   const { getLearningProgress } = useSaveToLocalStorage();
 
   const [loadingMenu, setLoadingMenu] = useState(false);
-  const [openChapters, setOpenChapters] = useState<string[]>([]);
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
   const [progress, setProgress] = useState<{ chapters: any[] }>({ chapters: [] });
 

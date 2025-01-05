@@ -7,8 +7,8 @@ import { html } from "@codemirror/lang-html";
 import { css } from "@codemirror/lang-css";
 
 const CodeEditor = () => {
-    const [htmlCode, setHtmlCode] = useState("<h1>Hello World</h1>");
-    const [cssCode, setCssCode] = useState("h1 { color: red; }");
+    const [htmlCode, setHtmlCode] = useState("<h1>Hello World!</h1>");
+    const [cssCode, setCssCode] = useState("h1 { color: blue; }");
     const [jsCode, setJsCode] = useState("console.log('hello world!');");
 
     const [htmlWidth, setHtmlWidth] = useState(33);
