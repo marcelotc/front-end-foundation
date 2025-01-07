@@ -6,11 +6,7 @@ import { javascript } from "@codemirror/lang-javascript";
 import { html } from "@codemirror/lang-html";
 import { css } from "@codemirror/lang-css";
 
-const CodeEditor = () => {
-    const [htmlCode, setHtmlCode] = useState("<h1>Hello World!</h1>");
-    const [cssCode, setCssCode] = useState("h1 { color: blue; }");
-    const [jsCode, setJsCode] = useState("console.log('hello world!');");
-
+const CodeEditor = ({ htmlCode, cssCode, jsCode, setHtmlCode, setCssCode, setJsCode }: any) => {
     const [htmlWidth, setHtmlWidth] = useState(33);
     const [cssWidth, setCssWidth] = useState(33);
     const [jsWidth, setJsWidth] = useState(33);

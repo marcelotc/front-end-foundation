@@ -26,6 +26,9 @@ export default function Admin() {
     const [technology, setTechnology] = useState('');
     const [description, setDescription] = useState('');
     const [quizzes, setQuizzes] = useState<any[]>([]);
+    const [htmlCode, setHtmlCode] = useState("<h1>Hello World!</h1>");
+    const [cssCode, setCssCode] = useState("h1 { color: blue; }");
+    const [jsCode, setJsCode] = useState("console.log('hello world!');");
 
     const { userId, getToken } = useAuth();
     const { session } = useSession();
@@ -218,21 +221,19 @@ export default function Admin() {
         }
     };
 
-    const handleDeleteCodePractice = async (markdownContentId: any) => {
+    const handlePostCodePractice = async ({ content }: any) => {
+
         try {
             const userToken: any = await getToken({ template: 'supabase' });
 
             await postCodePractice({
                 token: userToken,
-                markdownContentId: markdownContentId,
+                markdownContentId: '1810c0a6-071d-41b7-9a6c-5c4381da9b79',
                 userId: userId,
-                question: 'Write a basic HTML structure',
-                userHtmlCode: '<html><body><h1>Hello</h1></body></html>',
-                userCssCode: 'h1 { color: red; }',
-                userJsCode: 'console.log("Hello");',
-                correctHtmlCode: '<html><body><h1>Hello</h1></body></html>',
-                correctCssCode: 'h1 { color: red; }',
-                correctJsCode: 'console.log("Hello");',
+                question: content,
+                correctHtmlCode: htmlCode,
+                correctCssCode: cssCode,
+                correctJsCode: jsCode,
             });
 
             alert('Code practice saved successfully!');
@@ -358,8 +359,20 @@ export default function Admin() {
                 <div>
                     {publishContent()}
                     <div className="m-[60px] border-solid border-2 border-black p-10">
-                        <CodeEditor />
-                        <div className='bg-black hover:opacity-90 text-white p-3 text-center rounded-md cursor-pointer' onClick={() => handleDeleteCodePractice('1810c0a6-071d-41b7-9a6c-5c4381da9b79')}>Publish code practice</div>
+                        <CodeEditor
+                            htmlCode={htmlCode}
+                            cssCode={cssCode}
+                            jsCode={jsCode}
+                            setHtmlCode={setHtmlCode}
+                            setCssCode={setCssCode}
+                            setJsCode={setJsCode}
+                        />
+                        <label className='mb-6 block'>
+                            Code practice question:
+                        </label>
+
+                        <TextEditor handlePublish={handlePostCodePractice} submitting={submitting} isCodePractice={true}
+                        />
                     </div>
                 </div>
             )

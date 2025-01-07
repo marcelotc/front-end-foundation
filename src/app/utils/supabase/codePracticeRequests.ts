@@ -1,6 +1,6 @@
 import { supabaseClientWithAuth, supabaseClientPublic } from './supabaseClient';
 
-export const postCodePractice = async ({ token, markdownContentId, userId, question, userHtmlCode, userCssCode, userJsCode, correctHtmlCode, correctCssCode, correctJsCode }: any) => {
+export const postCodePractice = async ({ token, markdownContentId, userId, question, correctHtmlCode, correctCssCode, correctJsCode }: any) => {
     const supabase = await supabaseClientWithAuth(token);
 
     const { data, error } = await supabase
@@ -10,9 +10,6 @@ export const postCodePractice = async ({ token, markdownContentId, userId, quest
                 markdown_content_id: markdownContentId,
                 user_id: userId,
                 question,
-                user_html_code: userHtmlCode,
-                user_css_code: userCssCode,
-                user_js_code: userJsCode,
                 correct_html_code: correctHtmlCode,
                 correct_css_code: correctCssCode,
                 correct_js_code: correctJsCode,

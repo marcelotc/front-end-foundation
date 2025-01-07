@@ -8,6 +8,7 @@ import { Typography } from "@/components/ui/typography";
 import CodeEditor from "@/app/learning/(technologies)/components/CodeEditor";
 import { useSaveToLocalStorage } from "@/app/hooks/useSaveToLocalStorage";
 import { getCodePracticeByMarkdownContent } from '@/app/utils/supabase/codePracticeRequests';
+import ContentOutput from '../components/contentOutput';
 import { Toaster } from 'sonner';
 
 import { Button } from '@/components/ui/button';
@@ -32,6 +33,9 @@ export default function MainWrapper({
     const [showAnswer, setShowAnswer] = useState(false);
     const [codePractice, setCodePractice] = useState<any[] | null>(null);
     const [loading, setLoading] = useState(false);
+    const [htmlCode, setHtmlCode] = useState("<h1>Hello World!</h1>");
+    const [cssCode, setCssCode] = useState("h1 { color: blue; }");
+    const [jsCode, setJsCode] = useState("console.log('hello world!');");
 
     const toggleAnswer = () => {
         setShowAnswer(!showAnswer);
@@ -84,7 +88,13 @@ export default function MainWrapper({
         fetchCodePractice();
     }, [markdown]);
 
-    console.log('codePractice', codePractice && codePractice?.length === 0)
+    // TODO try to find why the markdown data is not coming with {"content": like in the technologies pages, cause this code is terrible
+    const questionData = codePractice && codePractice[0]?.question;
+
+    const parsedQuestionData = typeof questionData === "string" ? JSON.parse(questionData) : questionData;
+    
+    const content = JSON.stringify({ content: parsedQuestionData });
+
 
     return (
         <main className={clsx("flex-1 mr-8 transition-all duration-300",
@@ -129,19 +139,17 @@ export default function MainWrapper({
                         Practice time!
                     </Typography>
 
-                    <div className="bg-black text-white text-center rounded-sm p-4 my-4">
-                        <p className="text-lg">
-                            Implement a basic HTML structure in the code editor below that includes:
-                            <ul className="text-left mt-2">
-                                <li>A <code>&lt;header&gt;</code> element with a website title and a navigation menu containing links to "Home", "About", and "Services".</li>
-                                <li>A <code>&lt;main&gt;</code> section with a paragraph and a section titled "About Us" describing your company.</li>
-                                <li>A <code>&lt;footer&gt;</code> with a copyright notice.</li>
-                            </ul>
-                            Use semantic tags like <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;section&gt;</code>, and <code>&lt;footer&gt;</code>.
-                        </p>
-                    </div>
 
-                    <CodeEditor />
+                    <ContentOutput content={codePractice ? content : ''} />
+
+                    <CodeEditor
+                        htmlCode={htmlCode}
+                        cssCode={cssCode}
+                        jsCode={jsCode}
+                        setHtmlCode={setHtmlCode}
+                        setCssCode={setCssCode}
+                        setJsCode={setJsCode}
+                    />
 
                     <div className="text-center mt-4">
                         <Button
@@ -155,42 +163,33 @@ export default function MainWrapper({
 
                     {showAnswer && (
                         <div className="bg-gray-100 p-4 mb-5 rounded-sm">
-                            <Typography variant="h4" as="h4" className="font-bold">
+                            <Typography variant="h4" as="h4" className="font-bold mb-3">
                                 Answer:
                             </Typography>
-                            <pre className='p-3'>
-                                {`<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Website</title>
-</head>
-<body>
-    <header>
-        <h1>My Website</h1>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#services">Services</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <main>
-        <section id="about">
-            <h2>About Us</h2>
-            <p>Learn more about our company and what we do.</p>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2025 My Website</p>
-    </footer>
-</body>
-</html>`}
-                            </pre>
+                            <div className="mb-3">
+                                <Typography variant="h5" as="h5" className="font-semibold">
+                                    HTML:
+                                </Typography>
+                                <pre className="bg-white p-3 rounded-sm border border-gray-300 overflow-x-auto">
+                                    {codePractice && codePractice[0].correct_html_code}
+                                </pre>
+                            </div>
+                            <div className="mb-3">
+                                <Typography variant="h5" as="h5" className="font-semibold">
+                                    CSS:
+                                </Typography>
+                                <pre className="bg-white p-3 rounded-sm border border-gray-300 overflow-x-auto">
+                                    {codePractice && codePractice[0].correct_css_code}
+                                </pre>
+                            </div>
+                            <div className="mb-3">
+                                <Typography variant="h5" as="h5" className="font-semibold">
+                                    JavaScript:
+                                </Typography>
+                                <pre className="bg-white p-3 rounded-sm border border-gray-300 overflow-x-auto">
+                                    {codePractice && codePractice[0].correct_js_code}
+                                </pre>
+                            </div>
                         </div>
                     )}
                 </>
