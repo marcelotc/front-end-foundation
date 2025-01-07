@@ -92,7 +92,7 @@ export default function MainWrapper({
     const questionData = codePractice && codePractice[0]?.question;
 
     const parsedQuestionData = typeof questionData === "string" ? JSON.parse(questionData) : questionData;
-    
+
     const content = JSON.stringify({ content: parsedQuestionData });
 
 
@@ -140,7 +140,9 @@ export default function MainWrapper({
                     </Typography>
 
 
-                    <ContentOutput content={codePractice ? content : ''} />
+                    <div className="bg-black text-white rounded-sm p-4 my-4">
+                        <ContentOutput content={codePractice ? content : ''} />
+                    </div>
 
                     <CodeEditor
                         htmlCode={htmlCode}
