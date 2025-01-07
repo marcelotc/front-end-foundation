@@ -1,19 +1,20 @@
 'use client'
 
 import { useContext, useEffect, useState } from 'react';
+import clsx from 'clsx';
 import { BookCheck } from 'lucide-react';
 import SideMenuContext from '@/app/learning/(technologies)/context/sideMenuContext';
 import { Typography } from "@/components/ui/typography";
 import CodeEditor from "@/app/learning/(technologies)/components/CodeEditor";
 import { useSaveToLocalStorage } from "@/app/hooks/useSaveToLocalStorage";
+import { getCodePracticeByMarkdownContent } from '@/app/utils/supabase/codePracticeRequests';
 import { Toaster } from 'sonner';
-import clsx from 'clsx';
 
 import { Button } from '@/components/ui/button';
 
 interface MainWrapperProps {
     children: React.ReactNode;
-    markdown?: Array<{ chapter: string, subject: string, technology: string }>;
+    markdown?: Array<{ id: string, chapter: string, subject: string, technology: string }>;
 }
 
 export default function MainWrapper({
@@ -29,6 +30,8 @@ export default function MainWrapper({
     const { handleSaveToLearningProgress } = useSaveToLocalStorage();
     const [showButton, setShowButton] = useState(false);
     const [showAnswer, setShowAnswer] = useState(false);
+    const [codePractice, setCodePractice] = useState<any[] | null>(null);
+    const [loading, setLoading] = useState(false);
 
     const toggleAnswer = () => {
         setShowAnswer(!showAnswer);
@@ -59,6 +62,29 @@ export default function MainWrapper({
     useEffect(() => {
         setOpenChapters([]);
     }, []);
+
+    useEffect(() => {
+        const fetchCodePractice = async () => {
+            setLoading(true);
+            try {
+                const result: any = await getCodePracticeByMarkdownContent(markdown && markdown[0]?.id);
+
+                if (result) {
+                    setCodePractice(result);
+                } else {
+                    console.error('No data found');
+                }
+            } catch (error) {
+                console.error('Error fetching code practice:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchCodePractice();
+    }, [markdown]);
+
+    console.log('codePractice', codePractice && codePractice?.length === 0)
 
     return (
         <main className={clsx("flex-1 mr-8 transition-all duration-300",
@@ -97,7 +123,7 @@ export default function MainWrapper({
                 ) : null}*/}
 
 
-            {isMarkdownEmpty && (
+            {isMarkdownEmpty && codePractice?.length !== 0 && (
                 <>
                     <Typography variant="extra3LargeText" as="h1" className="font-bold text-center">
                         Practice time!

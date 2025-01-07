@@ -11,8 +11,10 @@ import { Typography } from "@/components/ui/typography"
 import { useRouter } from 'next/navigation';
 import TextEditor from '../learning/(technologies)/components/TextEditor'
 import { postMarkdown } from '../utils/supabase/contentRequests';
+import { postCodePractice } from '../utils/supabase/codePracticeRequests';
 import { postQuiz, getAllQuizzes, deleteQuiz } from '../utils/supabase/quizzRequest';
 import { checkUserRole } from '../../utils/userUtils';
+import CodeEditor from "@/app/learning/(technologies)/components/CodeEditor";
 
 export default function Admin() {
     const [submitting, setSubmitting] = useState(false);
@@ -216,6 +218,30 @@ export default function Admin() {
         }
     };
 
+    const handleDeleteCodePractice = async (markdownContentId: any) => {
+        try {
+            const userToken: any = await getToken({ template: 'supabase' });
+
+            await postCodePractice({
+                token: userToken,
+                markdownContentId: markdownContentId,
+                userId: userId,
+                question: 'Write a basic HTML structure',
+                userHtmlCode: '<html><body><h1>Hello</h1></body></html>',
+                userCssCode: 'h1 { color: red; }',
+                userJsCode: 'console.log("Hello");',
+                correctHtmlCode: '<html><body><h1>Hello</h1></body></html>',
+                correctCssCode: 'h1 { color: red; }',
+                correctJsCode: 'console.log("Hello");',
+            });
+
+            alert('Code practice saved successfully!');
+        } catch (error) {
+            console.error('Error saving code practice:', error);
+            alert('An error occurred while saving the code practice. Please try again.');
+        }
+    };
+
     const publishQuizz = () => {
         return (
             <div className="m-[60px] border-solid border-2 border-black p-10">
@@ -328,7 +354,15 @@ export default function Admin() {
 
     const renderPublish = () => {
         if (publishSwitch === 'content') {
-            return publishContent();
+            return (
+                <div>
+                    {publishContent()}
+                    <div className="m-[60px] border-solid border-2 border-black p-10">
+                        <CodeEditor />
+                        <div className='bg-black hover:opacity-90 text-white p-3 text-center rounded-md cursor-pointer' onClick={() => handleDeleteCodePractice('1810c0a6-071d-41b7-9a6c-5c4381da9b79')}>Publish code practice</div>
+                    </div>
+                </div>
+            )
         }
 
         if (publishSwitch === 'quizz') {

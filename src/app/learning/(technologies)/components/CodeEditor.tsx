@@ -125,7 +125,7 @@ const CodeEditor = () => {
             <div className="p-2 m-6">
                 <h2>Live Preview</h2>
 
-                <div className="border-2 border-black rounded-sm mt-3">
+                <div className="border-2 border-black rounded-sm mt-3 mb-[90px]">
                     <iframe
                         srcDoc={livePreview}
                         title="preview"
