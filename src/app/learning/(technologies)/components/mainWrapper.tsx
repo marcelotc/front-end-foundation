@@ -26,6 +26,11 @@ export default function MainWrapper({
     const { menuOpen, progressUpdate, setProgressUpdate, loadingContent, setOpenChapters } = useContext(SideMenuContext);
     const { handleSaveToLearningProgress } = useSaveToLocalStorage();
     const [showButton, setShowButton] = useState(false);
+    const [showAnswer, setShowAnswer] = useState(false);
+
+    const toggleAnswer = () => {
+        setShowAnswer(!showAnswer);
+    };
 
     const isMarkdownEmpty = markdown && markdown.length > 0;
 
@@ -49,9 +54,9 @@ export default function MainWrapper({
         return () => clearTimeout(timeout);
     }, [loadingContent]);
 
-      useEffect(() => {
+    useEffect(() => {
         setOpenChapters([]);
-      }, []);
+    }, []);
 
     return (
         <main className={clsx("flex-1 mr-8 transition-all duration-300",
@@ -92,10 +97,74 @@ export default function MainWrapper({
 
             {isMarkdownEmpty && (
                 <>
-                    <Typography variant="extra3LargeText" as="h1" className='font-bold text-center'>
+                    <Typography variant="extra3LargeText" as="h1" className="font-bold text-center">
                         Practice time!
                     </Typography>
+
+                    <div className="bg-black text-white text-center rounded-sm p-4 my-4">
+                        <p className="text-lg">
+                            Implement a basic HTML structure in the code editor below that includes:
+                            <ul className="text-left mt-2">
+                                <li>A <code>&lt;header&gt;</code> element with a website title and a navigation menu containing links to "Home", "About", and "Services".</li>
+                                <li>A <code>&lt;main&gt;</code> section with a paragraph and a section titled "About Us" describing your company.</li>
+                                <li>A <code>&lt;footer&gt;</code> with a copyright notice.</li>
+                            </ul>
+                            Use semantic tags like <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;section&gt;</code>, and <code>&lt;footer&gt;</code>.
+                        </p>
+                    </div>
+
                     <CodeEditor />
+
+                    <div className="text-center mt-4">
+                        <Button
+                            size="sm"
+                            onClick={toggleAnswer}
+                            className="mb-5 bg-green-800"
+                        >
+                            {showAnswer ? 'Hide Answer' : 'Reveal Answer'}
+                        </Button>
+                    </div>
+
+                    {showAnswer && (
+                        <div className="bg-gray-100 p-4 mb-5 rounded-sm">
+                            <Typography variant="h4" as="h4" className="font-bold">
+                                Answer:
+                            </Typography>
+                            <pre className='p-3'>
+                                {`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website</title>
+</head>
+<body>
+    <header>
+        <h1>My Website</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="about">
+            <h2>About Us</h2>
+            <p>Learn more about our company and what we do.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 My Website</p>
+    </footer>
+</body>
+</html>`}
+                            </pre>
+                        </div>
+                    )}
                 </>
             )}
         </main>

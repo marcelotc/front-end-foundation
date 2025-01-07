@@ -1,6 +1,4 @@
-'use client';
-
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { html } from "@codemirror/lang-html";
@@ -14,6 +12,7 @@ const CodeEditor = () => {
     const [htmlWidth, setHtmlWidth] = useState(33);
     const [cssWidth, setCssWidth] = useState(33);
     const [jsWidth, setJsWidth] = useState(33);
+    const [resized, setResized] = useState(false);
 
     const onHtmlChange = useCallback((value: string) => {
         setHtmlCode(value);
@@ -26,6 +25,10 @@ const CodeEditor = () => {
     const onJsChange = useCallback((value: string) => {
         setJsCode(value);
     }, []);
+
+    useEffect(() => {
+        setResized(htmlWidth !== 33 || cssWidth !== 33 || jsWidth !== 33);
+    }, [htmlWidth, cssWidth, jsWidth]);
 
     const livePreview = `
     <html>
@@ -106,14 +109,16 @@ const CodeEditor = () => {
                 </div>
             </div>
 
-            <div className="flex justify-center">
-                <button
-                    onClick={resetWidths}
-                    className="bg-black text-white w-48 rounded-sm py-2"
-                >
-                    Reset Resizable Panes
-                </button>
-            </div>
+            {resized && (
+                <div className="flex justify-center">
+                    <button
+                        onClick={resetWidths}
+                        className="bg-black text-white px-3 py-1 text-sm rounded-sm"
+                    >
+                        Reset panels
+                    </button>
+                </div>
+            )}
 
             <div className="p-2 m-6">
                 <h2>Live Preview</h2>
