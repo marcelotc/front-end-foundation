@@ -1,3 +1,5 @@
+'use client'
+
 import { useContext, useEffect, useState } from 'react';
 import { BookCheck } from 'lucide-react';
 import SideMenuContext from '@/app/learning/(technologies)/context/sideMenuContext';
