@@ -2,14 +2,14 @@
 
 import { useContext, useEffect, useState } from 'react';
 import clsx from 'clsx';
-import { BookCheck } from 'lucide-react';
+import { BookCheck, Copy } from 'lucide-react';
 import SideMenuContext from '@/app/learning/(technologies)/context/sideMenuContext';
 import { Typography } from "@/components/ui/typography";
 import CodeEditor from "@/app/learning/(technologies)/components/CodeEditor";
 import { useSaveToLocalStorage } from "@/app/hooks/useSaveToLocalStorage";
 import { getCodePracticeByMarkdownContent } from '@/app/utils/supabase/codePracticeRequests';
 import ContentOutput from '../components/contentOutput';
-import { Toaster } from 'sonner';
+import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
 
@@ -22,18 +22,13 @@ export default function MainWrapper({
     children,
     markdown,
 }: MainWrapperProps) {
-    /*const {
-    goToPreviousSubject,
-    goToNextSubject,
-    technologyUrl
-} = useSubjectNavigation();*/
     const { menuOpen, progressUpdate, setProgressUpdate, loadingContent, setOpenChapters } = useContext(SideMenuContext);
     const { handleSaveToLearningProgress } = useSaveToLocalStorage();
     const [showButton, setShowButton] = useState(false);
     const [showAnswer, setShowAnswer] = useState(false);
     const [codePractice, setCodePractice] = useState<any[] | null>(null);
     const [loading, setLoading] = useState(false);
-    const [htmlCode, setHtmlCode] = useState("<h1>Hello World!</h1>");
+    const [htmlCode, setHtmlCode] = useState("<h1>Code your answer!</h1>");
     const [cssCode, setCssCode] = useState("h1 { color: blue; }");
     const [jsCode, setJsCode] = useState("console.log('hello world!');");
 
@@ -68,11 +63,15 @@ export default function MainWrapper({
     }, []);
 
     useEffect(() => {
+        setCodePractice(null);
+        setHtmlCode("<h1>Code your answer!</h1>");
+        setCssCode("h1 { color: blue; }");
+        setJsCode("console.log('hello world!');");
+        setShowAnswer(false);
         const fetchCodePractice = async () => {
             setLoading(true);
             try {
                 const result: any = await getCodePracticeByMarkdownContent(markdown && markdown[0]?.id);
-
                 if (result) {
                     setCodePractice(result);
                 } else {
@@ -84,17 +83,19 @@ export default function MainWrapper({
                 setLoading(false);
             }
         };
-
         fetchCodePractice();
     }, [markdown]);
 
-    // TODO try to find why the markdown data is not coming with {"content": like in the technologies pages, cause this code is terrible
     const questionData = codePractice && codePractice[0]?.question;
-
     const parsedQuestionData = typeof questionData === "string" ? JSON.parse(questionData) : questionData;
-
     const content = JSON.stringify({ content: parsedQuestionData });
 
+    const handleCopy = (code: string) => {
+        navigator.clipboard.writeText(code)
+            .then(() => {
+                toast.success('Copied to clipboard!');
+            })
+    };
 
     return (
         <main className={clsx("flex-1 mr-8 transition-all duration-300",
@@ -120,26 +121,13 @@ export default function MainWrapper({
                 )}
             </div>
 
-            {/*{technologyUrl !== null && !loadingContent ?
-                (
-                    <div className='flex justify-between mt-5'>
-                        <Button size={"sm"} onClick={goToPreviousSubject} className='mb-5'>
-                            Previous
-                        </Button>
-                        <Button size={"sm"} onClick={goToNextSubject} className='mb-5'>
-                            Next
-                        </Button>
-                    </div>
-                ) : null}*/}
-
-
             {isMarkdownEmpty && codePractice?.length !== 0 && (
                 <>
                     <Typography variant="extra3LargeText" as="h1" className="font-bold text-center">
                         Practice time!
                     </Typography>
 
-                    <div className="border-2 border-black rounded-sm p-4 my-4">
+                    <div className="bg-gray-100 border-2 border-black rounded-sm p-4 my-4">
                         <ContentOutput content={codePractice ? content : ''} />
                     </div>
 
@@ -150,6 +138,9 @@ export default function MainWrapper({
                         setHtmlCode={setHtmlCode}
                         setCssCode={setCssCode}
                         setJsCode={setJsCode}
+                        correctHtmlCode={codePractice && codePractice[0].correct_html_code}
+                        correctCssCode={codePractice && codePractice[0].correct_css_code}
+                        correctJsCode={codePractice && codePractice[0].correct_js_code}
                     />
 
                     <div className="text-center mt-4">
@@ -167,30 +158,57 @@ export default function MainWrapper({
                             <Typography variant="h4" as="h4" className="font-bold mb-3">
                                 Answer:
                             </Typography>
-                            <div className="mb-3">
-                                <Typography variant="h5" as="h5" className="font-semibold">
-                                    HTML:
-                                </Typography>
-                                <pre className="bg-white p-3 rounded-sm border border-gray-300 overflow-x-auto">
-                                    {codePractice && codePractice[0].correct_html_code}
-                                </pre>
-                            </div>
-                            <div className="mb-3">
-                                <Typography variant="h5" as="h5" className="font-semibold">
-                                    CSS:
-                                </Typography>
-                                <pre className="bg-white p-3 rounded-sm border border-gray-300 overflow-x-auto">
-                                    {codePractice && codePractice[0].correct_css_code}
-                                </pre>
-                            </div>
-                            <div className="mb-3">
-                                <Typography variant="h5" as="h5" className="font-semibold">
-                                    JavaScript:
-                                </Typography>
-                                <pre className="bg-white p-3 rounded-sm border border-gray-300 overflow-x-auto">
-                                    {codePractice && codePractice[0].correct_js_code}
-                                </pre>
-                            </div>
+                            {codePractice && codePractice[0].correct_html_code && (
+                                <div className="mb-3">
+                                    <div className='flex justify-between'>
+                                        <Typography variant="h5" as="h5" className="font-semibold">
+                                            HTML:
+                                        </Typography>
+                                        <Button size="sm" onClick={() => handleCopy(codePractice[0].correct_html_code)} className="mb-3">
+                                            Copy HTML
+                                            &nbsp;
+                                            <Copy />
+                                        </Button>
+                                    </div>
+                                    <pre className="bg-white p-3 rounded-sm border border-gray-300 overflow-x-auto">
+                                        {codePractice && codePractice[0].correct_html_code}
+                                    </pre>
+                                </div>
+                            )}
+                            {codePractice && codePractice[0].correct_css_code && (
+                                <div className="mb-3">
+                                    <div className='flex justify-between'>
+                                        <Typography variant="h5" as="h5" className="font-semibold">
+                                            CSS:
+                                        </Typography>
+                                        <Button size="sm" onClick={() => handleCopy(codePractice[0].correct_html_code)} className="mb-3">
+                                            Copy CSS
+                                            &nbsp;
+                                            <Copy />
+                                        </Button>
+                                    </div>
+                                    <pre className="bg-white p-3 rounded-sm border border-gray-300 overflow-x-auto">
+                                        {codePractice && codePractice[0].correct_css_code}
+                                    </pre>
+                                </div>
+                            )}
+                            {codePractice && codePractice[0].correct_js_code && (
+                                <div className="mb-3">
+                                    <div className='flex justify-between'>
+                                        <Typography variant="h5" as="h5" className="font-semibold">
+                                            JavaScript:
+                                        </Typography>
+                                        <Button size="sm" onClick={() => handleCopy(codePractice[0].correct_html_code)} className="mb-3">
+                                            Copy JavaScript
+                                            &nbsp;
+                                            <Copy />
+                                        </Button>
+                                    </div>
+                                    <pre className="bg-white p-3 rounded-sm border border-gray-300 overflow-x-auto">
+                                        {codePractice && codePractice[0].correct_js_code}
+                                    </pre>
+                                </div>
+                            )}
                         </div>
                     )}
                 </>

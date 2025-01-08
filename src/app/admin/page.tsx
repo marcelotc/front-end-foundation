@@ -28,9 +28,9 @@ export default function Admin() {
     const [technology, setTechnology] = useState('');
     const [description, setDescription] = useState('');
     const [quizzes, setQuizzes] = useState<any[]>([]);
-    const [htmlCode, setHtmlCode] = useState("<h1>Hello World!</h1>");
-    const [cssCode, setCssCode] = useState("h1 { color: blue; }");
-    const [jsCode, setJsCode] = useState("console.log('hello world!');");
+    const [htmlCode, setHtmlCode] = useState("");
+    const [cssCode, setCssCode] = useState("");
+    const [jsCode, setJsCode] = useState("");
     const [markdownContent, setMarkdownContent] = useState<any[]>([]);
     const [markdownContentId, setMarkdownContentId] = useState();
     const [selectedtechnology, setSelectedtechnology] = useState("html");
