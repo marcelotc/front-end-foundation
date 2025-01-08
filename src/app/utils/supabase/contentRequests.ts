@@ -178,6 +178,22 @@ export const getMenuChaptersSubjects = async (technology: string, chapter: strin
   return data;
 };
 
+export const getChaptersAndSubjects = async (technology: string) => {
+  const { data, error } = await supabaseClientPublic
+    .from('markdown_content')
+    .select('id, chapter, subject')
+    .eq('technology', technology);
+
+  if (error) {
+    console.error('Error fetching data:', error);
+    return;
+  }
+
+  console.log('Chapters and Subjects:', data);
+  return data;
+}
+
+
 export const deletePost = async ({ userId, token, chapter, technology, subject, contentId }: any) => {
   const supabase = await supabaseClientWithAuth(token);
 

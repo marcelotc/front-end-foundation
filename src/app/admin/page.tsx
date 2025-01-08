@@ -13,6 +13,8 @@ import TextEditor from '../learning/(technologies)/components/TextEditor'
 import { postMarkdown } from '../utils/supabase/contentRequests';
 import { postCodePractice } from '../utils/supabase/codePracticeRequests';
 import { postQuiz, getAllQuizzes, deleteQuiz } from '../utils/supabase/quizzRequest';
+import { getChaptersAndSubjects } from '../utils/supabase/contentRequests';
+import { deleteCodePracticeByMarkdownId } from '../utils/supabase/codePracticeRequests';
 import { checkUserRole } from '../../utils/userUtils';
 import CodeEditor from "@/app/learning/(technologies)/components/CodeEditor";
 
@@ -29,6 +31,10 @@ export default function Admin() {
     const [htmlCode, setHtmlCode] = useState("<h1>Hello World!</h1>");
     const [cssCode, setCssCode] = useState("h1 { color: blue; }");
     const [jsCode, setJsCode] = useState("console.log('hello world!');");
+    const [markdownContent, setMarkdownContent] = useState<any[]>([]);
+    const [markdownContentId, setMarkdownContentId] = useState();
+    const [selectedtechnology, setSelectedtechnology] = useState("html");
+    const [selectedmarkdownContentRow, setSelectedmarkdownContentRow] = useState(null);
 
     const { userId, getToken } = useAuth();
     const { session } = useSession();
@@ -41,6 +47,17 @@ export default function Admin() {
             router.push('/');
         }
     }, [userRole, session]);
+
+    useEffect(() => {
+        const fetchChapters = async () => {
+            const fetchedChapters = await getChaptersAndSubjects(selectedtechnology);
+            if (fetchedChapters) {
+                setMarkdownContent(fetchedChapters);
+            }
+        };
+
+        fetchChapters();
+    }, [selectedtechnology]);
 
     async function handlePublish({ chapter, chapterId, content, menu, subject, technology, difficulty }: any) {
         try {
@@ -228,7 +245,7 @@ export default function Admin() {
 
             await postCodePractice({
                 token: userToken,
-                markdownContentId: '1810c0a6-071d-41b7-9a6c-5c4381da9b79',
+                markdownContentId: markdownContentId,
                 userId: userId,
                 question: content,
                 correctHtmlCode: htmlCode,
@@ -240,6 +257,20 @@ export default function Admin() {
         } catch (error) {
             console.error('Error saving code practice:', error);
             alert('An error occurred while saving the code practice. Please try again.');
+        }
+    };
+
+    const handleSelectMarkdownId = (id: any) => {
+        setMarkdownContentId(id);
+        setSelectedmarkdownContentRow(id);
+
+    };
+    const handleDeleteCodePracticeByMarkdownId = async (markdownContentId: any) => {
+        try {
+            await deleteCodePracticeByMarkdownId(markdownContentId);
+            alert("Code practice deleted successfully!");
+        } catch (error) {
+            alert("Error while deleting Code practice");
         }
     };
 
@@ -359,6 +390,50 @@ export default function Admin() {
                 <div>
                     {publishContent()}
                     <div className="m-[60px] border-solid border-2 border-black p-10">
+                        <div className="mt-6">
+                            <label htmlFor="codeType" className="mb-2 block">
+                                Select technology:
+                            </label>
+                            <select
+                                id="codeType"
+                                value={selectedtechnology}
+                                onChange={(e) => setSelectedtechnology(e.target.value)}
+                                className="p-2 border rounded"
+                            >
+                                <option value="html">HTML</option>
+                                <option value="css">CSS</option>
+                                <option value="js">JS</option>
+                            </select>
+
+                            <div className="mt-10">
+                                <h3 className="font-bold text-lg mb-4">Chapters and Subjects:</h3>
+                                <ul className="list-none pl-0">
+                                    {markdownContent.map((item) => (
+                                        <li
+                                            key={item.id}
+                                            className={`mb-2 flex items-center space-x-4 p-4 rounded-md ${selectedmarkdownContentRow === item.id ? 'bg-gray-300' : ''}`}
+                                        >
+                                            <span><strong>Chapter:</strong> {item.chapter}</span>
+                                            <span><strong>Subject:</strong> {item.subject}</span>
+
+                                            <button
+                                                className="bg-black text-white px-4 py-2 rounded"
+                                                onClick={() => handleSelectMarkdownId(item.id)}
+                                            >
+                                                Select
+                                            </button>
+
+                                            <button
+                                                className="bg-red-600 text-white px-4 py-2 rounded"
+                                                onClick={() => handleDeleteCodePracticeByMarkdownId(item.id)}
+                                            >
+                                                Delete
+                                            </button>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </div>
                         <CodeEditor
                             htmlCode={htmlCode}
                             cssCode={cssCode}
@@ -367,15 +442,20 @@ export default function Admin() {
                             setCssCode={setCssCode}
                             setJsCode={setJsCode}
                         />
+
                         <label className='mb-6 block'>
                             Code practice question:
                         </label>
 
-                        <TextEditor handlePublish={handlePostCodePractice} submitting={submitting} isCodePractice={true}
+                        <TextEditor
+                            handlePublish={handlePostCodePractice}
+                            submitting={submitting}
+                            isCodePractice={true}
                         />
                     </div>
                 </div>
-            )
+            );
+
         }
 
         if (publishSwitch === 'quizz') {

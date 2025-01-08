@@ -139,8 +139,7 @@ export default function MainWrapper({
                         Practice time!
                     </Typography>
 
-
-                    <div className="bg-black text-white rounded-sm p-4 my-4">
+                    <div className="border-2 border-black rounded-sm p-4 my-4">
                         <ContentOutput content={codePractice ? content : ''} />
                     </div>
 

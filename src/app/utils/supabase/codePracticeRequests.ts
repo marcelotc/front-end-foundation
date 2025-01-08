@@ -36,3 +36,17 @@ export const getCodePracticeByMarkdownContent = async (markdownContentId: any) =
     }
     return data;
 };
+
+export const deleteCodePracticeByMarkdownId = async (markdownContentId: any) => {
+    const { data, error } = await supabaseClientPublic
+        .from('code_practice')
+        .delete()
+        .eq('markdown_content_id', markdownContentId);
+
+    if (error) {
+        console.error("Error deleting code practice data:", error);
+        throw error;
+    }
+
+    return data;
+};
