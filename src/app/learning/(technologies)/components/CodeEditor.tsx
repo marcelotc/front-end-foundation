@@ -76,9 +76,10 @@ const CodeEditor = ({ htmlCode, cssCode, jsCode, setHtmlCode, setCssCode, setJsC
         setJsWidth(33);
     };
 
-        const visiblePanels = [correctHtmlCode, correctCssCode, correctJsCode].filter(Boolean).length;
-    
-        const availableWidth = 100 / visiblePanels;
+    const visiblePanels = [correctHtmlCode, correctCssCode, correctJsCode].filter(Boolean).length;
+
+    const availableWidth = correctHtmlCode === undefined || correctCssCode || correctCssCode === undefined || correctJsCode || correctJsCode === undefined ?
+        100 / visiblePanels : 100;
 
     return (
         <div className="flex flex-col gap-5">
