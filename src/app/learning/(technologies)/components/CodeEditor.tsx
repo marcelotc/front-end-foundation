@@ -126,10 +126,10 @@ const CodeEditor = ({ htmlCode, cssCode, jsCode, setHtmlCode, setCssCode, setJsC
                 </div>
             )}
 
-            <div className="p-2 m-6">
+            <div>
                 <h2>Live Preview</h2>
 
-                <div className="border-2 border-black rounded-sm mt-3 mb-[90px]">
+                <div className="border-2 border-black rounded-sm mt-3 mb-6">
                     <iframe
                         srcDoc={livePreview}
                         title="preview"

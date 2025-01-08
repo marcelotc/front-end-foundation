@@ -111,7 +111,7 @@ export default function MainWrapper({
                 {children}
             </div>
 
-            <div className='flex justify-center my-5'>
+            <div className='flex justify-center mt-5'>
                 {isMarkdownEmpty && showButton && (
                     <Button size={"sm"} onClick={handleUpdateAndSaveProgress} className='mb-5 bg-green-800'>
                         Complete subject
@@ -143,7 +143,7 @@ export default function MainWrapper({
                         correctJsCode={codePractice && codePractice[0].correct_js_code}
                     />
 
-                    <div className="text-center mt-4">
+                    <div className="text-center">
                         <Button
                             size="sm"
                             onClick={toggleAnswer}
