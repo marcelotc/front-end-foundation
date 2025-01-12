@@ -34,6 +34,7 @@
   - [] REACT
   - [] VUE
   - [] ANGULAR
+- [ ] Design page (UX/UI)
 - [ ] Responsiveness
 - [ ] Internationalization
 
