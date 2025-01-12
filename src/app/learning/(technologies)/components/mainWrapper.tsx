@@ -24,7 +24,6 @@ export default function MainWrapper({
 }: MainWrapperProps) {
     const { menuOpen, progressUpdate, setProgressUpdate, loadingContent, setOpenChapters } = useContext(SideMenuContext);
     const { handleSaveToLearningProgress } = useSaveToLocalStorage();
-    const [showButton, setShowButton] = useState(false);
     const [showAnswer, setShowAnswer] = useState(false);
     const [codePractice, setCodePractice] = useState<any[] | null>(null);
     const [loading, setLoading] = useState(false);
@@ -44,19 +43,6 @@ export default function MainWrapper({
             setProgressUpdate(!progressUpdate);
         }
     };
-
-    useEffect(() => {
-        let timeout: NodeJS.Timeout;
-        if (!loadingContent) {
-            timeout = setTimeout(() => {
-                setShowButton(true);
-            }, 800);
-        } else {
-            setShowButton(false);
-        }
-
-        return () => clearTimeout(timeout);
-    }, [loadingContent]);
 
     useEffect(() => {
         setOpenChapters([]);
@@ -112,7 +98,7 @@ export default function MainWrapper({
             </div>
 
             <div className='flex justify-center mt-5'>
-                {isMarkdownEmpty && showButton && (
+                {isMarkdownEmpty && (
                     <Button size={"sm"} onClick={handleUpdateAndSaveProgress} className='mb-5 bg-green-800'>
                         Complete subject
                         &nbsp;
