@@ -10,7 +10,17 @@ import { useSaveToLocalStorage } from "@/app/hooks/useSaveToLocalStorage";
 import { getCodePracticeByMarkdownContent } from '@/app/utils/supabase/codePracticeRequests';
 import ContentOutput from '../components/contentOutput';
 import { toast } from 'sonner';
-
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from '@/components/ui/button';
 
 interface MainWrapperProps {
@@ -25,14 +35,12 @@ export default function MainWrapper({
     const { menuOpen, progressUpdate, setProgressUpdate, loadingContent, setOpenChapters } = useContext(SideMenuContext);
     const { handleSaveToLearningProgress } = useSaveToLocalStorage();
     const [showAnswer, setShowAnswer] = useState(false);
+    const [dontshowDialog, setdontShowDialog] = useState(false);
+    const [dontShowAgain, setDontShowAgain] = useState(false);
     const [codePractice, setCodePractice] = useState<any[] | null>(null);
     const [htmlCode, setHtmlCode] = useState("<h1>Code your answer!</h1>");
     const [cssCode, setCssCode] = useState("h1 { color: blue; }");
     const [jsCode, setJsCode] = useState("console.log('hello world!');");
-
-    const toggleAnswer = () => {
-        setShowAnswer(!showAnswer);
-    };
 
     const isMarkdownEmpty = markdown && markdown.length > 0;
 
@@ -68,6 +76,11 @@ export default function MainWrapper({
         fetchCodePractice();
     }, [markdown]);
 
+    useEffect(() => {
+        const dontShow: any = localStorage.getItem('dontShowRevealAnswerDialog');
+        setdontShowDialog(!!dontShow);
+    }, [showAnswer]);
+
     const questionData = codePractice && codePractice[0]?.question;
     const parsedQuestionData = typeof questionData === "string" ? JSON.parse(questionData) : questionData;
     const content = JSON.stringify({ content: parsedQuestionData });
@@ -77,6 +90,21 @@ export default function MainWrapper({
             .then(() => {
                 toast.success('Copied to clipboard!');
             })
+    };
+
+    const handleDontShowAgainChange = () => {
+        setDontShowAgain(!dontShowAgain);
+    };
+
+    const handleRevealAnswer = () => {
+        if (dontShowAgain) {
+            localStorage.setItem('dontShowRevealAnswerDialog', 'true');
+        }
+        setShowAnswer(true);
+    };
+
+    const toggleAnswer = () => {
+        setShowAnswer(!showAnswer);
     };
 
     return (
@@ -126,13 +154,61 @@ export default function MainWrapper({
                     />
 
                     <div className="text-center">
-                        <Button
-                            size="sm"
-                            onClick={toggleAnswer}
-                            className="mb-5 bg-green-800"
-                        >
-                            {showAnswer ? 'Hide Answer' : 'Reveal Answer'}
-                        </Button>
+                        {!dontshowDialog && (
+                            <>
+                                {!showAnswer && (
+                                    <AlertDialog>
+                                        <AlertDialogTrigger asChild>
+                                            <Button
+                                                size="sm"
+                                                className="mb-5 bg-green-800"
+                                            >
+                                                Reveal Answer
+                                            </Button>
+                                        </AlertDialogTrigger>
+                                        <AlertDialogContent>
+                                            <AlertDialogHeader>
+                                                <AlertDialogTitle>Are you sure to reveal the answer?</AlertDialogTitle>
+                                                <AlertDialogDescription>
+                                                    Before you reveal the answer, it is highly recommended that you try yourself first!
+                                                </AlertDialogDescription>
+                                            </AlertDialogHeader>
+                                            <div className="flex items-center">
+                                                <Checkbox
+                                                    checked={dontShowAgain}
+                                                    onCheckedChange={handleDontShowAgainChange}
+                                                    className="mr-2"
+                                                />
+                                                <label>Don't show this message again</label>
+                                            </div>
+                                            <AlertDialogFooter>
+                                                <AlertDialogAction>Cancel</AlertDialogAction>
+                                                <AlertDialogAction onClick={handleRevealAnswer}>Reveal Answer</AlertDialogAction>
+                                            </AlertDialogFooter>
+                                        </AlertDialogContent>
+                                    </AlertDialog>
+                                )}
+
+                                {showAnswer && (
+                                    <Button
+                                        size="sm"
+                                        onClick={toggleAnswer}
+                                        className="mb-5 bg-green-800"
+                                    >
+                                        Hide Answer
+                                    </Button>
+                                )}
+                            </>
+                        )}
+                        {dontshowDialog && (
+                            <Button
+                                size="sm"
+                                onClick={toggleAnswer}
+                                className="mb-5 bg-green-800"
+                            >
+                                {showAnswer ? 'Hide Answer' : 'Reveal Answer'}
+                            </Button>
+                        )}
                     </div>
 
                     {showAnswer && (
