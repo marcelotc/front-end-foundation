@@ -35,6 +35,7 @@
   - [] VUE
   - [] ANGULAR
 - [ ] Design page (UX/UI)
+- [ ] Design Systems page
 - [ ] Responsiveness
 - [ ] Internationalization
 
