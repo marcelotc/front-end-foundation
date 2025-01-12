@@ -24,11 +24,16 @@
   - [x] Abble to edit a post
   - [x] Abble to delete a post
   - [x] Abble to list a post
+  - [x] Abble add a quizz
+  - [x] Abble to delete a quizz
+  - [x] Abble to list a quizz
 - [x] Auth page using clerk
-- [ ] Roadmap page
-- [ ] Progress tracking page
-- [ ] Learning path calendar page
+- [x] Roadmap page
 - [ ] Quizzes page
+- [ ] Framework page
+  - [] REACT
+  - [] VUE
+  - [] ANGULAR
 
 <div align="center">
   <img src="public/homepage.png" alt="Homepage Screenshot"/>
