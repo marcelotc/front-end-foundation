@@ -64,7 +64,6 @@ export default function ProgressCards({ htmlProgress, cssProgress, javascriptPro
                             </div>
                             <div>
                                 <CardTitle className="text-white">VUE</CardTitle>
-                                <CardDescription>Intermediate</CardDescription>
                             </div>
                         </div>
                     </CardHeader>
@@ -96,7 +95,6 @@ export default function ProgressCards({ htmlProgress, cssProgress, javascriptPro
                             </div>
                             <div>
                                 <CardTitle className="text-white">ANGULAR</CardTitle>
-                                <CardDescription>Advanced</CardDescription>
                             </div>
                         </div>
                     </CardHeader>
