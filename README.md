@@ -34,6 +34,8 @@
   - [] REACT
   - [] VUE
   - [] ANGULAR
+- [ ] Responsiveness
+- [ ] Internationalization
 
 <div align="center">
   <img src="public/homepage.png" alt="Homepage Screenshot"/>
