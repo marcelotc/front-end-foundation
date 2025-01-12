@@ -30,7 +30,7 @@
 - [x] Auth page using clerk
 - [x] Roadmap page
 - [ ] Quizzes page
-- [ ] Framework page
+- [ ] Frameworks page
   - [ ] REACT
   - [ ] VUE
   - [ ] ANGULAR
