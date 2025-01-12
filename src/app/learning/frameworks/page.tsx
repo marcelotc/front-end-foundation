@@ -59,7 +59,7 @@ export default function Frameworks() {
     const isNotPrepared = htmlProgress < 80 || cssProgress < 80 || javascriptProgress < 80;
 
     return (
-        <section className="flex flex-col min-h-[100dvh] p-4 md:p-6">
+        <section className="flex flex-col p-4 md:p-6">
             <Typography variant="h1">Frameworks</Typography>
             <Typography variant="extraLargeText" className="mt-4">
                 Before proceeding, make sure you have <span className="font-semibold">completed 80%</span> of the <span className="font-semibold">fundamentals in HTML, CSS, and JavaScript</span>.

@@ -26,7 +26,6 @@ export default function MainWrapper({
     const { handleSaveToLearningProgress } = useSaveToLocalStorage();
     const [showAnswer, setShowAnswer] = useState(false);
     const [codePractice, setCodePractice] = useState<any[] | null>(null);
-    const [loading, setLoading] = useState(false);
     const [htmlCode, setHtmlCode] = useState("<h1>Code your answer!</h1>");
     const [cssCode, setCssCode] = useState("h1 { color: blue; }");
     const [jsCode, setJsCode] = useState("console.log('hello world!');");
@@ -55,7 +54,6 @@ export default function MainWrapper({
         setJsCode("console.log('hello world!');");
         setShowAnswer(false);
         const fetchCodePractice = async () => {
-            setLoading(true);
             try {
                 const result: any = await getCodePracticeByMarkdownContent(markdown && markdown[0]?.id);
                 if (result) {
@@ -65,8 +63,6 @@ export default function MainWrapper({
                 }
             } catch (error) {
                 console.error('Error fetching code practice:', error);
-            } finally {
-                setLoading(false);
             }
         };
         fetchCodePractice();
