@@ -14,13 +14,11 @@ interface ProgressCardsInterface {
 }
 
 export default function ProgressCards({ htmlProgress, cssProgress, javascriptProgress }: ProgressCardsInterface) {
-    // Check if any technology has progress greater than 80
     const isLocked = htmlProgress < 80 || cssProgress < 80 || javascriptProgress < 80;
 
     return (
         <section className="mt-5">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {/* HTML Progress Card */}
                 <Card className="bg-[#1b1b1d]">
                     <CardHeader>
                         <div className="flex items-center gap-4">
@@ -52,7 +50,6 @@ export default function ProgressCards({ htmlProgress, cssProgress, javascriptPro
                     </CardContent>
                 </Card>
 
-                {/* CSS Progress Card */}
                 <Card className="bg-[#1b1b1d]">
                     <CardHeader>
                         <div className="flex items-center gap-4">
@@ -85,7 +82,6 @@ export default function ProgressCards({ htmlProgress, cssProgress, javascriptPro
                     </CardContent>
                 </Card>
 
-                {/* JavaScript Progress Card */}
                 <Card className="bg-[#1b1b1d]">
                     <CardHeader>
                         <div className="flex items-center gap-4">
