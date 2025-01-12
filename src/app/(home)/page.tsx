@@ -10,6 +10,7 @@ import pathImage from "../../../public/path-image.png";
 import flagImage from "../../../public/flag-image.png";
 import questionImage from "../../../public/question-image.png";
 import roadMapImage from "../../../public/road-map-image.png";
+import reactIcon from "../../../public/react-icon.png";
 
 export default function Home() {
 
@@ -122,15 +123,14 @@ export default function Home() {
                                 </div>
                             </div>
                         </Link>*/}
-                        <Link href={'/learning/progress'}>
+                        <Link href={'/learning/frameworks'}>
                             <div className="flex bg-[#1b1b1d] w-full sm:w-[300px] md:w-[400px] h-[200px] rounded-xl hover:opacity-95 cursor-pointer">
                                 <div className="flex items-center justify-between w-full p-6 sm:p-8 md:p-10">
                                     <Typography variant="largeText" as="h1" className="text-white">
-                                        Track your
-                                        learning progress
+                                        Ready for Frameworks?
                                     </Typography>
                                     <Image
-                                        src={flagImage}
+                                        src={reactIcon}
                                         width={80}
                                         height={80}
                                         alt="flag image"
