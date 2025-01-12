@@ -1,64 +1,21 @@
-'use client';
-
-import { useEffect, useState } from "react";
 import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/components/ui/card";
 import Link from "next/link";
+import { LockIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { getMenu } from '@/app/utils/supabase/contentRequests';
 import reactIcon from "../../../../../public/react-icon.png";
-import cssIcon from "../../../../../public/vue-icon.png";
-import anglularIcon from "../../../../../public/angular-icon.png";
+import vueIcon from "../../../../../public/vue-icon.png";
+import angularIcon from "../../../../../public/angular-icon.png";
 import Image from "next/image";
 
-export default function ProgressCards() {
-    const [dataHtml, setDataHtml] = useState<any>(null);
-    const [dataCss, setDataCss] = useState<any>(null);
-    const [dataJs, setDataJs] = useState<any>(null);
-    const [learningProgress, setLearningProgress] = useState<any>(null);
+interface ProgressCardsInterface {
+    htmlProgress: number;
+    cssProgress: number;
+    javascriptProgress: number;
+}
 
-    useEffect(() => {
-        const loadMenu = async () => {
-            try {
-                const fetchedHtml = await getMenu('html');
-                const fetchedCss = await getMenu('css');
-                const fetchedJs = await getMenu('javascript');
-
-                setDataHtml(fetchedHtml);
-                setDataCss(fetchedCss);
-                setDataJs(fetchedJs);
-            } catch (error) {
-                console.error("Error fetching data", error);
-            }
-        };
-
-        loadMenu();
-
-        const storedProgress = localStorage.getItem('learningProgress');
-        if (storedProgress) {
-            setLearningProgress(JSON.parse(storedProgress));
-        }
-    }, []);
-
-    const countSubjectsByTechnology = (data: any) => {
-        return data?.reduce((acc: number, chapter: any) => acc + chapter.subjects.length, 0);
-    };
-
-    const countSubjectsCompletedByTechnology = (tech: string) => {
-        const progress = learningProgress?.[tech]?.chapters;
-        return progress?.reduce((acc: number, chapter: any) => acc + chapter.subjectsConcluded.length, 0) || 0;
-    };
-
-    const calculateProgress = (data: any, tech: string) => {
-        const totalSubjects = countSubjectsByTechnology(data);
-        const completedSubjects = countSubjectsCompletedByTechnology(tech);
-
-        return totalSubjects > 0 ? (completedSubjects / totalSubjects) * 100 : 0;
-    };
-
-    const htmlProgress = dataHtml && learningProgress ? calculateProgress(dataHtml, 'html') : 0;
-    const cssProgress = dataCss && learningProgress ? calculateProgress(dataCss, 'css') : 0;
-    const javascriptProgress = dataJs && learningProgress ? calculateProgress(dataJs, 'javascript') : 0;
+export default function ProgressCards({ htmlProgress, cssProgress, javascriptProgress }: ProgressCardsInterface) {
+    // Check if any technology has progress greater than 80
+    const isLocked = htmlProgress < 80 || cssProgress < 80 || javascriptProgress < 80;
 
     return (
         <section className="mt-5">
@@ -81,6 +38,18 @@ export default function ProgressCards() {
                             </div>
                         </div>
                     </CardHeader>
+                    <CardContent className="flex flex-col items-center justify-center gap-4">
+                        <Link href={htmlProgress < 80 ? '#' : '/learning/react'  } className="w-full">
+                            <Button
+                                className={`w-full ${isLocked ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                variant="outline"
+                                disabled={isLocked}
+                            >
+                                Learn
+                                {isLocked && <LockIcon className="h-6 w-6 text-gray-500" /> }
+                            </Button>
+                        </Link>
+                    </CardContent>
                 </Card>
 
                 {/* CSS Progress Card */}
@@ -89,7 +58,7 @@ export default function ProgressCards() {
                         <div className="flex items-center gap-4">
                             <div className="bg-green-600 p-3 rounded-full">
                                 <Image
-                                    src={cssIcon}
+                                    src={vueIcon}
                                     width={35}
                                     height={35}
                                     alt="CSS logo"
@@ -98,9 +67,22 @@ export default function ProgressCards() {
                             </div>
                             <div>
                                 <CardTitle className="text-white">VUE</CardTitle>
+                                <CardDescription>Intermediate</CardDescription>
                             </div>
                         </div>
                     </CardHeader>
+                    <CardContent className="flex flex-col items-center justify-center gap-4">
+                        <Link href={cssProgress < 80 ? '#' : '/learning/vue'} className="w-full">
+                            <Button
+                                className={`w-full ${isLocked ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                variant="outline"
+                                disabled={isLocked}
+                            >
+                                Learn
+                                {isLocked && <LockIcon className="h-6 w-6 text-gray-500" /> }
+                            </Button>
+                        </Link>
+                    </CardContent>
                 </Card>
 
                 {/* JavaScript Progress Card */}
@@ -109,7 +91,7 @@ export default function ProgressCards() {
                         <div className="flex items-center gap-4">
                             <div className="bg-red-700 p-3 rounded-full">
                                 <Image
-                                    src={anglularIcon}
+                                    src={angularIcon}
                                     width={35}
                                     height={35}
                                     alt="JavaScript logo"
@@ -122,6 +104,18 @@ export default function ProgressCards() {
                             </div>
                         </div>
                     </CardHeader>
+                    <CardContent className="flex flex-col items-center justify-center gap-4">
+                        <Link href={javascriptProgress < 80 ? '#' : '/learning/angular'} className="w-full">
+                            <Button
+                                className={`w-full ${isLocked ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                variant="outline"
+                                disabled={isLocked}
+                            >
+                                Learn
+                                {isLocked && <LockIcon className="h-6 w-6 text-gray-500" /> }
+                            </Button>
+                        </Link>
+                    </CardContent>
                 </Card>
             </div>
         </section>
