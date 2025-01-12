@@ -31,9 +31,9 @@
 - [x] Roadmap page
 - [ ] Quizzes page
 - [ ] Framework page
-  - [] REACT
-  - [] VUE
-  - [] ANGULAR
+  - [ ] REACT
+  - [ ] VUE
+  - [ ] ANGULAR
 - [ ] Design page (UX/UI)
 - [ ] Design Systems page
 - [ ] Responsiveness
