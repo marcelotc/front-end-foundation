@@ -6,9 +6,9 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { getMenu } from '@/app/utils/supabase/contentRequests';
-import htmlLogo from "../../../../../public/html-logo.png";
-import cssLogo from "../../../../../public/css-logo.png";
-import javascriptLogo from "../../../../../public/javascript-logo.png";
+import reactIcon from "../../../../../public/react-icon.png";
+import cssIcon from "../../../../../public/vue-icon.png";
+import anglularIcon from "../../../../../public/angular-icon.png";
 import Image from "next/image";
 
 export default function ProgressCards() {
@@ -61,15 +61,15 @@ export default function ProgressCards() {
     const javascriptProgress = dataJs && learningProgress ? calculateProgress(dataJs, 'javascript') : 0;
 
     return (
-        <section className="p-4 md:p-6">
+        <section className="mt-5">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {/* HTML Progress Card */}
                 <Card className="bg-[#1b1b1d]">
                     <CardHeader>
                         <div className="flex items-center gap-4">
-                            <div className="bg-[#F16524] p-3 rounded-full">
+                            <div className="bg-blue-600 p-3 rounded-full">
                                 <Image
-                                    src={htmlLogo}
+                                    src={reactIcon}
                                     width={35}
                                     height={35}
                                     alt="HTML logo"
@@ -77,33 +77,19 @@ export default function ProgressCards() {
                                 />
                             </div>
                             <div>
-                                <CardTitle className="text-white">HTML</CardTitle>
-                                <CardDescription>Fundamentals</CardDescription>
+                                <CardTitle className="text-white">REACT</CardTitle>
                             </div>
                         </div>
                     </CardHeader>
-                    <CardContent className="flex flex-col items-center justify-center gap-4">
-                        <div className="relative w-32 h-32">
-                            <div className="absolute inset-0 flex items-center justify-center text-4xl text-white font-bold">
-                                {htmlProgress.toFixed(0)}%
-                            </div>
-                        </div>
-                        <Progress value={htmlProgress} />
-                        <Link href={'/learning/html'} className="w-full">
-                            <Button className="w-full" variant="outline">
-                                Continue Learning
-                            </Button>
-                        </Link>
-                    </CardContent>
                 </Card>
 
                 {/* CSS Progress Card */}
                 <Card className="bg-[#1b1b1d]">
                     <CardHeader>
                         <div className="flex items-center gap-4">
-                            <div className="bg-[#2965F1] p-3 rounded-full">
+                            <div className="bg-green-600 p-3 rounded-full">
                                 <Image
-                                    src={cssLogo}
+                                    src={cssIcon}
                                     width={35}
                                     height={35}
                                     alt="CSS logo"
@@ -111,33 +97,19 @@ export default function ProgressCards() {
                                 />
                             </div>
                             <div>
-                                <CardTitle className="text-white">CSS</CardTitle>
-                                <CardDescription>Intermediary</CardDescription>
+                                <CardTitle className="text-white">VUE</CardTitle>
                             </div>
                         </div>
                     </CardHeader>
-                    <CardContent className="flex flex-col items-center justify-center gap-4">
-                        <div className="relative w-32 h-32">
-                            <div className="absolute inset-0 flex items-center justify-center text-4xl text-white font-bold">
-                                {cssProgress.toFixed(0)}%
-                            </div>
-                        </div>
-                        <Progress value={cssProgress} />
-                        <Link href={'/learning/css'} className="w-full">
-                            <Button className="w-full" variant="outline">
-                                Continue Learning
-                            </Button>
-                        </Link>
-                    </CardContent>
                 </Card>
 
                 {/* JavaScript Progress Card */}
                 <Card className="bg-[#1b1b1d]">
                     <CardHeader>
                         <div className="flex items-center gap-4">
-                            <div className="bg-[#F0DB4F] p-3 rounded-full">
+                            <div className="bg-red-700 p-3 rounded-full">
                                 <Image
-                                    src={javascriptLogo}
+                                    src={anglularIcon}
                                     width={35}
                                     height={35}
                                     alt="JavaScript logo"
@@ -145,24 +117,11 @@ export default function ProgressCards() {
                                 />
                             </div>
                             <div>
-                                <CardTitle className="text-white">Javascript</CardTitle>
+                                <CardTitle className="text-white">ANGULAR</CardTitle>
                                 <CardDescription>Advanced</CardDescription>
                             </div>
                         </div>
                     </CardHeader>
-                    <CardContent className="flex flex-col items-center justify-center gap-4">
-                        <div className="relative w-32 h-32">
-                            <div className="absolute inset-0 flex items-center justify-center text-4xl text-white font-bold">
-                                {javascriptProgress.toFixed(0)}%
-                            </div>
-                        </div>
-                        <Progress value={javascriptProgress} />
-                        <Link href={'/learning/javascript'} className="w-full">
-                            <Button className="w-full" variant="outline">
-                                Continue Learning
-                            </Button>
-                        </Link>
-                    </CardContent>
                 </Card>
             </div>
         </section>
