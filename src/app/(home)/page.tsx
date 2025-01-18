@@ -6,8 +6,8 @@ import { CornerRightUp } from 'lucide-react'
 import htmlLogo from "../../../public/html-logo.png";
 import cssLogo from "../../../public/css-logo.png";
 import javascriptLogo from "../../../public/javascript-logo.png";
-import pathImage from "../../../public/path-image.png";
-import flagImage from "../../../public/flag-image.png";
+import designSystemsLogo from "../../../public/design-systems-logo.png";
+import uxuiLogo from "../../../public/ux-ui-logo.png";
 import questionImage from "../../../public/question-image.png";
 import roadMapImage from "../../../public/road-map-image.png";
 import reactIcon from "../../../public/react-icon.png";
@@ -105,6 +105,21 @@ export default function Home() {
                                 </div>
                             </div>
                         </Link>
+                        <Link href={'/learning/frameworks'}>
+                            <div className="flex bg-[#1b1b1d] w-full sm:w-[300px] md:w-[400px] h-[200px] rounded-xl hover:opacity-95 cursor-pointer">
+                                <div className="flex items-center justify-between w-full p-6 sm:p-8 md:p-10">
+                                    <Typography variant="largeText" as="h1" className="text-white">
+                                        Ready for Frameworks?
+                                    </Typography>
+                                    <Image
+                                        src={reactIcon}
+                                        width={80}
+                                        height={80}
+                                        alt="framwework image"
+                                    />
+                                </div>
+                            </div>
+                        </Link>
                     </div>
                     <div className="flex flex-wrap gap-4 justify-center mt-6">
                         {/*<Link href={'/learning/path'}>
@@ -123,17 +138,32 @@ export default function Home() {
                                 </div>
                             </div>
                         </Link>*/}
-                        <Link href={'/learning/frameworks'}>
+                        <Link href={'/learning/uxui'}>
                             <div className="flex bg-[#1b1b1d] w-full sm:w-[300px] md:w-[400px] h-[200px] rounded-xl hover:opacity-95 cursor-pointer">
                                 <div className="flex items-center justify-between w-full p-6 sm:p-8 md:p-10">
                                     <Typography variant="largeText" as="h1" className="text-white">
-                                        Ready for Frameworks?
+                                        UX/UI
                                     </Typography>
                                     <Image
-                                        src={reactIcon}
+                                        src={uxuiLogo}
                                         width={80}
                                         height={80}
-                                        alt="flag image"
+                                        alt="UX/UIX image"
+                                    />
+                                </div>
+                            </div>
+                        </Link>
+                        <Link href={'/learning/designsystems'}>
+                            <div className="flex bg-[#1b1b1d] w-full sm:w-[300px] md:w-[400px] h-[200px] rounded-xl hover:opacity-95 cursor-pointer">
+                                <div className="flex items-center justify-between w-full p-6 sm:p-8 md:p-10">
+                                    <Typography variant="largeText" as="h1" className="text-white">
+                                        Design systems
+                                    </Typography>
+                                    <Image
+                                        src={designSystemsLogo}
+                                        width={80}
+                                        height={80}
+                                        alt="Design systems image"
                                     />
                                 </div>
                             </div>

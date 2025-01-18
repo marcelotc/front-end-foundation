@@ -36,8 +36,8 @@
   - [ ] ANGULAR
 - [ ] Design page (UX/UI)
 - [ ] Design Systems page
-- [ ] Responsiveness
-- [ ] Internationalization
+- [ ] Responsiveness of the site itself
+- [ ] Internationalization of the site itself
 
 <div align="center">
   <img src="public/homepage.png" alt="Homepage Screenshot"/>

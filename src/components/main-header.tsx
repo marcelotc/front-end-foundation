@@ -161,6 +161,24 @@ export default function MainHeader() {
                     </Typography>
                 </Link>
                 <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
+                <Link
+                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
+                    href="/learning/uxui"
+                >
+                    <Typography variant="smallText" as="h1" className="text-white text-xs">
+                        UX/UI
+                    </Typography>
+                </Link>
+                <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
+                <Link
+                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
+                    href="/learning/designsystems"
+                >
+                    <Typography variant="smallText" as="h1" className="text-white text-xs">
+                        DESIGN SYSTEMS
+                    </Typography>
+                </Link>
+                <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
                 {/*<Link
                     className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
                     href="/learning/path"
