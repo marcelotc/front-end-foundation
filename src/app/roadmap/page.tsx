@@ -66,7 +66,7 @@ function CollapsibleSection({
                                 {section.subjects.map((subject, subjectIndex) => (
                                     <li
                                         key={subjectIndex}
-                                        className="group flex items-center w-1/4 mb-1 text-white dark:text-gray-400 p-3 rounded-md transition-colors duration-100 cursor-pointer hover:bg-[#ffa500] hover:text-black relative"
+                                        className="group flex items-center w-[50%] mb-1 text-white dark:text-gray-400 p-3 rounded-md transition-colors duration-100 cursor-pointer hover:bg-[#ffa500] hover:text-black relative"
                                         onClick={(e) => {
                                             e.stopPropagation();
                                         }}

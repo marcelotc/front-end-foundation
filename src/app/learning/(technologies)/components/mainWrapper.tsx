@@ -132,7 +132,7 @@ export default function MainWrapper({
             </div>
 
             {isMarkdownEmpty && codePractice?.length !== 0 && (
-                <>
+                <div className='bg-gray-100 shadow-md rounded-sm p-6 mb-5'>
                     <Typography variant="extra3LargeText" as="h1" className="font-bold text-center">
                         Practice time!
                     </Typography>
@@ -182,7 +182,7 @@ export default function MainWrapper({
                                                 <label>Don't show this message again</label>
                                             </div>
                                             <AlertDialogFooter>
-                                                <AlertDialogAction>Cancel</AlertDialogAction>
+                                                <AlertDialogAction>Ok I will try first!</AlertDialogAction>
                                                 <AlertDialogAction onClick={handleRevealAnswer}>Reveal Answer</AlertDialogAction>
                                             </AlertDialogFooter>
                                         </AlertDialogContent>
@@ -269,7 +269,7 @@ export default function MainWrapper({
                             )}
                         </div>
                     )}
-                </>
+                </div>
             )}
         </main>
     );
