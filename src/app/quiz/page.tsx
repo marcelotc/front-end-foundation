@@ -14,7 +14,7 @@ export default function QuizMainPage() {
   };
 
   return (
-    <section className="flex flex-col h-full items-center mt-20">
+    <section className="flex flex-col h-full font-bold items-center mt-20">
     <Typography variant="extra3LargeText" className="mb-4">
         Select a Technology to Start
     </Typography>

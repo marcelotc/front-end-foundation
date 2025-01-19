@@ -1,9 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 import { Typography } from "@/components/ui/typography";
 import { getQuizzesByTechnology } from '@/app/utils/supabase/quizzRequest';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown, ChevronUp, CircleArrowLeft } from 'lucide-react';
 
 interface QuizPageProps {
     params: {
@@ -12,6 +14,7 @@ interface QuizPageProps {
 }
 
 export default function QuizPage({ params }: QuizPageProps) {
+    const router = useRouter();
     const { technology } = params;
     const normalizedTech =
         technology.toLowerCase() === 'javascript' ? 'JavaScript' :
@@ -51,8 +54,10 @@ export default function QuizPage({ params }: QuizPageProps) {
         const parentElement = event.currentTarget;
         if (isCorrect) {
             parentElement.classList.add('bg-green-700');
+            toast.success('Correct answer!');
         } else {
             parentElement.classList.add('bg-red-700');
+            toast.error('Wrong answer! Try again');
         }
         parentElement.classList.remove('hover:bg-gray-600');
     };
@@ -87,9 +92,13 @@ export default function QuizPage({ params }: QuizPageProps) {
         <section
             className={`flex flex-col font-bold px-4 md:px-6 mt-10 ${expandedQuiz === null ? 'h-full' : ''}`}
         >
-            <Typography variant="extra3LargeText" className="text-center mb-6">
-                Quizzes on {technology}
-            </Typography>
+            <div className='flex justify-between'>
+                <CircleArrowLeft size={40} onClick={() => router.push('/quiz')} className='cursor-pointer' />
+                <Typography variant="extra3LargeText" className="text-center mb-6">
+                    Quizzes on {technology}
+                </Typography>
+                <div></div>
+            </div>
 
             {quizzes.length > 0 ? (
                 quizzes.map((quiz, index) => (
