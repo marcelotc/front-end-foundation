@@ -56,8 +56,6 @@ export function useSaveToLocalStorage() {
         };
 
         localStorage.setItem('learningProgress', JSON.stringify(learningProgress));
-
-        toast.success('Roadmap progress updated!');
         return { progressValues, sectionsData };
     };
 

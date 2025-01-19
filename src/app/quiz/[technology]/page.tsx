@@ -57,7 +57,7 @@ export default function QuizPage({ params }: QuizPageProps) {
             toast.success('Correct answer!');
         } else {
             parentElement.classList.add('bg-red-700');
-            toast.error('Wrong answer! Try again');
+            toast.error('Wrong answer! Try again.');
         }
         parentElement.classList.remove('hover:bg-gray-600');
     };

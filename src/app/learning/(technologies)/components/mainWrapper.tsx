@@ -112,12 +112,12 @@ export default function MainWrapper({
             menuOpen && "ml-72",
             !menuOpen && "ml-20",
         )}>
-            <Typography variant="extra3LargeText" as="h1" className='font-bold'>
-                {isMarkdownEmpty && (
-                    `${markdown[0]?.chapter} - ${markdown[0]?.subject}`
-                )}
-            </Typography>
-            <div className={clsx("overflow-y-auto bg-gray-100 p-6 mt-5 dark:bg-gray-900 shadow-md")}>
+            {isMarkdownEmpty && (
+                <Typography variant="extra3LargeText" as="h1" className='font-bold mb-5'>
+                    {markdown[0]?.chapter} - {markdown[0]?.subject}
+                </Typography>
+            )}
+            <div className={clsx("overflow-y-auto bg-gray-100 p-6 dark:bg-gray-900 shadow-md mb-5")}>
                 {children}
             </div>
 

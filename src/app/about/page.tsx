@@ -2,7 +2,7 @@ import { Typography } from "@/components/ui/typography";
 
 export default function About() {
     return (
-        <section className="flex flex-col h-full">
+        <section className="flex flex-col h-full bg-gray-100 shadow-lg rounded-sm p-6 my-10 mx-10">
             <main className="flex-1 px-4 md:px-6 mt-5">
                 <Typography variant="h2" className="mb-4">About</Typography>
 
@@ -13,9 +13,6 @@ export default function About() {
                 <Typography variant="h3" className="mb-4">What's Offered</Typography>
 
                 <ul className="list-disc list-inside mb-8">
-                    {/*<li>
-                        <b>Define Your Learning Path Calendar:</b> Tailor your learning journey with an interactive calendar, designed to help set achievable goals and track progress.
-                    </li>*/}
                     <li>
                         <b>Quizzes:</b> Test knowledge and reinforce understanding with regularly updated quizzes covering key concepts in HTML, CSS, and JavaScript.
                     </li>
@@ -23,7 +20,13 @@ export default function About() {
                         <b>Road Map of Technologies:</b> Navigate through a curated roadmap, guiding from beginner to advanced topics in front-end development.
                     </li>
                     <li>
-                        <b>Progress Tracking:</b>  Stay motivated and monitor growth with built-in progress tracking tool, allowing to see how far you've come and where headed.
+                        <b>Frameworks Page:</b> Explore popular front-end frameworks like React, Angular, and Vue, with detailed guides and resources to help integrate them into your projects.
+                    </li>
+                    <li>
+                        <b>UX/UI Design Page:</b> Learn the principles of user experience (UX) and user interface (UI) design, essential for creating intuitive and engaging applications.
+                    </li>
+                    <li>
+                        <b>Design Systems Page:</b> Understand the importance of design systems and how to implement them to maintain consistency and scalability in your projects.
                     </li>
                 </ul>
 

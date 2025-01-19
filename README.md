@@ -29,7 +29,7 @@
   - [x] Abble to list a quizz
 - [x] Auth page using clerk
 - [x] Roadmap page
-- [ ] Quizzes page
+- [ ] Quizzes page (add correct answers system)
 - [ ] Frameworks page
   - [ ] REACT
   - [ ] VUE
