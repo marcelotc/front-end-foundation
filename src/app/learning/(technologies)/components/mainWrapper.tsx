@@ -196,11 +196,25 @@ export default function MainWrapper({
                         )}
                         {dontshowDialog && (
                             <Button
-                                size="sm"
+                                size="lg"
                                 onClick={toggleAnswer}
-                                className="mb-5 bg-green-800"
+                                className={"flmb-5 w-full bg-blue-500"}
                             >
-                                {showAnswer ? 'Hide Answer' : 'Reveal Answer'}
+                                {showAnswer ? (<>
+
+                                    Hide Answer
+                                    &nbsp;
+                                    <EyeOff />
+                                </>
+                                ) :
+                                    (<>
+
+                                        Reveal Answer
+                                        &nbsp;
+                                        <Lightbulb />
+                                    </>
+                                    )}
+
                             </Button>
                         )}
                         <div className='flex justify-center mt-5'>
