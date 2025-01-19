@@ -284,6 +284,8 @@ export default function MyEditor({ editorMarkdown, handlePublish, submitting, is
                                         <option value="html">HTML</option>
                                         <option value="css">CSS</option>
                                         <option value="javascript">JavaScript</option>
+                                        <option value="designsystems">Design Systems</option>
+                                        <option value="uxui">uxui</option>
                                     </select>
                                 </label>
                                 <label>

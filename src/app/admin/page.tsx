@@ -296,6 +296,8 @@ export default function Admin() {
                         <option value="HTML">HTML</option>
                         <option value="CSS">CSS</option>
                         <option value="JavaScript">JavaScript</option>
+                        <option value="designsystems">Design Systems</option>
+                        <option value="uxui">uxui</option>
                     </select>
                     <textarea
                         placeholder="Quiz Description"

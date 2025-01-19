@@ -144,6 +144,8 @@ export default function Posts() {
                             <option value="html">HTML</option>
                             <option value="css">CSS</option>
                             <option value="javascript">JavaScript</option>
+                            <option value="designsystems">Design Systems</option>
+                            <option value="uxui">uxui</option>
                         </select>
                     </label>
                     <label>
