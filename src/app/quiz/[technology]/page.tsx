@@ -46,13 +46,15 @@ export default function QuizPage({ params }: QuizPageProps) {
         return url.includes('supabase.co/storage');
     };
 
-    const handleAnswerSelect = (isCorrect: boolean, event: any) => {
+    const handleAnswerSelect = (isCorrect: boolean, event: React.MouseEvent) => {
         event.stopPropagation();
+        const parentElement = event.currentTarget;
         if (isCorrect) {
-            event.target.classList.add('bg-green-700');
+            parentElement.classList.add('bg-green-700');
         } else {
-            event.target.classList.add('bg-red-700');
+            parentElement.classList.add('bg-red-700');
         }
+        parentElement.classList.remove('hover:bg-gray-600');
     };
 
     const handleQuizToggle = (quizIndex: number) => {
