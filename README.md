@@ -19,6 +19,8 @@
   - [x] HTML
   - [x] CSS
   - [x] JavaScript
+  - [x] Design page (UX/UI)
+  - [x] Design Systems page
 - [x] Admin page:
   - [x] Abble to add a post
   - [x] Abble to edit a post
@@ -34,8 +36,6 @@
   - [ ] REACT
   - [ ] VUE
   - [ ] ANGULAR
-- [ ] Design page (UX/UI)
-- [ ] Design Systems page
 - [ ] Responsiveness of the site itself
 - [ ] Internationalization of the site itself
 
