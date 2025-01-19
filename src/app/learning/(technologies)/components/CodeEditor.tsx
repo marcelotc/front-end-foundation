@@ -6,7 +6,7 @@ import { javascript } from "@codemirror/lang-javascript";
 import { html } from "@codemirror/lang-html";
 import { css } from "@codemirror/lang-css";
 
-const CodeEditor = ({ htmlCode, cssCode, jsCode, setHtmlCode, setCssCode, setJsCode, correctHtmlCode, correctCssCode, correctJsCode }: any) => {
+const CodeEditor = ({ htmlCode, cssCode, jsCode, setHtmlCode, setCssCode, setJsCode, correctHtmlCode, correctCssCode, correctJsCode, adminCodeEditor }: any) => {
     const [htmlWidth, setHtmlWidth] = useState(33);
     const [cssWidth, setCssWidth] = useState(33);
     const [jsWidth, setJsWidth] = useState(33);
@@ -78,7 +78,7 @@ const CodeEditor = ({ htmlCode, cssCode, jsCode, setHtmlCode, setCssCode, setJsC
 
     const visiblePanels = [correctHtmlCode, correctCssCode, correctJsCode].filter(Boolean).length;
 
-    const availableWidth = correctHtmlCode === undefined || correctCssCode || correctCssCode === undefined || correctJsCode || correctJsCode === undefined ?
+    const availableWidth = (correctHtmlCode === undefined || correctCssCode || correctCssCode === undefined || correctJsCode || correctJsCode === undefined) && !adminCodeEditor ?
         100 / visiblePanels : 100;
 
     return (

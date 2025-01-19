@@ -441,6 +441,7 @@ export default function Admin() {
                             setHtmlCode={setHtmlCode}
                             setCssCode={setCssCode}
                             setJsCode={setJsCode}
+                            adminCodeEditor={true}
                         />
 
                         <label className='mb-6 block'>

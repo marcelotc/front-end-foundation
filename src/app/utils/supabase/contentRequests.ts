@@ -189,7 +189,6 @@ export const getChaptersAndSubjects = async (technology: string) => {
     return;
   }
 
-  console.log('Chapters and Subjects:', data);
   return data;
 }
 

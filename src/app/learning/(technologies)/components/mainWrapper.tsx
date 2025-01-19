@@ -2,7 +2,7 @@
 
 import { useContext, useEffect, useState } from 'react';
 import clsx from 'clsx';
-import { BookCheck, Copy } from 'lucide-react';
+import { BookCheck, Copy, Lightbulb, EyeOff } from 'lucide-react';
 import SideMenuContext from '@/app/learning/(technologies)/context/sideMenuContext';
 import { Typography } from "@/components/ui/typography";
 import CodeEditor from "@/app/learning/(technologies)/components/CodeEditor";
@@ -88,7 +88,7 @@ export default function MainWrapper({
     const handleCopy = (code: string) => {
         navigator.clipboard.writeText(code)
             .then(() => {
-                toast.success('Copied to clipboard!');
+                toast.info('Copied to clipboard!');
             })
     };
 
@@ -121,18 +121,8 @@ export default function MainWrapper({
                 {children}
             </div>
 
-            <div className='flex justify-center mt-5'>
-                {isMarkdownEmpty && (
-                    <Button size={"sm"} onClick={handleUpdateAndSaveProgress} className='mb-5 bg-green-800'>
-                        Complete subject
-                        &nbsp;
-                        <BookCheck />
-                    </Button>
-                )}
-            </div>
-
             {isMarkdownEmpty && codePractice?.length !== 0 && (
-                <div className='bg-gray-100 shadow-md rounded-sm p-6 mb-5'>
+                <div className='bg-gray-100 shadow-md rounded-sm p-6 my-5'>
                     <Typography variant="extra3LargeText" as="h1" className="font-bold text-center">
                         Practice time!
                     </Typography>
@@ -160,10 +150,12 @@ export default function MainWrapper({
                                     <AlertDialog>
                                         <AlertDialogTrigger asChild>
                                             <Button
-                                                size="sm"
-                                                className="mb-5 bg-green-800"
+                                                size="lg"
+                                                className="w-full bg-blue-500"
                                             >
                                                 Reveal Answer
+                                                &nbsp;
+                                                <Lightbulb />
                                             </Button>
                                         </AlertDialogTrigger>
                                         <AlertDialogContent>
@@ -191,11 +183,13 @@ export default function MainWrapper({
 
                                 {showAnswer && (
                                     <Button
-                                        size="sm"
+                                        size="lg"
                                         onClick={toggleAnswer}
-                                        className="mb-5 bg-green-800"
+                                        className="w-full bg-blue-500"
                                     >
                                         Hide Answer
+                                        &nbsp;
+                                        <EyeOff />
                                     </Button>
                                 )}
                             </>
@@ -209,6 +203,30 @@ export default function MainWrapper({
                                 {showAnswer ? 'Hide Answer' : 'Reveal Answer'}
                             </Button>
                         )}
+                        <div className='flex justify-center mt-5'>
+                            {isMarkdownEmpty && (
+                                <AlertDialog>
+                                    <AlertDialogTrigger asChild>
+                                        <Button size={"lg"} className='w-full mt-5 bg-green-800'>
+                                            Complete subject
+                                            &nbsp;
+                                            <BookCheck />
+                                        </Button>
+                                    </AlertDialogTrigger>
+                                    <AlertDialogContent>
+                                        <AlertDialogHeader>
+                                            <AlertDialogTitle>Subject completion</AlertDialogTitle>
+                                            <AlertDialogDescription>
+                                                By confirming, I acknowledge completing the subject and practice coding challenge. I am ready to mark this subject as completed and move to the next topic                                            </AlertDialogDescription>
+                                        </AlertDialogHeader>
+                                        <AlertDialogFooter>
+                                            <AlertDialogAction>Close</AlertDialogAction>
+                                            <AlertDialogAction onClick={handleUpdateAndSaveProgress}>Complete subject!</AlertDialogAction>
+                                        </AlertDialogFooter>
+                                    </AlertDialogContent>
+                                </AlertDialog>
+                            )}
+                        </div>
                     </div>
 
                     {showAnswer && (

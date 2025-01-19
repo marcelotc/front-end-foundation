@@ -13,9 +13,9 @@ interface QuizPageProps {
 
 export default function QuizPage({ params }: QuizPageProps) {
     const { technology } = params;
-    const normalizedTech = 
-    technology.toLowerCase() === 'javascript' ? 'JavaScript' : 
-    technology.toUpperCase();
+    const normalizedTech =
+        technology.toLowerCase() === 'javascript' ? 'JavaScript' :
+            technology.toUpperCase();
 
     const [quizzes, setQuizzes] = useState<any[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
@@ -85,8 +85,9 @@ export default function QuizPage({ params }: QuizPageProps) {
 
     return (
         <section
-            className={`flex flex-col px-4 md:px-6 mt-10 ${expandedQuiz === null ? 'h-full' : ''}`}
-        >            <Typography variant="extra3LargeText" className="text-center mb-6">
+            className={`flex flex-col font-bold px-4 md:px-6 mt-10 ${expandedQuiz === null ? 'h-full' : ''}`}
+        >
+            <Typography variant="extra3LargeText" className="text-center mb-6">
                 Quizzes on {technology}
             </Typography>
 

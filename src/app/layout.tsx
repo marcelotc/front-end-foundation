@@ -4,6 +4,7 @@ import { ClerkProvider } from '@clerk/nextjs'
 import { ThemeProvider } from "@/components/theme-provider"
 import MainHeader from "@/components/main-header"
 import MainFooter from "@/components/main-footer"
+import { Toaster } from "@/components/ui/sonner"
 import FloatingProgressTracker from "@/components/floating-progress-tracker"
 import FloatingInfo from "@/components/floating-info"
 import "@/styles/globals.css"
@@ -32,6 +33,7 @@ export default function RootLayout({
           >
             <MainHeader />
             {children}
+            <Toaster richColors position="top-center" />
             <FloatingProgressTracker />
             <FloatingInfo />
             <MainFooter />
