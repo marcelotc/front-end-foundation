@@ -2,7 +2,7 @@ import { Typography } from "@/components/ui/typography";
 
 export default function About() {
     return (
-        <section className="flex flex-col h-full bg-gray-100 shadow-lg rounded-sm p-6 my-10 mx-10">
+        <section className="flex flex-col h-full bg-gray-100 shadow-lg rounded-sm p-6 my-5 mx-10">
             <main className="flex-1 px-4 md:px-6 mt-5">
                 <Typography variant="h2" className="mb-4">
                     <span className='bg-[#1b1b1d] text-white p-2 rounded-sm'>
