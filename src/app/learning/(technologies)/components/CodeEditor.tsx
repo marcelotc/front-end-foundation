@@ -85,8 +85,8 @@ const CodeEditor = ({ htmlCode, cssCode, jsCode, setHtmlCode, setCssCode, setJsC
         <div className="flex flex-col gap-5">
             <div className="flex w-full gap-2 p-3">
                 {(correctHtmlCode || correctHtmlCode === undefined) && (
-                    <div className="relative flex flex-col" style={{ width: `${availableWidth}%` }}>
-                        <h2>HTML code editor</h2>
+                    <div className="relative flex flex-col gap-2" style={{ width: `${availableWidth}%` }}>
+                        <h2><b>HTML code editor</b></h2>
                         <CodeMirror value={htmlCode} height="200px" extensions={[html()]} onChange={(value) => onHtmlChange(value)} />
                         <div
                             onMouseDown={(e) => handleMouseDown(e, "html")}
@@ -95,8 +95,8 @@ const CodeEditor = ({ htmlCode, cssCode, jsCode, setHtmlCode, setCssCode, setJsC
                     </div>
                 )}
                 {(correctCssCode || correctCssCode === undefined) && (
-                    <div className="relative flex flex-col" style={{ width: `${availableWidth}%` }}>
-                        <h2>CSS code editor</h2>
+                    <div className="relative flex flex-col gap-2" style={{ width: `${availableWidth}%` }}>
+                        <h2><b>CSS code editor</b></h2>
                         <CodeMirror value={cssCode} height="200px" extensions={[css()]} onChange={(value) => onCssChange(value)} />
                         <div
                             onMouseDown={(e) => handleMouseDown(e, "css")}
@@ -105,8 +105,8 @@ const CodeEditor = ({ htmlCode, cssCode, jsCode, setHtmlCode, setCssCode, setJsC
                     </div>
                 )}
                 {(correctJsCode || correctJsCode === undefined) && (
-                    <div className="relative flex flex-col" style={{ width: `${availableWidth}%` }}>
-                        <h2>JavaScript code editor</h2>
+                    <div className="relative flex flex-col gap-2" style={{ width: `${availableWidth}%` }}>
+                        <h2><b>JavaScript code editor</b></h2>
                         <CodeMirror value={jsCode} height="200px" extensions={[javascript({ jsx: true })]} onChange={(value) => onJsChange(value)} />
                         <div
                             onMouseDown={(e) => handleMouseDown(e, "js")}
@@ -128,7 +128,7 @@ const CodeEditor = ({ htmlCode, cssCode, jsCode, setHtmlCode, setCssCode, setJsC
             )}
 
             <div>
-                <h2>Live Preview</h2>
+                <h1><b>Live Preview</b></h1>
 
                 <div className="bg-white border-2 border-black rounded-sm mt-3 mb-6">
                     <iframe

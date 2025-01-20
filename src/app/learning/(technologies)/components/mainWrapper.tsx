@@ -114,7 +114,7 @@ export default function MainWrapper({
         )}>
             {isMarkdownEmpty && (
                 <Typography variant="extra3LargeText" as="h1" className='font-bold mb-5'>
-                    <span className='bg-gray-200 p-2 rounded-sm'>{markdown[0]?.chapter}</span> - <span className='bg-gray-200 p-2 rounded-sm'>{markdown[0]?.subject}</span>
+                    <span className='bg-[#1b1b1d] text-white p-2 rounded-sm'>{markdown[0]?.chapter}</span> - <span className='bg-[#1b1b1d] text-white p-2 rounded-sm'>{markdown[0]?.subject}</span>
                 </Typography>
             )}
             <div className={clsx("overflow-y-auto bg-gray-100 p-6 dark:bg-gray-900 shadow-md mb-5")}>
@@ -124,10 +124,10 @@ export default function MainWrapper({
             {isMarkdownEmpty && codePractice?.length !== 0 && (
                 <div className='bg-gray-100 shadow-md rounded-sm p-6 my-5'>
                     <Typography variant="extra3LargeText" as="h1" className="font-bold text-center">
-                        Practice time!
+                        <span className='bg-[#1b1b1d] text-white p-2 rounded-sm'>Practice time!</span>
                     </Typography>
 
-                    <div className="bg-gray-100 border-2 border-black rounded-sm p-4 my-4">
+                    <div className="bg-gray-100 border-2 border-black rounded-sm p-4 my-6">
                         <ContentOutput content={codePractice ? content : ''} />
                     </div>
 
