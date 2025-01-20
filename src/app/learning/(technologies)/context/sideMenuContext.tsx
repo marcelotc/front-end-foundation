@@ -9,6 +9,7 @@ export interface MarkdownData {
     subject: string;
     technology: string;
     created_at: string;
+    difficulty: string;
 }
 
 export interface MenuContentItem {

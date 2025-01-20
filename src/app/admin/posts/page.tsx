@@ -16,6 +16,7 @@ interface MarkdownData {
     content: string;
     chapter: string;
     created_at: string;
+    difficulty: string;
 }
 
 export default function Posts() {

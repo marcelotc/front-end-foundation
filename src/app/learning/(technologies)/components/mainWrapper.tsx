@@ -26,7 +26,7 @@ import { formatDate } from '@/utils/formatDate';
 
 interface MainWrapperProps {
     children: React.ReactNode;
-    markdown?: Array<{ id: string, chapter: string, subject: string, technology: string, created_at: string }>;
+    markdown?: Array<{ id: string, chapter: string, subject: string, technology: string, created_at: string, difficulty: string }>;
 }
 
 export default function MainWrapper({
@@ -118,9 +118,14 @@ export default function MainWrapper({
                     <Typography variant="extra3LargeText" as="h1" className='font-bold mb-5'>
                         <span className='bg-[#1b1b1d] text-white p-2 rounded-sm'>{markdown[0]?.chapter}</span> - <span className='bg-[#1b1b1d] text-white p-2 rounded-sm'>{markdown[0]?.subject}</span>
                     </Typography>
-                    <Typography variant="smallText" as="p" className="text-right mb-5">
+                    <div className='flex justify-between mt-9 mb-6'>
+                    <Typography variant="smallText" as="p">
+                        <span className='bg-[#1b1b1d] text-white p-2 rounded-sm'>Difficulty: {markdown[0]?.difficulty}</span>
+                    </Typography>
+                    <Typography variant="smallText" as="p">
                         <span className='bg-[#1b1b1d] text-white p-2 rounded-sm'>Post date: {formatDate(markdown[0]?.created_at)}</span>
                     </Typography>
+                    </div>
                 </>
             )}
             <div className={clsx("overflow-y-auto bg-gray-100 p-6 dark:bg-gray-900 shadow-md mb-5")}>
