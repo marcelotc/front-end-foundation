@@ -227,11 +227,11 @@ export default function MainWrapper({
 
                             </Button>
                         )}
-                        <div className='flex justify-center mt-5'>
+                        <div className='flex justify-center mt-3'>
                             {isMarkdownEmpty && (
                                 <AlertDialog>
                                     <AlertDialogTrigger asChild>
-                                        <Button size={"lg"} className='w-full mt-5 bg-green-800'>
+                                        <Button size={"lg"} className='w-full bg-green-800'>
                                             Complete subject
                                             &nbsp;
                                             <BookCheck />
