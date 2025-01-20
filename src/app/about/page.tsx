@@ -4,13 +4,21 @@ export default function About() {
     return (
         <section className="flex flex-col h-full bg-gray-100 shadow-lg rounded-sm p-6 my-10 mx-10">
             <main className="flex-1 px-4 md:px-6 mt-5">
-                <Typography variant="h2" className="mb-4">About</Typography>
+                <Typography variant="h2" className="mb-4">
+                    <span className='bg-[#1b1b1d] text-white p-2 rounded-sm'>
+                        About
+                    </span>
+                </Typography>
 
                 <Typography className="mb-8">
                     Welcome to <b>Front-end Foundation</b>, dedicated to establishing strong foundations in front-end development through <b>HTML</b>, <b>CSS</b>, and <b>JavaScript</b>. The mission is to empower learners of all levels with structured resources and tools, helping them master these essential technologies effectively.
                 </Typography>
 
-                <Typography variant="h3" className="mb-4">What's Offered</Typography>
+                <Typography variant="h3" className="mb-4">
+                    <span className='bg-[#1b1b1d] text-white p-2 rounded-sm'>
+                        What's Offered
+                    </span>
+                </Typography>
 
                 <ul className="list-disc list-inside mb-8">
                     <li>
