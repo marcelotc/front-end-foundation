@@ -40,7 +40,7 @@ export default function MainWrapper({
     const [dontShowAgain, setDontShowAgain] = useState(false);
     const [codePractice, setCodePractice] = useState<any[] | null>(null);
     const [htmlCode, setHtmlCode] = useState("<h1>Code your answer!</h1>");
-    const [cssCode, setCssCode] = useState("h1 { color: blue; }");
+    const [cssCode, setCssCode] = useState("body { }");
     const [jsCode, setJsCode] = useState("console.log('hello world!');");
 
     const isMarkdownEmpty = markdown && markdown.length > 0;
@@ -59,7 +59,7 @@ export default function MainWrapper({
     useEffect(() => {
         setCodePractice(null);
         setHtmlCode("<h1>Code your answer!</h1>");
-        setCssCode("h1 { color: blue; }");
+        setCssCode("body { }");
         setJsCode("console.log('hello world!');");
         setShowAnswer(false);
         const fetchCodePractice = async () => {
