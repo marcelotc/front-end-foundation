@@ -37,7 +37,7 @@ export default function ProgressCards({ htmlProgress, cssProgress, javascriptPro
                         </div>
                     </CardHeader>
                     <CardContent className="flex flex-col items-center justify-center gap-4">
-                        <Link href={htmlProgress < 80 ? '#' : '/learning/react'  } className="w-full">
+                        <Link href={htmlProgress < 80 ? '#' : '/learning/reactjs'  } className="w-full">
                             <Button
                                 className={`w-full ${isLocked ? 'opacity-50 cursor-not-allowed' : ''}`}
                                 variant="outline"
@@ -68,7 +68,7 @@ export default function ProgressCards({ htmlProgress, cssProgress, javascriptPro
                         </div>
                     </CardHeader>
                     <CardContent className="flex flex-col items-center justify-center gap-4">
-                        <Link href={cssProgress < 80 ? '#' : '/learning/vue'} className="w-full">
+                        <Link href={cssProgress < 80 ? '#' : '/learning/vuejs'} className="w-full">
                             <Button
                                 className={`w-full ${isLocked ? 'opacity-50 cursor-not-allowed' : ''}`}
                                 variant="outline"
@@ -99,7 +99,7 @@ export default function ProgressCards({ htmlProgress, cssProgress, javascriptPro
                         </div>
                     </CardHeader>
                     <CardContent className="flex flex-col items-center justify-center gap-4">
-                        <Link href={javascriptProgress < 80 ? '#' : '/learning/angular'} className="w-full">
+                        <Link href={javascriptProgress < 80 ? '#' : '/learning/angularjs'} className="w-full">
                             <Button
                                 className={`w-full ${isLocked ? 'opacity-50 cursor-not-allowed' : ''}`}
                                 variant="outline"

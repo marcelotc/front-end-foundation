@@ -404,7 +404,7 @@ export default function Admin() {
                             >
                                 <option value="html">HTML</option>
                                 <option value="css">CSS</option>
-                                <option value="js">JS</option>
+                                <option value="javascript">JAVASCRIPT</option>
                             </select>
 
                             <div className="mt-10">

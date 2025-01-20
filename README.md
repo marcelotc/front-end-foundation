@@ -39,6 +39,11 @@
   - [ ] ANGULAR
 - [ ] Responsiveness of the site itself
 - [ ] Internationalization of the site itself
+- [ ] Accessibility
+ - [ ] Keyboard Navigation
+ - [ ] Screen Reader
+ - [ ] Alt Text for Images
+ - [ ] Color Contrast
 - [ ] Social media sharing in subjects posts
 
 <div align="center">
