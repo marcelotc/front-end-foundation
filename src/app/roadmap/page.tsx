@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { ChevronDown, ChevronUp, CheckCircle2, Circle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Typography } from "@/components/ui/typography"
 import { useRouter } from 'next/navigation';
 import { Progress } from "@/components/ui/progress";
 import { useMenuData } from '@/app/hooks/useMenuData';
@@ -122,6 +123,11 @@ export default function Roadmap() {
     return (
         <section className={`flex flex-col ${!isAnySectionOpen ? 'h-full' : ''}`}>
             <main className="flex-1 px-4 md:px-6 mt-10">
+            <Typography variant="h2" className="mb-6 text-center">
+                <span className='bg-[#1b1b1d] text-white p-2 rounded-sm'>
+                    Roadmap
+                </span>
+            </Typography>
                 <CollapsibleSection
                     id={1}
                     title="HTML"
