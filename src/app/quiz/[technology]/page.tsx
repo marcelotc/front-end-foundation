@@ -90,7 +90,7 @@ export default function QuizPage({ params }: QuizPageProps) {
 
     return (
         <section
-            className={`flex flex-col font-bold px-4 md:px-6 mt-10 ${expandedQuiz === null ? 'h-full' : ''}`}
+            className={`flex flex-col font-bold px-4 md:px-6 mt-6 ${expandedQuiz === null ? 'h-full' : ''}`}
         >
             <div className='flex justify-between'>
                 <CircleArrowLeft size={40} onClick={() => router.push('/quiz')} className='cursor-pointer' />
