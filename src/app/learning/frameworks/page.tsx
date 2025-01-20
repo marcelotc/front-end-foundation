@@ -56,7 +56,7 @@ export default function Frameworks() {
     const cssProgress = dataCss && learningProgress ? calculateProgress(dataCss, 'css') : 0;
     const javascriptProgress = dataJs && learningProgress ? calculateProgress(dataJs, 'javascript') : 0;
 
-    const isNotPrepared = htmlProgress < 80 || cssProgress < 80 || javascriptProgress < 80;
+    const isNotPrepared = htmlProgress < 100 || cssProgress < 100 || javascriptProgress < 100;
 
     return (
         <section className="flex flex-col p-4 md:p-6">
@@ -64,7 +64,7 @@ export default function Frameworks() {
                 <span className='bg-[#1b1b1d] text-white p-2 rounded-sm'>Frameworks</span>
             </Typography>
             <Typography variant="extraLargeText" className="my-6">
-                Before proceeding, make sure you have <span className="font-semibold">completed 80%</span> of the <span className="font-semibold">fundamentals in HTML, CSS, and JavaScript</span>.
+                Before proceeding, make sure you have <span className="font-semibold">completed 100%</span> of the <span className="font-semibold">fundamentals in HTML, CSS, and JavaScript</span>.
                 Understanding these core technologies will ensure you are <span className="font-semibold">well-prepared</span> to tackle any front-end framework with <span className="font-semibold">confidence</span>.
             </Typography>
 
@@ -72,7 +72,7 @@ export default function Frameworks() {
                 <div className="flex items-center space-x-2">
                     <LockIcon className="h-6 w-6 text-gray-500" />
                     <Typography variant="smallText" className="text-gray-500">
-                        You are not prepared to learn frameworks yet. Complete 80% of HTML, CSS, and JavaScript fundamentals first.
+                        You are not prepared to learn frameworks yet. Complete 100% of HTML, CSS, and JavaScript fundamentals first.
                     </Typography>
                 </div>
             )}
