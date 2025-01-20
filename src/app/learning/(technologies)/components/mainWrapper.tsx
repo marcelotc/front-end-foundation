@@ -22,10 +22,11 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from '@/components/ui/button';
+import { formatDate } from '@/utils/formatDate';
 
 interface MainWrapperProps {
     children: React.ReactNode;
-    markdown?: Array<{ id: string, chapter: string, subject: string, technology: string }>;
+    markdown?: Array<{ id: string, chapter: string, subject: string, technology: string, created_at: string }>;
 }
 
 export default function MainWrapper({
@@ -43,7 +44,7 @@ export default function MainWrapper({
     const [jsCode, setJsCode] = useState("console.log('hello world!');");
 
     const isMarkdownEmpty = markdown && markdown.length > 0;
-
+    
     const handleUpdateAndSaveProgress = () => {
         if (isMarkdownEmpty) {
             handleSaveToLearningProgress(markdown[0]?.technology, markdown[0]?.chapter, markdown[0]?.subject);
@@ -113,14 +114,18 @@ export default function MainWrapper({
             !menuOpen && "ml-20",
         )}>
             {isMarkdownEmpty && (
-                <Typography variant="extra3LargeText" as="h1" className='font-bold mb-5'>
-                    <span className='bg-[#1b1b1d] text-white p-2 rounded-sm'>{markdown[0]?.chapter}</span> - <span className='bg-[#1b1b1d] text-white p-2 rounded-sm'>{markdown[0]?.subject}</span>
-                </Typography>
+                <>
+                    <Typography variant="extra3LargeText" as="h1" className='font-bold mb-5'>
+                        <span className='bg-[#1b1b1d] text-white p-2 rounded-sm'>{markdown[0]?.chapter}</span> - <span className='bg-[#1b1b1d] text-white p-2 rounded-sm'>{markdown[0]?.subject}</span>
+                    </Typography>
+                    <Typography variant="smallText" as="p" className="text-right mb-5">
+                        <span className='bg-[#1b1b1d] text-white p-2 rounded-sm'>Post date: {formatDate(markdown[0]?.created_at)}</span>
+                    </Typography>
+                </>
             )}
             <div className={clsx("overflow-y-auto bg-gray-100 p-6 dark:bg-gray-900 shadow-md mb-5")}>
                 {children}
             </div>
-
             {isMarkdownEmpty && codePractice?.length !== 0 && (
                 <div className='bg-gray-100 shadow-md rounded-sm p-6 my-5'>
                     <Typography variant="extra3LargeText" as="h1" className="font-bold text-center">

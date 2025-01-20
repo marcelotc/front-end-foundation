@@ -15,6 +15,7 @@ interface MarkdownData {
     id: string;
     content: string;
     chapter: string;
+    created_at: string;
 }
 
 export default function Posts() {
