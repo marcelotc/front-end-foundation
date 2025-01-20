@@ -95,7 +95,7 @@ export default function QuizPage({ params }: QuizPageProps) {
             <div className='flex justify-between'>
                 <CircleArrowLeft size={40} onClick={() => router.push('/quiz')} className='cursor-pointer' />
                 <Typography variant="extra3LargeText" className="text-center mb-6">
-                    Quizzes on {technology}
+                    <span className='bg-[#1b1b1d] text-white p-2 rounded-sm'>Quizzes on {technology}</span>
                 </Typography>
                 <div></div>
             </div>

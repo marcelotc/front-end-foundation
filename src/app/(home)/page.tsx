@@ -16,7 +16,7 @@ export default function Home() {
 
     return (
         <section className="flex flex-col">
-            <main className="flex-1 px-4 md:px-6 mt-32">
+            <main className="flex-1 px-4 md:px-6 mt-10">
                 <div className="flex flex-col md:flex-row justify-between gap-8">
                     <div className="space-y-4">
                         <div>
