@@ -39,6 +39,7 @@
   - [ ] ANGULAR
 - [ ] Responsiveness of the site itself
 - [ ] Internationalization of the site itself
+- [ ] Social media sharing in subjects posts
 
 <div align="center">
   <img src="public/homepage.png" alt="Homepage Screenshot"/>
