@@ -156,7 +156,7 @@ export default function SideMenu() {
                         className="flex items-center justify-between space-x-4 px-4 cursor-pointer"
                         onClick={() => toggleChapter(menuContent.chapter)}
                       >
-                        <Typography variant="smallText" as="p" className="text-white">
+                        <Typography variant="smallText" as="p" className="text-white truncate flex-grow">
                           {menuContent.chapter}
                         </Typography>
                         <div>

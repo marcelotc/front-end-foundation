@@ -114,7 +114,7 @@ export default function MainWrapper({
         )}>
             {isMarkdownEmpty && (
                 <Typography variant="extra3LargeText" as="h1" className='font-bold mb-5'>
-                    {markdown[0]?.chapter} - {markdown[0]?.subject}
+                    <span className='bg-gray-200 p-2 rounded-sm'>{markdown[0]?.chapter}</span> - <span className='bg-gray-200 p-2 rounded-sm'>{markdown[0]?.subject}</span>
                 </Typography>
             )}
             <div className={clsx("overflow-y-auto bg-gray-100 p-6 dark:bg-gray-900 shadow-md mb-5")}>
@@ -198,7 +198,7 @@ export default function MainWrapper({
                             <Button
                                 size="lg"
                                 onClick={toggleAnswer}
-                                className={"flmb-5 w-full bg-blue-500"}
+                                className={"w-full bg-blue-500"}
                             >
                                 {showAnswer ? (<>
 
@@ -271,7 +271,7 @@ export default function MainWrapper({
                                         <Typography variant="h5" as="h5" className="font-semibold">
                                             CSS:
                                         </Typography>
-                                        <Button size="sm" onClick={() => handleCopy(codePractice[0].correct_html_code)} className="mb-3">
+                                        <Button size="sm" onClick={() => handleCopy(codePractice[0].correct_css_code)} className="mb-3">
                                             Copy CSS
                                             &nbsp;
                                             <Copy />
@@ -288,7 +288,7 @@ export default function MainWrapper({
                                         <Typography variant="h5" as="h5" className="font-semibold">
                                             JavaScript:
                                         </Typography>
-                                        <Button size="sm" onClick={() => handleCopy(codePractice[0].correct_html_code)} className="mb-3">
+                                        <Button size="sm" onClick={() => handleCopy(codePractice[0].correct_js_code)} className="mb-3">
                                             Copy JavaScript
                                             &nbsp;
                                             <Copy />

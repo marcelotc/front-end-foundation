@@ -29,6 +29,7 @@
   - [x] Abble add a quizz
   - [x] Abble to delete a quizz
   - [x] Abble to list a quizz
+  - [ ] Make syntax highlight for code blocks  
 - [x] Auth page using clerk
 - [x] Roadmap page
 - [ ] Quizzes page (add correct answers system)
