@@ -122,7 +122,7 @@ export default function Roadmap() {
 
     return (
         <section className={`flex flex-col ${!isAnySectionOpen ? 'h-full' : ''}`}>
-            <main className="flex-1 px-4 md:px-6 mt-10">
+            <main className="flex-1 px-4 md:px-6 mt-6">
             <Typography variant="h2" className="mb-6 text-center">
                 <span className='bg-[#1b1b1d] text-white p-2 rounded-sm'>
                     Roadmap
