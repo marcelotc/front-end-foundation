@@ -32,19 +32,19 @@
   - [ ] Make syntax highlight for code blocks  
 - [x] Auth page using clerk
 - [x] Roadmap page
+- [x] Frameworks page
+  - [x] REACT
+  - [x] VUE
+  - [x] ANGULAR
 - [ ] Quizzes page (add correct answers system)
-- [ ] Frameworks page
-  - [ ] REACT
-  - [ ] VUE
-  - [ ] ANGULAR
 - [ ] Responsiveness of the site itself
-- [ ] Internationalization of the site itself
+- [ ] Internationalization of the site itself (Portuguese, Spanish)
+- [ ] Social media sharing in subjects posts
 - [ ] Accessibility
  - [ ] Keyboard Navigation
  - [ ] Screen Reader
  - [ ] Alt Text for Images
  - [ ] Color Contrast
-- [ ] Social media sharing in subjects posts
 
 <div align="center">
   <img src="public/homepage.png" alt="Homepage Screenshot"/>
