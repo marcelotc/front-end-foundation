@@ -72,99 +72,60 @@ export default function Home() {
                     </div>
                 </div>
 
-                <div className="flex flex-col justify-center items-center gap-4 mt-10 py-10">
-                    <div className="flex flex-wrap gap-4 justify-center">
+                <div className="flex flex-col justify-center items-center gap-6 mt-10 py-10 max-w-screen-lg mx-auto">
+                    {/* First row: 3 cards on large screens */}
+                    <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-6 w-full px-4">
                         <Link href={'/roadmap'}>
-                            <div className="flex bg-[#1b1b1d] w-full sm:w-[300px] md:w-[400px] h-[200px] rounded-xl hover:opacity-95 cursor-pointer">
-                                <div className="flex items-center justify-between w-full p-6 sm:p-8 md:p-10">
+                            <div className="flex bg-[#1b1b1d] w-full h-[200px] rounded-xl hover:opacity-95 cursor-pointer">
+                                <div className="flex items-center justify-between w-full p-6 sm:p-8">
                                     <Typography variant="largeText" as="h1" className="text-white">
-                                        Check the
-                                        front-end roadmap
+                                        Check the front-end roadmap
                                     </Typography>
-                                    <Image
-                                        src={roadMapImage}
-                                        width={80}
-                                        height={80}
-                                        alt="road map image"
-                                    />
+                                    <Image src={roadMapImage} width={80} height={80} alt="road map image" />
                                 </div>
                             </div>
                         </Link>
                         <Link href={'/quiz'}>
-                            <div className="flex bg-[#1b1b1d] w-full sm:w-[300px] md:w-[400px] h-[200px] rounded-xl hover:opacity-95 cursor-pointer">
-                                <div className="flex items-center justify-between w-full p-6 sm:p-8 md:p-10">
+                            <div className="flex bg-[#1b1b1d] w-full h-[200px] rounded-xl hover:opacity-95 cursor-pointer">
+                                <div className="flex items-center justify-between w-full p-6 sm:p-8">
                                     <Typography variant="largeText" as="h1" className="text-white">
                                         Take quizzes
                                     </Typography>
-                                    <Image
-                                        src={questionImage}
-                                        width={60}
-                                        height={60}
-                                        alt="question mark image"
-                                    />
+                                    <Image src={questionImage} width={60} height={60} alt="question mark image" />
                                 </div>
                             </div>
                         </Link>
                         <Link href={'/learning/frameworks'}>
-                            <div className="flex bg-[#1b1b1d] w-full sm:w-[300px] md:w-[400px] h-[200px] rounded-xl hover:opacity-95 cursor-pointer">
-                                <div className="flex items-center justify-between w-full p-6 sm:p-8 md:p-10">
+                            <div className="flex bg-[#1b1b1d] w-full h-[200px] rounded-xl hover:opacity-95 cursor-pointer">
+                                <div className="flex items-center justify-between w-full p-6 sm:p-8">
                                     <Typography variant="largeText" as="h1" className="text-white">
                                         Ready for Frameworks?
                                     </Typography>
-                                    <Image
-                                        src={reactIcon}
-                                        width={80}
-                                        height={80}
-                                        alt="framwework image"
-                                    />
+                                    <Image src={reactIcon} width={80} height={80} alt="framework image" />
                                 </div>
                             </div>
                         </Link>
                     </div>
-                    <div className="flex flex-wrap gap-4 justify-center mt-6">
-                        {/*<Link href={'/learning/path'}>
-                            <div className="flex bg-[#1b1b1d] w-full sm:w-[300px] md:w-[400px] h-[200px] rounded-xl hover:opacity-95 cursor-pointer">
-                                <div className="flex items-center justify-between w-full p-6 sm:p-8 md:p-10">
-                                    <Typography variant="largeText" as="h1" className="text-white">
-                                        Define your
-                                        learning path calendar
-                                    </Typography>
-                                    <Image
-                                        src={pathImage}
-                                        width={80}
-                                        height={80}
-                                        alt="path image"
-                                    />
-                                </div>
-                            </div>
-                        </Link>*/}
+
+                    {/* Second row: Full-width 2 cards */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full px-4">
                         <Link href={'/learning/uxui'}>
-                            <div className="flex bg-[#1b1b1d] w-full sm:w-[300px] md:w-[400px] h-[200px] rounded-xl hover:opacity-95 cursor-pointer">
-                                <div className="flex items-center justify-between w-full p-6 sm:p-8 md:p-10">
+                            <div className="flex bg-[#1b1b1d] w-full h-[200px] rounded-xl hover:opacity-95 cursor-pointer">
+                                <div className="flex items-center justify-between w-full p-6 sm:p-8">
                                     <Typography variant="largeText" as="h1" className="text-white">
                                         UX/UI
                                     </Typography>
-                                    <Image
-                                        src={uxuiLogo}
-                                        width={80}
-                                        height={80}
-                                        alt="UX/UIX image"
-                                    />
+                                    <Image src={uxuiLogo} width={80} height={80} alt="UX/UI image" />
                                 </div>
                             </div>
                         </Link>
                         <Link href={'/learning/designsystems'}>
-                            <div className="flex bg-[#1b1b1d] w-full sm:w-[300px] md:w-[400px] h-[200px] rounded-xl hover:opacity-95 cursor-pointer">
-                                <div className="flex items-center justify-between w-full p-6 sm:p-8 md:p-10">
+                            <div className="flex bg-[#1b1b1d] w-full h-[200px] rounded-xl hover:opacity-95 cursor-pointer">
+                                <div className="flex items-center justify-between w-full p-6 sm:p-8">
                                     <Typography variant="largeText" as="h1" className="text-white">
                                         Design systems
                                     </Typography>
-                                    <Image
-                                        src={designSystemsLogo}
-                                        width={80}
-                                        height={80}
-                                        alt="Design systems image"
-                                    />
+                                    <Image src={designSystemsLogo} width={80} height={80} alt="Design systems image" />
                                 </div>
                             </div>
                         </Link>

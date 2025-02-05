@@ -36,9 +36,9 @@
   - [x] REACT
   - [x] VUE
   - [x] ANGULAR
-- [ ] Quizzes page (add correct answers system)
 - [ ] Responsiveness of the site itself
 - [ ] Internationalization of the site itself (Portuguese, Spanish)
+- [ ] Quizzes page (add correct answers system)
 - [ ] Social media sharing in subjects posts
 - [ ] Accessibility
  - [ ] Keyboard Navigation
