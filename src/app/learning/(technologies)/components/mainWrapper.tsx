@@ -140,39 +140,41 @@ export default function MainWrapper({
             <div className={clsx("overflow-y-auto bg-gray-100 p-6 dark:bg-gray-900 shadow-md mb-5")}>
                 {children}
             </div>
-            <div className='flex items-center gap-4'>
-                Share:
-                <FacebookShare
-                    url={fullUrl}
-                    size={40}
-                    round
-                />
-                <TwitterShare
-                    url={fullUrl}
-                    size={40}
-                    round
-                />
-                <RedditShare
-                    url={fullUrl}
-                    size={40}
-                    round
-                />
-                <LinkedinShare
-                    url={fullUrl}
-                    size={40}
-                    round
-                />
-                <TelegramShare
-                    url={fullUrl}
-                    size={40}
-                    round
-                />
-                <WhatsappShare
-                    url={fullUrl}
-                    size={40}
-                    round
-                />
-            </div>
+            {isMarkdownEmpty && (
+                <div className='flex items-center gap-4'>
+                    Share:
+                    <FacebookShare
+                        url={fullUrl}
+                        size={40}
+                        round
+                    />
+                    <TwitterShare
+                        url={fullUrl}
+                        size={40}
+                        round
+                    />
+                    <RedditShare
+                        url={fullUrl}
+                        size={40}
+                        round
+                    />
+                    <LinkedinShare
+                        url={fullUrl}
+                        size={40}
+                        round
+                    />
+                    <TelegramShare
+                        url={fullUrl}
+                        size={40}
+                        round
+                    />
+                    <WhatsappShare
+                        url={fullUrl}
+                        size={40}
+                        round
+                    />
+                </div>
+            )}
             {isMarkdownEmpty && codePractice?.length !== 0 && (
                 <div className='bg-gray-100 shadow-md rounded-sm p-6 my-5'>
                     <Typography variant="extra3LargeText" as="h1" className="font-bold text-center">
