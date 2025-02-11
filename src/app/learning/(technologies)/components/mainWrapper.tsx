@@ -1,6 +1,7 @@
 'use client'
 
 import { useContext, useEffect, useState } from 'react';
+import { usePathname, useSearchParams } from 'next/navigation';
 import clsx from 'clsx';
 import { BookCheck, Copy, Lightbulb, EyeOff } from 'lucide-react';
 import SideMenuContext from '@/app/learning/(technologies)/context/sideMenuContext';
@@ -10,6 +11,7 @@ import { useSaveToLocalStorage } from "@/app/hooks/useSaveToLocalStorage";
 import { getCodePracticeByMarkdownContent } from '@/app/utils/supabase/codePracticeRequests';
 import ContentOutput from '../components/contentOutput';
 import { toast } from 'sonner';
+import { FacebookShare, TwitterShare, RedditShare, LinkedinShare, TelegramShare, WhatsappShare } from 'react-share-kit';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -33,6 +35,8 @@ export default function MainWrapper({
     children,
     markdown,
 }: MainWrapperProps) {
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
     const { menuOpen, progressUpdate, setProgressUpdate, loadingContent, setOpenChapters } = useContext(SideMenuContext);
     const { handleSaveToLearningProgress } = useSaveToLocalStorage();
     const [showAnswer, setShowAnswer] = useState(false);
@@ -43,8 +47,13 @@ export default function MainWrapper({
     const [cssCode, setCssCode] = useState("body { }");
     const [jsCode, setJsCode] = useState("console.log('hello world!');");
 
+    const queryString = searchParams.toString();
+    const fullUrl = typeof window !== "undefined"
+        ? `${window.location.origin}${pathname}${queryString ? `?${queryString}` : ''}`
+        : "";
+
     const isMarkdownEmpty = markdown && markdown.length > 0;
-    
+
     const handleUpdateAndSaveProgress = () => {
         if (isMarkdownEmpty) {
             handleSaveToLearningProgress(markdown[0]?.technology, markdown[0]?.chapter, markdown[0]?.subject);
@@ -119,17 +128,50 @@ export default function MainWrapper({
                         <span className='bg-[#1b1b1d] text-white p-2 rounded-sm'>{markdown[0]?.chapter}</span> - <span className='bg-[#1b1b1d] text-white p-2 rounded-sm'>{markdown[0]?.subject}</span>
                     </Typography>
                     <div className='flex justify-between mt-9 mb-6'>
-                    <Typography variant="smallText" as="p">
-                        <span className='bg-[#1b1b1d] text-white p-2 rounded-sm'>Difficulty: {markdown[0]?.difficulty}</span>
-                    </Typography>
-                    <Typography variant="smallText" as="p">
-                        <span className='bg-[#1b1b1d] text-white p-2 rounded-sm'>Post date: {formatDate(markdown[0]?.created_at)}</span>
-                    </Typography>
+                        <Typography variant="smallText" as="p">
+                            <span className='bg-[#1b1b1d] text-white p-2 rounded-sm'>Difficulty: {markdown[0]?.difficulty}</span>
+                        </Typography>
+                        <Typography variant="smallText" as="p">
+                            <span className='bg-[#1b1b1d] text-white p-2 rounded-sm'>Post date: {formatDate(markdown[0]?.created_at)}</span>
+                        </Typography>
                     </div>
                 </>
             )}
             <div className={clsx("overflow-y-auto bg-gray-100 p-6 dark:bg-gray-900 shadow-md mb-5")}>
                 {children}
+            </div>
+            <div className='flex items-center gap-4'>
+                Share:
+                <FacebookShare
+                    url={fullUrl}
+                    size={40}
+                    round
+                />
+                <TwitterShare
+                    url={fullUrl}
+                    size={40}
+                    round
+                />
+                <RedditShare
+                    url={fullUrl}
+                    size={40}
+                    round
+                />
+                <LinkedinShare
+                    url={fullUrl}
+                    size={40}
+                    round
+                />
+                <TelegramShare
+                    url={fullUrl}
+                    size={40}
+                    round
+                />
+                <WhatsappShare
+                    url={fullUrl}
+                    size={40}
+                    round
+                />
             </div>
             {isMarkdownEmpty && codePractice?.length !== 0 && (
                 <div className='bg-gray-100 shadow-md rounded-sm p-6 my-5'>
