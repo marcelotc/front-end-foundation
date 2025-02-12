@@ -124,9 +124,12 @@ export default function SideMenu() {
   };
 
   return (
-    <nav className={`my-5 mr-4 rounded-tr-[10px] rounded-br-[10px] bg-[#1b1b1d] dark:bg-gray-800 md:block fixed top-16 bottom-20 z-10 animate-fade-right transition-all duration-300 ${menuOpen ? 'w-64' : 'w-10'}`}>
+    <nav
+      className={`my-5 mr-4 rounded-tr-[10px] rounded-br-[10px] bg-[#1b1b1d] dark:bg-gray-800 md:block fixed top-16 bottom-20 z-10 animate-fade-right transition-all duration-300 ${menuOpen ? "w-64" : "w-10"
+        } flex flex-col overflow-hidden`}
+    >
       {loadingMenu || !menuContent ? (
-        <div className='flex flex-col gap-5 p-5'>
+        <div className="flex flex-col gap-5 p-5">
           <Skeleton className="h-[20px] w-full rounded-xl" />
           <Skeleton className="h-[20px] w-full rounded-xl" />
           <Skeleton className="h-[20px] w-full rounded-xl" />
@@ -138,36 +141,52 @@ export default function SideMenu() {
       ) : (
         <>
           {menuOpen ? (
-            <div className='fade-edge-bottom'>
-              <div className="flex items-center space-x-2 p-3">
+            <div className="flex flex-col h-full">
+              <div className="flex items-center space-x-2 p-3 flex-shrink-0">
                 <Code2 color="white" size={20} />
-                <Typography variant="largeText" as="p" className="text-white cursor-pointer" onClick={() => {
-                  setMarkdown(null);
-                  router.push(`/learning/${technology}`);
-                }}>
+                <Typography
+                  variant="largeText"
+                  as="p"
+                  className="text-white cursor-pointer"
+                  onClick={() => {
+                    setMarkdown(null);
+                    router.push(`/learning/${technology}`);
+                  }}
+                >
                   {technology.toUpperCase()}
                 </Typography>
               </div>
-              <div className='space-y-6 px-2 pb-10 m-2'>
-                {menuContent && menuContent.map((menuContent: any, index: number) => (
-                  <Collapsible key={index} className="space-y-2">
+
+              <div className="flex-grow overflow-y-auto px-2 pb-10">
+                {menuContent.map((menuContent: any, index: number) => (
+                  <Collapsible key={index} className="space-y-2 mb-4">
                     <CollapsibleTrigger asChild>
                       <div
                         className="flex items-center justify-between space-x-4 px-4 cursor-pointer"
                         onClick={() => toggleChapter(menuContent.chapter)}
                       >
-                        <Typography variant="smallText" as="p" className="text-white truncate flex-grow">
+                        <Typography
+                          variant="smallText"
+                          as="p"
+                          className="text-white truncate flex-grow"
+                        >
                           {menuContent.chapter}
                         </Typography>
                         <div>
-                          {openChapters.includes(menuContent.chapter) ? <ChevronUp color="white" size={20} /> : <ChevronDown color="white" size={20} />}
+                          {openChapters.includes(menuContent.chapter) ? (
+                            <ChevronUp color="white" size={20} />
+                          ) : (
+                            <ChevronDown color="white" size={20} />
+                          )}
                         </div>
                       </div>
                     </CollapsibleTrigger>
-                    <CollapsibleContent className={clsx(
-                      "space-y-4 px-4 overflow-hidden transition-[max-height] duration-300",
-                      openChapters.includes(menuContent.chapter) ? "max-h-[1000px]" : "max-h-0"
-                    )}>
+                    <CollapsibleContent
+                      className={clsx(
+                        "space-y-4 px-4 overflow-hidden transition-[max-height] duration-300",
+                        openChapters.includes(menuContent.chapter) ? "max-h-[1000px]" : "max-h-0"
+                      )}
+                    >
                       {renderSubjects(menuContent.subjects, menuContent.chapter)}
                     </CollapsibleContent>
                   </Collapsible>
@@ -177,17 +196,20 @@ export default function SideMenu() {
           ) : null}
         </>
       )}
-      <div className={clsx(
-        "absolute bottom-0 p-1 rounded-b-[10px] bg-[#272729] w-full cursor-pointer transition-all duration-300",
-        !menuOpen && "h-full rounded-[10px]"
-      )} onClick={toggleMenu}>
-        <div className={clsx(
-          "flex items-center justify-center",
-          !menuOpen && "h-full"
-        )}>
+
+      <div
+        className={clsx(
+          "absolute bottom-0 p-1 rounded-b-[10px] bg-[#272729] w-full cursor-pointer transition-all duration-300",
+          !menuOpen && "h-full rounded-[10px]"
+        )}
+        onClick={toggleMenu}
+      >
+        <div className={clsx("flex items-center justify-center", !menuOpen && "h-full")}>
           {menuOpen ? <ChevronLeft color="white" size={30} /> : <ChevronRight color="white" size={30} />}
         </div>
       </div>
     </nav>
+
+
   );
 }

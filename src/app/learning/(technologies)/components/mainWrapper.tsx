@@ -124,7 +124,7 @@ export default function MainWrapper({
         )}>
             {isMarkdownEmpty && (
                 <>
-                    <Typography variant="extra3LargeText" as="h1" className='font-bold mb-5'>
+                    <Typography variant="extra2LargeText" as="h1" className='font-bold mb-5'>
                         <span className='bg-[#1b1b1d] text-white p-2 rounded-sm'>{markdown[0]?.chapter}</span> - <span className='bg-[#1b1b1d] text-white p-2 rounded-sm'>{markdown[0]?.subject}</span>
                     </Typography>
                     <div className='flex justify-between mt-9 mb-6'>
@@ -141,38 +141,42 @@ export default function MainWrapper({
                 {children}
             </div>
             {isMarkdownEmpty && (
-                <div className='flex items-center gap-4'>
-                    Share:
-                    <FacebookShare
-                        url={fullUrl}
-                        size={40}
-                        round
-                    />
-                    <TwitterShare
-                        url={fullUrl}
-                        size={40}
-                        round
-                    />
-                    <RedditShare
-                        url={fullUrl}
-                        size={40}
-                        round
-                    />
-                    <LinkedinShare
-                        url={fullUrl}
-                        size={40}
-                        round
-                    />
-                    <TelegramShare
-                        url={fullUrl}
-                        size={40}
-                        round
-                    />
-                    <WhatsappShare
-                        url={fullUrl}
-                        size={40}
-                        round
-                    />
+                <div className='flex flex-col items-center justify-center gap-4 bg-[#1b1b1d] p-4 rounded-sm'>
+                    <Typography variant="h5" as="h5" className='text-white'>
+                        Share:
+                    </Typography>
+                    <div className='flex gap-4'>
+                        <FacebookShare
+                            url={fullUrl}
+                            size={40}
+                            round
+                        />
+                        <TwitterShare
+                            url={fullUrl}
+                            size={40}
+                            round
+                        />
+                        <RedditShare
+                            url={fullUrl}
+                            size={40}
+                            round
+                        />
+                        <LinkedinShare
+                            url={fullUrl}
+                            size={40}
+                            round
+                        />
+                        <TelegramShare
+                            url={fullUrl}
+                            size={40}
+                            round
+                        />
+                        <WhatsappShare
+                            url={fullUrl}
+                            size={40}
+                            round
+                        />
+                    </div>
                 </div>
             )}
             {isMarkdownEmpty && codePractice?.length !== 0 && (

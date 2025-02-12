@@ -36,8 +36,8 @@
   - [x] REACT
   - [x] VUE
   - [x] ANGULAR
-- [ ] Responsiveness of the site itself
 - [ ] Internationalization of the site itself (Portuguese, Spanish)
+- [ ] Responsiveness of the site itself
 - [ ] Quizzes page (add correct answers system)
 - [ ] Social media sharing in subjects posts
 - [ ] Accessibility
