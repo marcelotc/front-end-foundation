@@ -7,6 +7,7 @@ import { Typography } from "@/components/ui/typography";
 import { Button } from "@/components/ui/button";
 import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet";
 import { DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu";
+import { HeaderMenus } from "@/components/header-menus"
 //import ModeToggle from "@/components/mode-toggle"
 
 export default function MainHeader() {
@@ -91,103 +92,7 @@ export default function MainHeader() {
                 </DropdownMenu>
             </div>
             <nav className="hidden items-center lg:flex">
-                <Link
-                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
-                    href="/"
-                >
-                    <Home color="white" />
-                </Link>
-                <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
-                <Link
-                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
-                    href="/about"
-                >
-                    <Typography variant="smallText" as="h1" className="text-white text-xs">
-                        ABOUT
-                    </Typography>
-                </Link>
-                <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
-                <Link
-                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
-                    href="/learning/html"
-                >
-                    <Typography variant="smallText" as="h1" className="text-white text-xs">
-                        HTML
-                    </Typography>
-                </Link>
-                <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
-                <Link
-                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
-                    href="/learning/css"
-                >
-                    <Typography variant="smallText" as="h1" className="text-white text-xs">
-                        CSS
-                    </Typography>
-                </Link>
-                <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
-                <Link
-                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
-                    href="/learning/javascript"
-                >
-                    <Typography variant="smallText" as="h1" className="text-white text-xs">
-                        JAVASCRIPT
-                    </Typography>
-                </Link>
-                <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
-                <Link
-                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
-                    href="/roadmap"
-                >
-                    <Typography variant="smallText" as="h1" className="text-white text-xs">
-                        ROADMAP
-                    </Typography>
-                </Link>
-                <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
-                <Link
-                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
-                    href="/learning/frameworks"
-                >
-                    <Typography variant="smallText" as="h1" className="text-white text-xs">
-                        FRAMEWORKS
-                    </Typography>
-                </Link>
-                <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
-                <Link
-                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
-                    href="/quiz"
-                >
-                    <Typography variant="smallText" as="h1" className="text-white text-xs">
-                        QUIZZES
-                    </Typography>
-                </Link>
-                <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
-                <Link
-                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
-                    href="/learning/uxui"
-                >
-                    <Typography variant="smallText" as="h1" className="text-white text-xs">
-                        UX/UI
-                    </Typography>
-                </Link>
-                <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
-                <Link
-                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
-                    href="/learning/designsystems"
-                >
-                    <Typography variant="smallText" as="h1" className="text-white text-xs">
-                        DESIGN SYSTEMS
-                    </Typography>
-                </Link>
-                <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
-                {/*<Link
-                    className="flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-50"
-                    href="/learning/path"
-                >
-                    <Typography variant="smallText" as="h1" className="text-white text-xs">
-                        LEARNING PATH CALENDAR
-                    </Typography>
-                </Link>
-                <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />*/}
+                <HeaderMenus />
                 {/*<ModeToggle />*/}
                 {isSignedIn ? (
                     <div className="flex justify-center items-center gap-4 ml-3">
