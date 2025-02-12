@@ -143,7 +143,7 @@ export default function MainWrapper({
             {isMarkdownEmpty && (
                 <div className='flex flex-col items-center justify-center gap-4 bg-[#1b1b1d] p-4 rounded-sm'>
                     <Typography variant="h5" as="h5" className='text-white'>
-                        Share:
+                        Share this post
                     </Typography>
                     <div className='flex gap-4'>
                         <FacebookShare
