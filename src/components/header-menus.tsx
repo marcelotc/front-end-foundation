@@ -26,7 +26,7 @@ const advancedSpecialization = [
 ];
 
 const resourcesExtras = [
-    { title: "About", href: "/about", description: "General information about the platform or project." },
+    { title: "About", href: "/about", description: "General information about the platform." },
     { title: "Roadmap", href: "/roadmap", description: "Learning paths and career progression guides." },
     { title: "Quizzes", href: "/quiz", description: "Interactive tests for learning validation." },
 ];
