@@ -141,7 +141,7 @@ export default function MainWrapper({
                 {children}
             </div>
             {isMarkdownEmpty && (
-                <div className='flex flex-col items-center justify-center gap-4 bg-[#1b1b1d] p-4 rounded-sm'>
+                <div className='flex flex-col items-center justify-center gap-4 bg-[#1b1b1d] p-4 rounded-sm my-5'>
                     <Typography variant="h5" as="h5" className='text-white'>
                         Share this post
                     </Typography>
@@ -180,7 +180,7 @@ export default function MainWrapper({
                 </div>
             )}
             {isMarkdownEmpty && codePractice?.length !== 0 && (
-                <div className='bg-gray-100 shadow-md rounded-sm p-6 my-5'>
+                <div className='bg-gray-100 shadow-md rounded-sm p-6 mb-5'>
                     <Typography variant="extra3LargeText" as="h1" className="font-bold text-center">
                         <span className='bg-[#1b1b1d] text-white p-2 rounded-sm'>Practice time!</span>
                     </Typography>
