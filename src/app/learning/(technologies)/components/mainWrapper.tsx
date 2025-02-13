@@ -129,7 +129,9 @@ export default function MainWrapper({
             {isMarkdownEmpty && (
                 <>
                     <Typography variant="extra2LargeText" as="h1" className='font-bold mb-5 max-[800px]:text-center'>
-                        <span className='bg-[#1b1b1d] text-white p-2 rounded-sm'>{markdown[0]?.chapter}</span> - <span className='bg-[#1b1b1d] text-white p-2 rounded-sm'>{markdown[0]?.subject}</span>
+                        <div className='flex flex-col text-center'>
+                        <span className='bg-[#1b1b1d] text-white p-2 border-b-2 rounded-sm'>{markdown[0]?.chapter}</span> <span className='bg-[#1b1b1d] text-white p-2 rounded-sm'>{markdown[0]?.subject}</span>
+                        </div>
                     </Typography>
                     <div className='flex justify-between mt-9 mb-6'>
                         <div></div>
