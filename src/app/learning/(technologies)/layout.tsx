@@ -8,7 +8,7 @@ export default function LearningLayout({
     children: React.ReactNode
 }) {
     return (
-        <div className="flex flex-1 pt-5">
+        <div className="flex flex-col flex-1 pt-5">
             <SideMenuProvider>
                 <SideMenu />
                 {children}

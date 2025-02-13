@@ -125,7 +125,7 @@ export default function SideMenu() {
 
   return (
     <nav
-      className={`my-5 mr-4 rounded-tr-[10px] rounded-br-[10px] bg-[#1b1b1d] dark:bg-gray-800 md:block fixed top-16 bottom-20 z-10 animate-fade-right transition-all duration-300 ${menuOpen ? "w-64" : "w-10"
+      className={`my-5 mr-4 rounded-tr-[10px] rounded-br-[10px] bg-[#1b1b1d] dark:bg-gray-800 md:block min-[800px]:fixed top-16 bottom-20 z-10 animate-fade-right transition-all duration-300 ${menuOpen ? "w-64 max-[800px]:w-[98%]" : "w-10"
         } flex flex-col overflow-hidden`}
     >
       {loadingMenu || !menuContent ? (
@@ -199,7 +199,7 @@ export default function SideMenu() {
 
       <div
         className={clsx(
-          "absolute bottom-0 p-1 rounded-b-[10px] bg-[#272729] w-full cursor-pointer transition-all duration-300",
+          "absolute bottom-0 p-1 rounded-b-[10px] bg-[#272729] w-full cursor-pointer transition-all duration-300 max-[800px]:hidden",
           !menuOpen && "h-full rounded-[10px]"
         )}
         onClick={toggleMenu}

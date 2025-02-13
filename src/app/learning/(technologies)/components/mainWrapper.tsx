@@ -118,13 +118,17 @@ export default function MainWrapper({
     };
 
     return (
-        <main className={clsx("flex-1 mr-8 transition-all duration-300",
-            menuOpen && "ml-72",
-            !menuOpen && "ml-20",
-        )}>
+        <main
+            className={clsx(
+                "flex-1 mr-8 transition-all duration-300",
+                menuOpen && "ml-72",
+                !menuOpen && "ml-20",
+                "max-[800px]:m-2"
+            )}
+        >
             {isMarkdownEmpty && (
                 <>
-                    <Typography variant="extra2LargeText" as="h1" className='font-bold mb-5'>
+                    <Typography variant="extra2LargeText" as="h1" className='font-bold mb-5 max-[800px]:text-center'>
                         <span className='bg-[#1b1b1d] text-white p-2 rounded-sm'>{markdown[0]?.chapter}</span> - <span className='bg-[#1b1b1d] text-white p-2 rounded-sm'>{markdown[0]?.subject}</span>
                     </Typography>
                     <div className='flex justify-between mt-9 mb-6'>
