@@ -36,10 +36,10 @@
   - [x] REACT
   - [x] VUE
   - [x] ANGULAR
+- [x] Social media sharing in subjects posts
 - [ ] Internationalization of the site itself (Portuguese, Spanish)
 - [ ] Responsiveness of the site itself
 - [ ] Quizzes page (add correct answers system)
-- [ ] Social media sharing in subjects posts
 - [ ] Accessibility
  - [ ] Keyboard Navigation
  - [ ] Screen Reader
