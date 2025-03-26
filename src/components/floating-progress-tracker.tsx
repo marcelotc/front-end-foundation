@@ -5,9 +5,9 @@ import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress";
 import { CodeXml, CircleX } from 'lucide-react';
 import Image from "next/image";
-import htmlLogo from "../../public/html-logo.png";
-import cssLogo from "../../public/css-logo.png";
-import javascriptLogo from "../../public/javascript-logo.png";
+import htmlLogo from "/public/html-logo.png";
+import cssLogo from "/public/css-logo.png";
+import javascriptLogo from "/public/javascript-logo.png";
 
 export default function FloatingProgressTracker() {
     const [expanded, setExpanded] = useState(false);

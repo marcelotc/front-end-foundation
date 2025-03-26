@@ -2,10 +2,10 @@
 
 import React, { useContext, useEffect } from 'react';
 import SideMenuContext from '../context/sideMenuContext';
-import { SkeletonCard } from "../components/contentSkeleton";
+import { SkeletonCard } from "@/app/learning/(technologies)/components/contentSkeleton";
 import { Typography } from "@/components/ui/typography";
 import Image from "next/image";
-import cssLogo from "../../../../../public/css-logo.png";
+import cssLogo from "/public/css-logo.png";
 
 import MainWrapper from '../components/mainWrapper';
 import ContentOutput from '../components/contentOutput';
@@ -41,7 +41,7 @@ export default function Css() {
 
                         <Typography variant="h3" className="mb-4">Role of CSS in Web Development</Typography>
                         <Typography className="mb-4">
-                            CSS plays a key role in web development by providing the tools to create aesthetically pleasing and responsive websites. Here’s how CSS contributes to web design:
+                            CSS plays a key role in web development by providing the tools to create aesthetically pleasing and responsive websites. Here's how CSS contributes to web design:
                         </Typography>
                         <ul className="list-disc list-inside mb-8">
                             <li><b>Styling Layouts:</b> CSS allows developers to create various layouts, using techniques such as Flexbox and Grid, ensuring websites look good on all screen sizes.</li>

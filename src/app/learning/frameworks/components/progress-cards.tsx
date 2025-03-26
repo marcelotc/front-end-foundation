@@ -2,9 +2,9 @@ import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/com
 import Link from "next/link";
 import { LockIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import reactIcon from "../../../../../public/react-icon.png";
-import vueIcon from "../../../../../public/vue-icon.png";
-import angularIcon from "../../../../../public/angular-icon.png";
+import reactIcon from "/public/react-icon.png";
+import vueIcon from "/public/vue-icon.png";
+import angularIcon from "/public/angular-icon.png";
 import Image from "next/image";
 
 interface ProgressCardsInterface {

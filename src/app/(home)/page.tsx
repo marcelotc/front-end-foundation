@@ -3,14 +3,14 @@ import { Button } from "@/components/ui/button"
 import Image from "next/image";
 import Link from "next/link";
 import { CornerRightUp } from 'lucide-react'
-import htmlLogo from "../../../public/html-logo.png";
-import cssLogo from "../../../public/css-logo.png";
-import javascriptLogo from "../../../public/javascript-logo.png";
-import designSystemsLogo from "../../../public/design-systems-logo.png";
-import uxuiLogo from "../../../public/ux-ui-logo.png";
-import questionImage from "../../../public/question-image.png";
-import roadMapImage from "../../../public/road-map-image.png";
-import reactIcon from "../../../public/react-icon.png";
+import htmlLogo from "/public/html-logo.png";
+import cssLogo from "/public/css-logo.png";
+import javascriptLogo from "/public/javascript-logo.png";
+import designSystemsLogo from "/public/design-systems-logo.png";
+import uxuiLogo from "/public/ux-ui-logo.png";
+import questionImage from "/public/question-image.png";
+import roadMapImage from "/public/road-map-image.png";
+import reactIcon from "/public/react-icon.png";
 
 export default function Home() {
 

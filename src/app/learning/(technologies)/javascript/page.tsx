@@ -2,10 +2,10 @@
 
 import React, { useContext, useEffect } from 'react';
 import SideMenuContext from '../context/sideMenuContext';
-import { SkeletonCard } from "../components/contentSkeleton";
+import { SkeletonCard } from "@/app/learning/(technologies)/components/contentSkeleton";
 import { Typography } from "@/components/ui/typography";
 import Image from "next/image";
-import javascriptLogo from "../../../../../public/javascript-logo.png";
+import javascriptLogo from "/public/javascript-logo.png";
 
 import MainWrapper from '../components/mainWrapper';
 import ContentOutput from '../components/contentOutput';

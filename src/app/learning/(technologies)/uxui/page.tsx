@@ -5,7 +5,7 @@ import SideMenuContext from '@/app/learning/(technologies)/context/sideMenuConte
 import { SkeletonCard } from '@/app/learning/(technologies)/components/contentSkeleton';
 import { Typography } from "@/components/ui/typography"
 import Image from "next/image";
-import uxuiLogo from "../../../../../public/ux-ui-logo.png";
+import uxuiLogo from "/public/ux-ui-logo.png";
 
 import MainWrapper from '@/app/learning/(technologies)/components/mainWrapper';
 import ContentOutput from '@/app/learning/(technologies)/components/contentOutput';
