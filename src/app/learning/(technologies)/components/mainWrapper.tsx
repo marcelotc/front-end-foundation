@@ -123,20 +123,28 @@ export default function MainWrapper({
                 "flex-1 mr-8 transition-all duration-300",
                 menuOpen && "ml-72",
                 !menuOpen && "ml-20",
-                "max-[800px]:m-2"
+                "max-[800px]:m-2",
+                "pb-8"
             )}
         >
-            {isMarkdownEmpty && (
+            {isMarkdownEmpty && markdown?.[0] && (
                 <>
-                    <Typography variant="extra2LargeText" as="h1" className='font-bold mb-5 max-[800px]:text-center'>
-                        <div className='flex flex-col text-center'>
-                        <span className='bg-[#1b1b1d] text-white p-2 border-b-2 rounded-sm'>{markdown[0]?.chapter}</span> <span className='bg-[#1b1b1d] text-white p-2 rounded-sm'>{markdown[0]?.subject}</span>
+                    <Typography variant="extra2LargeText" as="h1" className="font-bold mb-5 max-[800px]:text-center">
+                        <div className="flex flex-col text-center">
+                            <span className="bg-[#1b1b1d] text-white p-2 border-b-2 rounded-sm">
+                                {markdown[0].chapter}
+                            </span>
+                            <span className="bg-[#1b1b1d] text-white p-2 rounded-sm">
+                                {markdown[0].subject}
+                            </span>
                         </div>
                     </Typography>
-                    <div className='flex justify-between mt-9 mb-6'>
+                    <div className="flex justify-between mt-9 mb-6">
                         <div></div>
                         <Typography variant="smallText" as="p">
-                            <span className='bg-[#1b1b1d] text-white p-2 rounded-sm'>Difficulty: {markdown[0]?.difficulty}</span>
+                            <span className="bg-[#1b1b1d] text-white p-2 rounded-sm">
+                                Difficulty: {markdown[0].difficulty}
+                            </span>
                         </Typography>
                     </div>
                 </>
@@ -233,7 +241,7 @@ export default function MainWrapper({
                                                     onCheckedChange={handleDontShowAgainChange}
                                                     className="mr-2"
                                                 />
-                                                <label>Don't show this message again</label>
+                                                <label>Don&apos;t show this message again</label>
                                             </div>
                                             <AlertDialogFooter>
                                                 <AlertDialogAction>Ok I will try first!</AlertDialogAction>

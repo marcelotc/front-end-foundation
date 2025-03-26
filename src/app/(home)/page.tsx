@@ -2,7 +2,7 @@ import { Typography } from "@/components/ui/typography"
 import { Button } from "@/components/ui/button"
 import Image from "next/image";
 import Link from "next/link";
-import { CornerRightUp } from 'lucide-react'
+import { Star, ArrowRight, CornerRightUp } from 'lucide-react'
 import htmlLogo from "/public/html-logo.png";
 import cssLogo from "/public/css-logo.png";
 import javascriptLogo from "/public/javascript-logo.png";
@@ -13,125 +13,168 @@ import roadMapImage from "/public/road-map-image.png";
 import reactIcon from "/public/react-icon.png";
 
 export default function Home() {
-
     return (
-        <section className="flex flex-col">
-            <main className="flex-1 px-4 md:px-6 mt-10">
-                <div className="flex flex-col md:flex-row justify-between gap-8">
-                    <div className="space-y-4">
-                        <div>
-                            <Typography variant="extra3LargeText" as="h1">
-                                Leverage your front-end skills
-                            </Typography>
-                            <Typography variant="extra3LargeText" as="h1">
-                                by developing your <b><u>foundation</u></b>
-                            </Typography>
+        <main className="flex-1">
+            {/* Hero Section */}
+            <section className="pt-32 pb-20 px-4">
+                <div className="max-w-7xl mx-auto">
+                    <div className="text-center space-y-8 max-w-3xl mx-auto">
+                        <h1 className="text-5xl md:text-6xl font-bold tracking-tight">
+                            Leverage your front-end skills by developing your <span className="border-b-4 border-black">foundation</span>
+                        </h1>
+                        <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                            Learn HTML, CSS, JavaScript, and modern frameworks through interactive lessons, 
+                            real-world projects, and a supportive community.
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                            <Link href="/roadmap">
+                                <Button size="lg" className="text-lg w-full sm:w-auto">
+                                View Roadmap
+                                </Button>
+                            </Link>
                         </div>
-                        <Link href={'/roadmap'} className="block w-min">
-                            <Button size={"lg"}>
-                                Check the front-end roadmap
+                    </div>
+                </div>
+            </section>
+
+            {/* Technology Selection Section */}
+            <section className="py-20 bg-gray-50">
+                <div className="max-w-7xl mx-auto px-4">
+                    <div className="text-center mb-12">
+                        <h2 className="text-3xl font-bold mb-4">Choose Your Learning Path</h2>
+                        <p className="text-xl text-gray-600">Start with the fundamentals and progress at your own pace</p>
+                    </div>
+                    <div className="flex flex-col items-center gap-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 w-full max-w-4xl mx-auto">
+                            <div className="flex justify-center">
+                                <Link href="/learning/html" className="w-full max-w-[180px] transform hover:scale-105 transition-transform">
+                                    <Image
+                                        src={htmlLogo}
+                                        width={180}
+                                        height={180}
+                                        alt="HTML logo"
+                                        className="w-full h-auto hover:opacity-90"
+                                        priority
+                                    />
+                                </Link>
+                            </div>
+                            <div className="flex justify-center">
+                                <Link href="/learning/css" className="w-full max-w-[180px] transform hover:scale-105 transition-transform">
+                                    <Image
+                                        src={cssLogo}
+                                        width={180}
+                                        height={180}
+                                        alt="CSS logo"
+                                        className="w-full h-auto hover:opacity-90"
+                                        priority
+                                    />
+                                </Link>
+                            </div>
+                            <div className="flex justify-center sm:col-span-2 md:col-span-1">
+                                <Link href="/learning/javascript" className="w-full max-w-[180px] transform hover:scale-105 transition-transform">
+                                    <Image
+                                        src={javascriptLogo}
+                                        width={180}
+                                        height={180}
+                                        alt="JavaScript logo"
+                                        className="w-full h-auto hover:opacity-90"
+                                        priority
+                                    />
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Learning Resources Grid */}
+            <section className="py-20">
+                <div className="max-w-7xl mx-auto px-4">
+                    <div className="text-center mb-12">
+                        <h2 className="text-3xl font-bold mb-4">Explore Learning Resources</h2>
+                        <p className="text-xl text-gray-600">Everything you need to become a front-end developer</p>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <Link href="/roadmap">
+                            <div className="group bg-black text-white rounded-2xl p-8 hover:bg-black/90 transition-colors">
+                                <div className="flex items-center justify-between mb-4">
+                                    <h3 className="text-xl font-semibold">Front-end Roadmap</h3>
+                                    <Image src={roadMapImage} width={60} height={60} alt="Roadmap" />
+                                </div>
+                                <p className="text-gray-400 group-hover:text-gray-300">Follow our structured learning path from beginner to advanced</p>
+                            </div>
+                        </Link>
+                        <Link href="/quiz">
+                            <div className="group bg-black text-white rounded-2xl p-8 hover:bg-black/90 transition-colors">
+                                <div className="flex items-center justify-between mb-4">
+                                    <h3 className="text-xl font-semibold">Test Your Knowledge</h3>
+                                    <Image src={questionImage} width={50} height={50} alt="Quiz" />
+                                </div>
+                                <p className="text-gray-400 group-hover:text-gray-300">Take quizzes to reinforce your learning and track progress</p>
+                            </div>
+                        </Link>
+                        <Link href="/learning/frameworks">
+                            <div className="group bg-black text-white rounded-2xl p-8 hover:bg-black/90 transition-colors">
+                                <div className="flex items-center justify-between mb-4">
+                                    <h3 className="text-xl font-semibold">Framework Learning</h3>
+                                    <Image src={reactIcon} width={60} height={60} alt="Frameworks" />
+                                </div>
+                                <p className="text-gray-400 group-hover:text-gray-300">Master modern frameworks like React, Vue, and Angular</p>
+                            </div>
+                        </Link>
+                    </div>
+                </div>
+            </section>
+
+            {/* Additional Resources */}
+            <section className="py-20 bg-gray-50">
+                <div className="max-w-7xl mx-auto px-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <Link href="/learning/uxui">
+                            <div className="group bg-black text-white rounded-2xl p-8 hover:bg-black/90 transition-colors">
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <h3 className="text-xl font-semibold mb-2">UX/UI Design</h3>
+                                        <p className="text-gray-400 group-hover:text-gray-300">Learn the principles of user experience and interface design</p>
+                                    </div>
+                                    <Image src={uxuiLogo} width={80} height={80} alt="UX/UI" />
+                                </div>
+                            </div>
+                        </Link>
+                        <Link href="/learning/designsystems">
+                            <div className="group bg-black text-white rounded-2xl p-8 hover:bg-black/90 transition-colors">
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <h3 className="text-xl font-semibold mb-2">Design Systems</h3>
+                                        <p className="text-gray-400 group-hover:text-gray-300">Master the art of creating scalable design systems</p>
+                                    </div>
+                                    <Image src={designSystemsLogo} width={80} height={80} alt="Design Systems" />
+                                </div>
+                            </div>
+                        </Link>
+                    </div>
+                </div>
+            </section>
+
+            {/* CTA Section */}
+            <section className="py-20">
+                <div className="max-w-7xl mx-auto px-4">
+                    <div className="bg-black text-white rounded-3xl p-12 text-center">
+                        <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                            Ready to Start Your Front-End Journey?
+                        </h2>
+                        <p className="text-gray-400 text-lg mb-8 max-w-2xl mx-auto">
+                            Join thousands of developers who have already transformed their careers 
+                            through our comprehensive learning platform.
+                        </p>
+                        <Link href="/learning/html">
+                            <Button size="lg" className="bg-white text-black hover:bg-gray-100">
+                                Get Started for Free <ArrowRight className="ml-2 h-5 w-5" />
                             </Button>
                         </Link>
                     </div>
-                    <div className="flex flex-col items-center gap-3 border-2 border-[#1b1b1d] p-3 rounded-xl">
-                        <div className="flex justify-center gap-4">
-                            <Link href={'/learning/html'}>
-                                <Image
-                                    src={htmlLogo}
-                                    width={150}
-                                    height={150}
-                                    alt="HTML logo"
-                                    className="hover:opacity-80 cursor-pointer"
-                                />
-                            </Link>
-                            <Link href={'/learning/css'}>
-                                <Image
-                                    src={cssLogo}
-                                    width={150}
-                                    height={150}
-                                    alt="CSS logo"
-                                    className="hover:opacity-80 cursor-pointer"
-                                />
-                            </Link>
-                            <Link href={'/learning/javascript'}>
-                                <Image
-                                    src={javascriptLogo}
-                                    width={150}
-                                    height={150}
-                                    alt="JavaScript logo"
-                                    className="hover:opacity-80 cursor-pointer"
-                                />
-                            </Link>
-                        </div>
-                        <div className="flex items-center gap-3 mt-4">
-                            <Typography variant="blockquote" as="p">
-                                Choose what you want to learn by clicking on the technologies above
-                            </Typography>
-                            <CornerRightUp />
-                        </div>
-                    </div>
                 </div>
-
-                <div className="flex flex-col justify-center items-center gap-6 mt-10 py-10 max-w-screen-lg mx-auto">
-                    {/* First row: 3 cards on large screens */}
-                    <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-6 w-full px-4">
-                        <Link href={'/roadmap'}>
-                            <div className="flex bg-[#1b1b1d] w-full h-[200px] rounded-xl hover:opacity-95 cursor-pointer">
-                                <div className="flex items-center justify-between w-full p-6 sm:p-8">
-                                    <Typography variant="largeText" as="h1" className="text-white">
-                                        Check the front-end roadmap
-                                    </Typography>
-                                    <Image src={roadMapImage} width={80} height={80} alt="road map image" />
-                                </div>
-                            </div>
-                        </Link>
-                        <Link href={'/quiz'}>
-                            <div className="flex bg-[#1b1b1d] w-full h-[200px] rounded-xl hover:opacity-95 cursor-pointer">
-                                <div className="flex items-center justify-between w-full p-6 sm:p-8">
-                                    <Typography variant="largeText" as="h1" className="text-white">
-                                        Take quizzes
-                                    </Typography>
-                                    <Image src={questionImage} width={60} height={60} alt="question mark image" />
-                                </div>
-                            </div>
-                        </Link>
-                        <Link href={'/learning/frameworks'}>
-                            <div className="flex bg-[#1b1b1d] w-full h-[200px] rounded-xl hover:opacity-95 cursor-pointer">
-                                <div className="flex items-center justify-between w-full p-6 sm:p-8">
-                                    <Typography variant="largeText" as="h1" className="text-white">
-                                        Ready for Frameworks?
-                                    </Typography>
-                                    <Image src={reactIcon} width={80} height={80} alt="framework image" />
-                                </div>
-                            </div>
-                        </Link>
-                    </div>
-
-                    {/* Second row: Full-width 2 cards */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full px-4">
-                        <Link href={'/learning/uxui'}>
-                            <div className="flex bg-[#1b1b1d] w-full h-[200px] rounded-xl hover:opacity-95 cursor-pointer">
-                                <div className="flex items-center justify-between w-full p-6 sm:p-8">
-                                    <Typography variant="largeText" as="h1" className="text-white">
-                                        UX/UI
-                                    </Typography>
-                                    <Image src={uxuiLogo} width={80} height={80} alt="UX/UI image" />
-                                </div>
-                            </div>
-                        </Link>
-                        <Link href={'/learning/designsystems'}>
-                            <div className="flex bg-[#1b1b1d] w-full h-[200px] rounded-xl hover:opacity-95 cursor-pointer">
-                                <div className="flex items-center justify-between w-full p-6 sm:p-8">
-                                    <Typography variant="largeText" as="h1" className="text-white">
-                                        Design systems
-                                    </Typography>
-                                    <Image src={designSystemsLogo} width={80} height={80} alt="Design systems image" />
-                                </div>
-                            </div>
-                        </Link>
-                    </div>
-                </div>
-            </main>
-        </section>
-    );
+            </section>
+        </main>
+    )
 }

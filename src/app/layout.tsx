@@ -24,15 +24,19 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`flex h-screen flex-col ${inter.className}`}>
+        <body className={`min-h-screen flex flex-col ${inter.className}`}>
           <ThemeProvider
             attribute="class"
             defaultTheme="light"
             enableSystem
             disableTransitionOnChange
           >
-            <MainHeader />
-            {children}
+            <div className="fixed top-0 left-0 right-0 z-50">
+              <MainHeader />
+            </div>
+            <div className="flex-1 pt-16">
+              {children}
+            </div>
             <Toaster richColors position="top-center" />
             <FloatingProgressTracker />
             <FloatingInfo />
